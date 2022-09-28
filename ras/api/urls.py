@@ -3,5 +3,5 @@ from .views import *
 
 urlpatterns = [
     path('books', api_all_books),
-    path('books/<int:_id>', api_get_book),
+    path('books/genres', books_per_genre_per_month)
 ]
