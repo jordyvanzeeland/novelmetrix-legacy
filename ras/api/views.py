@@ -9,22 +9,6 @@ from django.templatetags.static import static
 import json
 
 @api_view(['GET'])
-def api_all_books(request):
-    df = pd.read_csv("api/static/books2.csv", encoding = "utf-8")
-    books = []
-    for book in df['Books']:
-        info = book.split(';')
-        books.append({
-            "name": info[0],
-            "author": info[1],
-            "genre": info[2],
-            "pages": info[3],
-            "readed": info[4],
-            "rating": info[5]
-        })
-    return Response(books)
-
-@api_view(['GET'])
 def books_per_genre_per_month(request):
 
     datayear = request.META.get('HTTP_YEAR')
@@ -48,6 +32,32 @@ def books_per_genre_per_month(request):
                 "genre": row['genre'],
                 "readed": row['readed'],
                 "count": row['count']
+            })
+        
+        return Response(data)
+    else:
+        return Response("No year header included")
+
+@api_view(['GET'])
+def avg_ratings_per_month(request):
+    datayear = request.META.get('HTTP_YEAR')
+
+    if datayear:
+        data = []
+
+        # Get CSV file with book data
+        df = pd.read_csv("api/static/books2.csv", encoding = "utf-8", header = 0, sep=';')
+
+        # Filter data on year
+        df = df.where(df['readed'].str.contains(datayear))
+
+        avgratingspermonth = df.groupby('readed')['rating'].mean().reset_index(name="rating")
+
+        for index, row in avgratingspermonth.iterrows():
+
+            data.append({
+                "date": row['readed'],
+                "rating": int(row['rating'])
             })
         
         return Response(data)

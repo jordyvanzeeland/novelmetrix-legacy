@@ -5,15 +5,21 @@ export default class App extends Component {
         super(props);
     }
 
-    initChart(data, year) {
+    initChart(data, ratings, year) {
+
+        /*
+        ----------------------------------
+             Books per month per genre
+        ----------------------------------
+        */
 
         var genres = [];
 
         var colors = [
-            '#d0b2cf', '#b66f2b', '#003C72', '#ecdb0e'
+            '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
         ]
 
-        var dataSet = []; 
+        var dataSet = [];
 
         data.forEach(book => {
             if (!genres.includes(book.genre)) {
@@ -48,10 +54,50 @@ export default class App extends Component {
                 dataSet.push({
                     label: genre,
                     data: genreData,
-                    backgroundColor: colors[index]
+                    backgroundColor: colors[index],
+                    order: 2
                 })
             })
         }
+
+        /*
+        ----------------------------------
+             Avarage ratings per month
+        ----------------------------------
+        */
+
+        var avgRatings = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        for (var j = 0; j < 12; j++) {
+
+            if (j < 9) {
+                var month = "0" + (j + 1)
+            } else {
+                month = (j + 1)
+            }
+
+            for (var i = 0; i < ratings.length; i++) {
+                if (ratings[i].date == month + '-' + year) {
+                    avgRatings[j] = ratings[i].rating;
+                }
+            }
+        }
+
+        dataSet.push({
+            label: 'Gemiddelde beoordeling',
+            data: avgRatings,
+            backgroundColor: '#ffa500',
+            borderColor: '#ffa500',
+            tension: 0.4,
+            type: 'line',
+            order: 1
+        })
+
+        /*
+        ----------------------------------
+             Stacked bar chart
+        ----------------------------------
+        */
 
         new Chart(document.getElementById('chart'), {
             type: 'bar',
@@ -60,28 +106,36 @@ export default class App extends Component {
                 datasets: dataSet
             },
             options: {
+                responsive: true,
+                showTooltips: true,
                 legend: {
                     display: true,
                 },
-                tooltips: {
-                    mode: 'index',
-                    intersect: true,
-                    axis: 'y'
+                interaction: {
+                    mode: 'index'
                 },
                 scales: {
                     x: {
                         ticks: {
                             beginAtZero: true,
-
+                            color: "white",
                         },
                         stacked: true,
                     },
                     y: {
                         ticks: {
                             beginAtZero: true,
-                            stepSize: 1
+                            stepSize: 1,
+                            color: "white",
                         },
                         stacked: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: "white"
+                        }
                     }
                 }
             }
@@ -90,9 +144,7 @@ export default class App extends Component {
 
     componentDidMount() {
 
-        var currentyear = new Date().getFullYear()
-
-        console.log(currentyear);
+        var currentyear = new Date("2021-09-29").getFullYear()
 
         fetch('/api/books/genres', {
             "method": "GET",
@@ -101,17 +153,26 @@ export default class App extends Component {
             }
         })
             .then(response => response.json())
-            .then(data => {
-                this.initChart(data, currentyear);
-                console.log(data);
+            .then(books => {
+                fetch('/api/ratings', {
+                    "method": "GET",
+                    "headers": {
+                        "year": currentyear
+                    }
+                })
+                    .then(response => response.json())
+                    .then(ratings => {
+                        console.log(ratings);
+                        this.initChart(books, ratings, currentyear);
+                    })
+
             })
     }
 
     render() {
         return (
             <React.Fragment>
-                <canvas id="chart"></canvas>
-                <p>Soon here comes the Reading Analytics System! test</p>
+                <div className="books-per-month"><canvas id="chart"></canvas></div>
             </React.Fragment>
 
         )
