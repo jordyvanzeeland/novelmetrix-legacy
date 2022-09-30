@@ -3,6 +3,56 @@ import React, { Component } from "react";
 export default class App extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            year: new Date().getFullYear(),
+        }
+
+        this.yearsArray = [];
+    }
+
+    changeYear(event) {
+        this.setState({
+            year: event.target.value
+        })
+    }
+
+    initDoughnut(data) {
+
+        var labels = [];
+        var counts = [];
+
+        data.forEach((count) => {
+            if (!labels.includes(count.genre)) {
+                labels.push(count.genre)
+            }
+
+            counts.push(count.count)
+        })
+
+        $("canvas#chartGenres").remove();
+        $("div.genresPercent").append('<canvas id="chartGenres"></canvas>');
+
+        var ctx = document.getElementById("chartGenres");
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '# of Tomatoes',
+                    data: counts,
+                    backgroundColor: [
+                        '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
+                    ],
+                    borderWidth: 3,
+                    borderColor: '#1f2940'
+                }]
+            },
+            options: {
+                //cutoutPercentage: 40,
+                responsive: true,
+
+            }
+        });
     }
 
     initChart(data, ratings, year) {
@@ -99,6 +149,9 @@ export default class App extends Component {
         ----------------------------------
         */
 
+        $("canvas#chart").remove();
+        $("div.books-per-month").append('<canvas id="chart"></canvas>');
+
         new Chart(document.getElementById('chart'), {
             type: 'bar',
             data: {
@@ -142,9 +195,43 @@ export default class App extends Component {
         });
     }
 
+    componentDidUpdate() {
+        fetch('/api/books/genres', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(books => {
+                fetch('/api/ratings', {
+                    "method": "GET",
+                    "headers": {
+                        "year": this.state.year
+                    }
+                })
+                    .then(response => response.json())
+                    .then(ratings => {
+                        this.initChart(books, ratings, this.state.year);
+                    })
+
+            })
+
+        fetch('/api/books/genres/count', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.initDoughnut(data);
+            })
+    }
+
     componentDidMount() {
 
-        var currentyear = new Date("2021-09-29").getFullYear()
+        var currentyear = this.state.year ? this.state.year : new Date().getFullYear()
 
         fetch('/api/books/genres', {
             "method": "GET",
@@ -162,19 +249,93 @@ export default class App extends Component {
                 })
                     .then(response => response.json())
                     .then(ratings => {
-                        console.log(ratings);
                         this.initChart(books, ratings, currentyear);
                     })
 
+            })
+
+        fetch('/api/books/genres/count', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.initDoughnut(data);
             })
     }
 
     render() {
         return (
             <React.Fragment>
-                <div className="books-per-month"><canvas id="chart"></canvas></div>
-            </React.Fragment>
+                <div className="sidebar">
+                    <ul className="sidebar_menu">
+                        <li className="menu-item">
+                            <div className="menu-item-label">
+                                <div className="menu-item-label-name"><i className="fa fa-chart-bar"></i> Dashboard</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="menu-item-label">
+                                <div className="menu-item-label-name"><i class="fa fa-book-open"></i> Boeken</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div className="content">
+                    <div className="filter">
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <span style={{ color: '#ffffff', display: 'inline-block', width: 'auto' }}>Jaar: </span>
+                                    <select style={{ display: 'inline-block', width: 'auto' }} defaultValue={this.state.year} onChange={(event) => this.changeYear(event)}>
+                                        <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                    </select>
+                                </div>
 
+                                <div className="col-md-4"></div>
+
+                                <div className="col-md-4"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="books-stats">
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div className="stat-block">
+                                        <span>Boeken</span>
+                                        <span>17</span>
+                                        <span>-20%</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div className="stat-block">
+                                        <span>Bladzijdes</span>
+                                        <span>512</span>
+                                        <span>+5%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-8">
+                                <div className="books-per-month"><canvas id="chart"></canvas></div>
+                            </div>
+                            <div className="col-md-4">
+                                <div className="genresPercent"><canvas id="chartGenres"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
         )
     }
 }

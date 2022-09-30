@@ -23,3 +23,21 @@ class Books(models.Model):
     null=False,
     blank=False
   )
+
+  pages = models.TextField(
+    max_length=100,
+    null=False,
+    blank=False
+  )
+
+  readed = models.TextField(
+    max_length=100,
+    null=False,
+    blank=False
+  )
+
+  rating = models.TextField(
+    max_length=100,
+    null=False,
+    blank=False
+  )
