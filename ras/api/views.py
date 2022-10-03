@@ -17,22 +17,23 @@ def getBooksData():
 
     return df
 
+def filterData(df, datayear = None):
+    df['readed'] = pd.to_datetime(df['readed'], format='%Y-%m-%d')
+    df['readed'] = df['readed'].dt.strftime('%m-%Y')
+
+    # Filter data on year
+    if datayear and datayear is not None:
+        df = df.where(df['readed'].str.contains(datayear))
+
+    return df
+
+
 @api_view(['GET'])
 def books_per_genre_per_month(request):
-
-    datayear = request.META.get('HTTP_YEAR')
-
-    if datayear:
+    if request.META.get('HTTP_YEAR'):
 
         data = []
-
-        df = getBooksData()
-
-        df['readed'] = pd.to_datetime(df['readed'], format='%Y-%m-%d')
-        df['readed'] = df['readed'].dt.strftime('%m-%Y')
-
-        # Filter data on year
-        df = df.where(df['readed'].str.contains(datayear))
+        df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
 
         # Filter array on genre and date
         booksPerMonth = df.groupby(['genre','readed'])['genre'].count().reset_index(name="count")  
@@ -50,48 +51,12 @@ def books_per_genre_per_month(request):
         return Response("No year header included")
 
 @api_view(['GET'])
-def avg_ratings_per_month(request):
-    datayear = request.META.get('HTTP_YEAR')
-
-    if datayear:
-        data = []
-
-        # Get CSV file with book data
-        df = getBooksData()
-        
-        df['readed'] = pd.to_datetime(df['readed'], format='%Y-%m-%d')
-        df['readed'] = df['readed'].dt.strftime('%m-%Y')
-
-        # Filter data on year
-        df = df.where(df['readed'].str.contains(datayear))
-
-        avgratingspermonth = df.groupby('readed')['rating'].mean().reset_index(name="rating")
-
-        for index, row in avgratingspermonth.iterrows():
-
-            data.append({
-                "date": row['readed'],
-                "rating": int(row['rating'])
-            })
-        
-        return Response(data)
-    else:
-        return Response("No year header included")
-
-@api_view(['GET'])
 def countGenres(request):
-    datayear = request.META.get('HTTP_YEAR')
-
-    if datayear:
+    if request.META.get('HTTP_YEAR'):
+        
         data = []
-
-        # Get CSV file with book data
-        df = getBooksData()
-
-        df['readed'] = pd.to_datetime(df['readed'], format='%Y-%m-%d')
-        df['readed'] = df['readed'].dt.strftime('%m-%Y')
-
-        df = df.where(df['readed'].str.contains(datayear))
+        df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+        
         genres = df.groupby('genre')['genre'].count().reset_index(name="count")
         genres = genres.sort_values(by='count', ascending=False)
 
@@ -106,3 +71,60 @@ def countGenres(request):
     else:
         return Response("No year header included")
 
+@api_view(['GET'])
+def books_per_country(request):
+    if request.META.get('HTTP_YEAR'):
+        data = []
+        df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+
+        countries = df.groupby('country')['country'].count().reset_index(name="count")
+        countries = countries.sort_values(by='count', ascending=False)
+
+        for index, row in countries.iterrows():
+
+            data.append({
+                "country": row['country'],
+                "count": int(row['count'])
+            })
+
+        return Response(data)
+    else:
+        return Response("No year header included")
+
+@api_view(['GET'])
+def getStats(request):
+    if request.META.get('HTTP_YEAR'):
+        data = []
+        df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+        df = df.dropna()
+
+        statsTotalBooks = df['name'].count()
+        statsTotalPages = df['pages'].astype(int).sum()
+        statsTotalWriters = df['author'].nunique()
+        statsTotalCountries = df['country'].nunique()
+        statsTotalGenres = df['genre'].nunique()
+
+
+        data.append({
+            'totalbooks': statsTotalBooks,
+            'totalpages': statsTotalPages,
+            'totalauthors': statsTotalWriters,
+            'totalcountries': statsTotalCountries,
+            'totalgenres': statsTotalGenres
+        })
+        
+
+        return Response(data[0])
+    else:
+        return Response("No year header included")
+
+@api_view(['GET'])
+def getYears(request):
+    df = filterData(getBooksData())
+
+    df['readed'] = pd.to_datetime(df['readed'], errors='coerce')
+    df['year']= df['readed'].dt.year
+
+    years = df.groupby('year')['year'].count().reset_index(name="count")
+
+    return Response(years['year'])

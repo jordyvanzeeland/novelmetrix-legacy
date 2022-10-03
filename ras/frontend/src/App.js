@@ -5,15 +5,95 @@ export default class App extends Component {
         super(props);
         this.state = {
             year: new Date().getFullYear(),
+            readingYears: [],
+            totalbooks: 0,
+            totalpages: 0,
+            totalauthors: 0,
+            totalcountries: 0,
+            totalgenres: 0
         }
 
         this.yearsArray = [];
     }
 
     changeYear(event) {
+
         this.setState({
             year: event.target.value
         })
+
+        fetch('/api/books/stats', {
+            "method": "GET",
+            "headers": {
+                "year": event.target.value
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    totalbooks: data.totalbooks,
+                    totalpages: data.totalpages,
+                    totalauthors: data.totalauthors,
+                    totalcountries: data.totalcountries,
+                    totalgenres: data.totalgenres
+                })
+            })
+    }
+
+    initHorBar(data){
+
+        var countries = [];
+        var counts = [];
+
+        data.forEach((count) => {
+            if (!countries.includes(count.country)) {
+                countries.push(count.country)
+            }
+
+            counts.push(count.count)
+        })
+
+        $("canvas#countryChart").remove();
+        $("div.books-per-country").append('<canvas id="countryChart"></canvas>');
+
+        var ctx = document.getElementById("countryChart");
+        new Chart(ctx, {
+            type: 'bar',
+            options: {
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            beginAtZero: true,
+                            color: "white",
+                        },
+                        stacked: true,
+                    },
+                    y: {
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1,
+                            color: "white",
+                        },
+                        stacked: true
+                    }
+                },
+            },
+            data: {
+                labels: countries,
+                datasets: [
+                    {
+                        label: "Boeken",
+                        data: counts,
+                        backgroundColor: '#696ffc'
+                    }]
+            }
+        });
     }
 
     initDoughnut(data) {
@@ -50,12 +130,11 @@ export default class App extends Component {
             options: {
                 //cutoutPercentage: 40,
                 responsive: true,
-
             }
         });
     }
 
-    initChart(data, ratings, year) {
+    initChart(data, year) {
 
         /*
         ----------------------------------
@@ -112,39 +191,6 @@ export default class App extends Component {
 
         /*
         ----------------------------------
-             Avarage ratings per month
-        ----------------------------------
-        */
-
-        var avgRatings = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-        for (var j = 0; j < 12; j++) {
-
-            if (j < 9) {
-                var month = "0" + (j + 1)
-            } else {
-                month = (j + 1)
-            }
-
-            for (var i = 0; i < ratings.length; i++) {
-                if (ratings[i].date == month + '-' + year) {
-                    avgRatings[j] = ratings[i].rating;
-                }
-            }
-        }
-
-        dataSet.push({
-            label: 'Gemiddelde beoordeling',
-            data: avgRatings,
-            backgroundColor: '#ffa500',
-            borderColor: '#ffa500',
-            tension: 0.4,
-            type: 'line',
-            order: 1
-        })
-
-        /*
-        ----------------------------------
              Stacked bar chart
         ----------------------------------
         */
@@ -196,6 +242,8 @@ export default class App extends Component {
     }
 
     componentDidUpdate() {
+        var $this = this;
+
         fetch('/api/books/genres', {
             "method": "GET",
             "headers": {
@@ -204,17 +252,7 @@ export default class App extends Component {
         })
             .then(response => response.json())
             .then(books => {
-                fetch('/api/ratings', {
-                    "method": "GET",
-                    "headers": {
-                        "year": this.state.year
-                    }
-                })
-                    .then(response => response.json())
-                    .then(ratings => {
-                        this.initChart(books, ratings, this.state.year);
-                    })
-
+                this.initChart(books, this.state.year);
             })
 
         fetch('/api/books/genres/count', {
@@ -227,9 +265,25 @@ export default class App extends Component {
             .then(data => {
                 this.initDoughnut(data);
             })
+
+        fetch('/api/books/countries', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.initHorBar(data);
+            })
+
+
+        
     }
 
     componentDidMount() {
+
+        var $this = this;
 
         var currentyear = this.state.year ? this.state.year : new Date().getFullYear()
 
@@ -241,17 +295,7 @@ export default class App extends Component {
         })
             .then(response => response.json())
             .then(books => {
-                fetch('/api/ratings', {
-                    "method": "GET",
-                    "headers": {
-                        "year": currentyear
-                    }
-                })
-                    .then(response => response.json())
-                    .then(ratings => {
-                        this.initChart(books, ratings, currentyear);
-                    })
-
+                this.initChart(books, currentyear);
             })
 
         fetch('/api/books/genres/count', {
@@ -264,60 +308,106 @@ export default class App extends Component {
             .then(data => {
                 this.initDoughnut(data);
             })
+
+        fetch('/api/books/countries', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.initHorBar(data);
+            })
+
+        fetch('/api/books/stats', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                $this.setState({
+                    totalbooks: data.totalbooks,
+                    totalpages: data.totalpages,
+                    totalauthors: data.totalauthors,
+                    totalcountries: data.totalcountries,
+                    totalgenres: data.totalgenres
+                })
+            })
+
+            fetch('/api/books/years', {
+                "method": "GET",
+            })
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({
+                        readingYears: data
+                    })
+                })
     }
 
     render() {
         return (
             <React.Fragment>
-                <div className="sidebar">
-                    <ul className="sidebar_menu">
-                        <li className="menu-item">
-                            <div className="menu-item-label">
-                                <div className="menu-item-label-name"><i className="fa fa-chart-bar"></i> Dashboard</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="menu-item-label">
-                                <div className="menu-item-label-name"><i class="fa fa-book-open"></i> Boeken</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
                 <div className="content">
-                    <div className="filter">
-                        <div className="container-fluid">
-                            <div className="row">
-                                <div className="col-md-4">
-                                    <span style={{ color: '#ffffff', display: 'inline-block', width: 'auto' }}>Jaar: </span>
-                                    <select style={{ display: 'inline-block', width: 'auto' }} defaultValue={this.state.year} onChange={(event) => this.changeYear(event)}>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                    </select>
-                                </div>
-
-                                <div className="col-md-4"></div>
-
-                                <div className="col-md-4"></div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div className="books-stats">
                         <div className="container-fluid">
                             <div className="row">
-                                <div className="col-md-4">
+                                <div className="col-md-2">
                                     <div className="stat-block">
-                                        <span>Boeken</span>
-                                        <span>17</span>
-                                        <span>-20%</span>
+                                        <i class="fa fa-calendar"></i>
+                                        <span className="stats-number">
+                                            <select className="yearselector" defaultValue={this.state.year} onChange={(event) => this.changeYear(event)}>
+                                                {this.state.readingYears.map((year) => {
+
+                                                    if(year === this.state.year){
+                                                        var selected = 'selected'
+                                                    }else{
+                                                        selected = ''
+                                                    }
+
+                                                    return(<option selected={selected} value={year}>{year}</option>)
+                                                })}
+                                            </select>
+                                        </span>
                                     </div>
                                 </div>
-                                <div className="col-md-4">
+                                
+                                <div className="col-md-2">
                                     <div className="stat-block">
-                                        <span>Bladzijdes</span>
-                                        <span>512</span>
-                                        <span>+5%</span>
+                                        <i class="fa fa-book"></i>
+                                        <span className="stats-number">{this.state.totalbooks}</span>
+                                        <span className="stats-label">Boeken</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="stat-block">
+                                        <i class="fa fa-book-open"></i>
+                                        <span className="stats-number">{this.state.totalpages}</span>
+                                        <span className="stats-label">Bladzijdes</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="stat-block">
+                                        <i class="fa fa-pen"></i>
+                                        <span className="stats-number">{this.state.totalauthors}</span>
+                                        <span className="stats-label">Schrijvers</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="stat-block">
+                                        <i class="fa fa-book"></i>
+                                        <span className="stats-number">{this.state.totalgenres}</span>
+                                        <span className="stats-label">Genres</span>
+                                    </div>
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="stat-block">
+                                        <i class="fa fa-globe"></i>
+                                        <span className="stats-number">{this.state.totalcountries}</span>
+                                        <span className="stats-label">Landen</span>
                                     </div>
                                 </div>
                             </div>
@@ -331,6 +421,17 @@ export default class App extends Component {
                             </div>
                             <div className="col-md-4">
                                 <div className="genresPercent"><canvas id="chartGenres"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="books-per-country"><canvas id="countryChart"></canvas></div>
+                            </div>
+                            <div className="col-md-6">
+                                
                             </div>
                         </div>
                     </div>
