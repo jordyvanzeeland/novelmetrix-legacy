@@ -26,6 +26,10 @@
     "@emotion/styled": "^11.10.4",
     "@material-ui/icons": "^4.11.3",
     "@mui/material": "^5.10.3",
+    "chartjs-plugin-style": "^0.5.0",
+    "datatables.net": "^1.12.1",
+    "datatables.net-dt": "^1.12.1",
+    "jquery": "^3.6.1",
     "react-router-dom": "^6.3.0"
   }
 }

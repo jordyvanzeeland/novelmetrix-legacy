@@ -77,12 +77,13 @@ def books_per_country(request):
         data = []
         df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
 
-        countries = df.groupby('country')['country'].count().reset_index(name="count")
+        countries = df.groupby(['country_code', 'country'])['country'].count().reset_index(name="count")
         countries = countries.sort_values(by='count', ascending=False)
 
         for index, row in countries.iterrows():
 
             data.append({
+                "code": row['country_code'],
                 "country": row['country'],
                 "count": int(row['count'])
             })

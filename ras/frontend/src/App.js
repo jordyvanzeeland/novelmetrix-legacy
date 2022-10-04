@@ -10,10 +10,48 @@ export default class App extends Component {
             totalpages: 0,
             totalauthors: 0,
             totalcountries: 0,
-            totalgenres: 0
+            totalgenres: 0,
+            countries: []
         }
 
         this.yearsArray = [];
+    }
+
+    getGenres(){
+        fetch('/api/books/genres', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(books => {
+                this.initChart(books, this.state.year);
+            }) 
+    }
+
+    getCountries(init){
+        fetch('/api/books/countries', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    countries: data
+                })
+
+                if(init == true){
+                    $('#DataTable').DataTable({
+                        paging: false,
+                        ordering: false,
+                        info: false,
+                        searching: false
+                    })
+                }
+            })
     }
 
     changeYear(event) {
@@ -37,6 +75,34 @@ export default class App extends Component {
                     totalcountries: data.totalcountries,
                     totalgenres: data.totalgenres
                 })
+            })
+
+        fetch('/api/books/countries', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    countries: data
+                })
+
+                this.getCountries(false);
+            })
+
+        var $this = this;
+
+        fetch('/api/books/genres/count', {
+            "method": "GET",
+            "headers": {
+                "year": this.state.year
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.initDoughnut(data);
             })
     }
 
@@ -90,7 +156,7 @@ export default class App extends Component {
                     {
                         label: "Boeken",
                         data: counts,
-                        backgroundColor: '#696ffc'
+                        backgroundColor: '#696ffc',
                     }]
             }
         });
@@ -123,13 +189,25 @@ export default class App extends Component {
                     backgroundColor: [
                         '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
                     ],
-                    borderWidth: 3,
+                    borderWidth: 0,
                     borderColor: '#1f2940'
                 }]
             },
             options: {
-                //cutoutPercentage: 40,
+                cutout: '70%',
                 responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            // This more specific font property overrides the global property
+                            color: "white",
+                            font: {
+                                size: 14,
+                                family: 'Source Sans Pro'
+                            }
+                        }
+                    }
+                }
             }
         });
     }
@@ -218,6 +296,7 @@ export default class App extends Component {
                         ticks: {
                             beginAtZero: true,
                             color: "white",
+                            fontFamily: "Source Sans Pro",
                         },
                         stacked: true,
                     },
@@ -226,6 +305,7 @@ export default class App extends Component {
                             beginAtZero: true,
                             stepSize: 1,
                             color: "white",
+                            fontFamily: "Source Sans Pro",
                         },
                         stacked: true
                     }
@@ -233,52 +313,23 @@ export default class App extends Component {
                 plugins: {
                     legend: {
                         labels: {
-                            color: "white"
+                            color: "white",
+                            font: {
+                                size: 14,
+                                family: 'Source Sans Pro'
+                            }
                         }
                     }
+                },
+                tooltips: {
+                    bodyFont: 'Source Sans Pro'
                 }
             }
         });
     }
 
     componentDidUpdate() {
-        var $this = this;
-
-        fetch('/api/books/genres', {
-            "method": "GET",
-            "headers": {
-                "year": this.state.year
-            }
-        })
-            .then(response => response.json())
-            .then(books => {
-                this.initChart(books, this.state.year);
-            })
-
-        fetch('/api/books/genres/count', {
-            "method": "GET",
-            "headers": {
-                "year": this.state.year
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                this.initDoughnut(data);
-            })
-
-        fetch('/api/books/countries', {
-            "method": "GET",
-            "headers": {
-                "year": this.state.year
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                this.initHorBar(data);
-            })
-
-
-        
+        this.getGenres();
     }
 
     componentDidMount() {
@@ -309,16 +360,7 @@ export default class App extends Component {
                 this.initDoughnut(data);
             })
 
-        fetch('/api/books/countries', {
-            "method": "GET",
-            "headers": {
-                "year": this.state.year
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                this.initHorBar(data);
-            })
+        this.getCountries(true);
 
         fetch('/api/books/stats', {
             "method": "GET",
@@ -346,9 +388,11 @@ export default class App extends Component {
                         readingYears: data
                     })
                 })
+
     }
 
     render() {
+        console.log(this.state);
         return (
             <React.Fragment>
                 <div className="content">
@@ -417,18 +461,46 @@ export default class App extends Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-8">
-                                <div className="books-per-month"><canvas id="chart"></canvas></div>
+                                <div className="books-per-month"><span className="block_name">Boeken per maand per genre</span><canvas id="chart"></canvas></div>
                             </div>
                             <div className="col-md-4">
-                                <div className="genresPercent"><canvas id="chartGenres"></canvas></div>
+                                <div className="genresPercent"><span className="block_name">Genres</span><canvas id="chartGenres"></canvas></div>
                             </div>
                         </div>
                     </div>
 
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-md-6">
-                                <div className="books-per-country"><canvas id="countryChart"></canvas></div>
+                            <div className="col-md-2">
+                                {/* <div className="books-per-country"><canvas id="countryChart"></canvas></div> */}
+                                <div className="books-per-country">
+                                    <span className="block_name">Landen</span>
+                                <table id="DataTable" class="showHead table responsive nowrap" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Land</th>
+                                            <th>Boeken</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {this.state.countries.map((country, i) => {
+
+                                        var code = country.code.toLowerCase();
+                                        return(
+                                            <React.Fragment>
+                                                    <tr>
+                                                        <td>{i+1}</td>
+                                                        <td><img src={`https://flagcdn.com/32x24/${code}.png`} /> {country.country}</td>
+                                                        <td>{country.count}</td>
+                                                    </tr>
+                                            </React.Fragment>
+                                        )
+                                        
+                                    })}
+                                    </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div className="col-md-6">
                                 
