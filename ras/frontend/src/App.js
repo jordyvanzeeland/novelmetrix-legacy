@@ -175,30 +175,65 @@ export default class App extends Component {
             counts.push(count.count)
         })
 
+        const legendMargin = {
+            id: 'legendMargin',
+            beforeInit(chart, legend, options){
+                const fitValue = chart.legend.fit;
+
+                chart.legend.fit = function fit(){
+                    fitValue.bind(chart.legend)();
+                    return this.height += 30;
+                }
+            }
+        };
+
         $("canvas#chartGenres").remove();
         $("div.genresPercent").append('<canvas id="chartGenres"></canvas>');
 
         var ctx = document.getElementById("chartGenres");
         var myChart = new Chart(ctx, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
                 labels: labels,
                 datasets: [{
                     label: '# of Tomatoes',
                     data: counts,
                     backgroundColor: [
-                        '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
+                        '#7b71ff', '#f9939b', '#3fe7bf', '#9bcafe', '#7c59ff'
                     ],
                     borderWidth: 0,
-                    borderColor: '#1f2940'
+                    borderColor: '#1f2940',
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label;
+                                let value = context.formattedValue;
+                
+                                if (!label)
+                                    label = 'Unknown'
+                
+                                let sum = 0;
+                                let dataArr = context.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += Number(data);
+                                });
+                
+                                let percentage = (value * 100 / sum).toFixed(1) + '%';
+                                return label + ": " + percentage;
+                            }
+                        }
+                    }
                 }]
             },
             options: {
-                cutout: '70%',
+                cutout: '50%',
                 responsive: true,
                 plugins: {
                     legend: {
+                        position: 'top',
                         labels: {
+                            padding: 20,
+                            usePointStyle: true,
                             // This more specific font property overrides the global property
                             color: "white",
                             font: {
@@ -208,7 +243,18 @@ export default class App extends Component {
                         }
                     }
                 }
-            }
+            },
+            plugins: [{
+                id: 'legendMargin',
+                beforeInit(chart, legend, options){
+                    const fitValue = chart.legend.fit;
+    
+                    chart.legend.fit = function fit(){
+                        fitValue.bind(chart.legend)();
+                        return this.height += 30;
+                    }
+                }
+            }],
         });
     }
 
@@ -223,7 +269,8 @@ export default class App extends Component {
         var genres = [];
 
         var colors = [
-            '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
+            // '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
+            '#7b71ff', '#f9939b', '#3fe7bf', '#9bcafe', '#7c59ff'
         ]
 
         var dataSet = [];
@@ -276,6 +323,18 @@ export default class App extends Component {
         $("canvas#chart").remove();
         $("div.books-per-month").append('<canvas id="chart"></canvas>');
 
+        const legendMargin = {
+            id: 'legendMargin',
+            beforeInit(chart, legend, options){
+                const fitValue = chart.legend.fit;
+
+                chart.legend.fit = function fit(){
+                    fitValue.bind(chart.legend)();
+                    return this.height += 30;
+                }
+            }
+        };
+
         new Chart(document.getElementById('chart'), {
             type: 'bar',
             data: {
@@ -283,10 +342,14 @@ export default class App extends Component {
                 datasets: dataSet
             },
             options: {
+                maintainAspectRatio: false,
                 responsive: true,
                 showTooltips: true,
                 legend: {
                     display: true,
+                    labels: {
+                       usePointStyle: true,
+                    }
                 },
                 interaction: {
                     mode: 'index'
@@ -312,11 +375,14 @@ export default class App extends Component {
                 },
                 plugins: {
                     legend: {
+                        position: 'top',
                         labels: {
+                            usePointStyle: true,
                             color: "white",
+                            padding: 20,
                             font: {
                                 size: 14,
-                                family: 'Source Sans Pro'
+                                family: 'Source Sans Pro',
                             }
                         }
                     }
@@ -324,7 +390,8 @@ export default class App extends Component {
                 tooltips: {
                     bodyFont: 'Source Sans Pro'
                 }
-            }
+            },
+            plugins: [legendMargin],
         });
     }
 
@@ -460,18 +527,19 @@ export default class App extends Component {
 
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-md-8">
+                            <div className="col-md-12">
                                 <div className="books-per-month"><span className="block_name">Boeken per maand per genre</span><canvas id="chart"></canvas></div>
                             </div>
-                            <div className="col-md-4">
-                                <div className="genresPercent"><span className="block_name">Genres</span><canvas id="chartGenres"></canvas></div>
-                            </div>
+                            
                         </div>
                     </div>
 
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-md-2">
+                            <div className="col-md-3">
+                                <div className="genresPercent"><span className="block_name">Genres</span><canvas id="chartGenres"></canvas></div>
+                            </div>
+                            <div className="col-md-3">
                                 {/* <div className="books-per-country"><canvas id="countryChart"></canvas></div> */}
                                 <div className="books-per-country">
                                     <span className="block_name">Landen</span>
@@ -502,8 +570,16 @@ export default class App extends Component {
                                     </table>
                                 </div>
                             </div>
-                            <div className="col-md-6">
-                                
+                            <div className="col-md-3">
+                            <div className="books-per-country">
+                            <span className="block_name">Schrijvers</span>
+                            </div>
+                            </div>
+
+                            <div className="col-md-3">
+                            <div className="books-per-country">
+                            <span className="block_name">Favorieten (5 sterren)</span>
+                            </div>
                             </div>
                         </div>
                     </div>

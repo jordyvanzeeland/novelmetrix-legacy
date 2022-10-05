@@ -35,7 +35,7 @@
    crossorigin=""></script>
    <style>
     html, body{
-      background:#141b2d;
+      background:#181c3f;
       margin:0;
       padding:0;
       font-family: 'Source Sans Pro', sans-serif;
@@ -47,9 +47,18 @@
       padding: 20px 0;
     }
 
+    .books-per-month{
+      height:700px;
+    }
+
+    .books-per-month canvas{
+      height:600px !important;
+    }
+    
     .books-per-month, .genresPercent, .books-per-country{
-      background: #1f2940;
-      padding:20px;
+      background: #2a2e56;
+      padding: 20px;
+      box-shadow: 0 1px 4px 0 rgb(0 0 0 / 14%);
     }
 
     .sidebar .menu-item-label-name {
@@ -94,10 +103,30 @@
     }
 
     .books-stats .stat-block{
-      background: #1f2940;
+      background: #2a2e56;
+      box-shadow: 0 1px 4px 0 rgb(0 0 0 / 14%);
       padding: 10px 5px;
       color:#ffffff;
       text-align: center;
+    }
+
+    .books-stats .col-md-2:nth-child(1) i{
+      background: linear-gradient(60deg,#5848cc,#796eff) !important;
+    }
+    .books-stats .col-md-2:nth-child(2) i{
+      background: linear-gradient(60deg,#c7767c,#fb9a9a) !important;
+    }
+    .books-stats .col-md-2:nth-child(3) i{
+      background: linear-gradient(60deg,#32b69c,#3cedb2) !important;
+    }
+    .books-stats .col-md-2:nth-child(4) i{
+      background: linear-gradient(60deg,#7c9dcb,#9dd0fe) !important;
+    }
+    .books-stats .col-md-2:nth-child(5) i{
+      background: linear-gradient(60deg,#663bc3,#9263f9) !important;
+    }
+    .books-stats .col-md-2:nth-child(6) i{
+      background: linear-gradient(60deg,#7b1fa2,#913f9e) !important;
     }
 
     .books-stats .stat-block i{
@@ -110,7 +139,7 @@
       line-height: 30px;
       text-align: center;
       background: #696ffc;
-      box-shadow: 7px 7px 10px rgba(20,27,45,0.5);
+      /* box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.3); */
     }
 
     .books-stats .stat-block .stats-number{
@@ -130,7 +159,7 @@
     .yearselector{
       display: inline-block;
       width: auto;
-      background: #1f2940;
+      background: #2a2e56;
       border: none;
       color: #fff;
       font-weight: bold;
