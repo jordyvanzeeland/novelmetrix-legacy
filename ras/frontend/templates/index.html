@@ -35,10 +35,14 @@
    crossorigin=""></script>
    <style>
     html, body{
-      background:#181c3f;
+      background:#f8f8fa;
       margin:0;
       padding:0;
       font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .content{
+      padding-left: 120px;
     }
 
     .filter{
@@ -56,46 +60,19 @@
     }
     
     .books-per-month, .genresPercent, .books-per-country{
-      background: #2a2e56;
+      background: #ffffff;
       padding: 20px;
-      box-shadow: 0 1px 4px 0 rgb(0 0 0 / 14%);
+      box-shadow: 0 2px 0px 1px rgb(0 0 0 / 3%);
+      margin-bottom: 20px;
+      border-radius: 10px;
     }
 
-    .sidebar .menu-item-label-name {
-      text-align: center;
-      font-size: 15px;
-      font-weight: 100;
-      padding-left: 15px;
-      padding-right: 15px;
-      letter-spacing: 1px;
-      color: #ffffff;
-    }
-
-    .sidebar .menu-item-label-name i{
-      display: block;
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
-
-    .sidebar .sidebar_menu {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-    }
-
-    .sidebar .sidebar_menu li {
-        list-style-type: none;
-        color: #555;
-        padding: 15px 0;
-        cursor: pointer;
-    }
-
-    .sidebar .sidebar_menu li.submenu-item {
-      color: #fff;
-      font-size: 12px;
-      font-weight: 100;
-      padding-left: 15px;
-      padding-right: 15px;
+    .sidebar{
+      background: #363a53;
+      width: 100px;
+      height: 100vh;
+      position: fixed;
+      margin: -20px 0 0 0;
     }
 
     .books-stats{
@@ -103,39 +80,46 @@
     }
 
     .books-stats .stat-block{
-      background: #2a2e56;
-      box-shadow: 0 1px 4px 0 rgb(0 0 0 / 14%);
-      padding: 10px 5px;
-      color:#ffffff;
+      background: #ffffff;
+      box-shadow: 0 2px 0px 1px rgb(0 0 0 / 3%);
+      padding: 15px 5px;
+      color: #101010;
       text-align: center;
+      border-radius: 10px;
     }
 
     .books-stats .col-md-2:nth-child(1) i{
-      background: linear-gradient(60deg,#5848cc,#796eff) !important;
+      background: #f8f5fc;
+      color: #8066ee;
     }
     .books-stats .col-md-2:nth-child(2) i{
-      background: linear-gradient(60deg,#c7767c,#fb9a9a) !important;
+      background: #fff5f6;
+      color: #fe4c62;
     }
     .books-stats .col-md-2:nth-child(3) i{
-      background: linear-gradient(60deg,#32b69c,#3cedb2) !important;
+      background: #f1fcf8;
+      color: #58c8d6;
     }
     .books-stats .col-md-2:nth-child(4) i{
-      background: linear-gradient(60deg,#7c9dcb,#9dd0fe) !important;
+      background: #f2f9ff;
+      color: #49b8fd;
     }
     .books-stats .col-md-2:nth-child(5) i{
-      background: linear-gradient(60deg,#663bc3,#9263f9) !important;
+      background: #fffaee;
+      color: #ffbe0e;
     }
     .books-stats .col-md-2:nth-child(6) i{
-      background: linear-gradient(60deg,#7b1fa2,#913f9e) !important;
+      background: #f8f5fc;
+      color: #8066ee;
     }
 
     .books-stats .stat-block i{
       font-weight: 900;
       font-size: 25px;
       border-radius: 50%;
-      padding: 20px;
-      width: 70px;
-      height: 70px;
+      padding: 17px;
+      width: 65px;
+      height: 65px;
       line-height: 30px;
       text-align: center;
       background: #696ffc;
@@ -143,26 +127,26 @@
     }
 
     .books-stats .stat-block .stats-number{
-      font-weight: bold;
+      font-weight: 600;
       display: inline-block;
       margin-left: 10px;
-      font-size: 25px;
+      font-size: 20px;
       margin-right: 10px;
     }
 
     .books-stats .stat-block .stats-label{
-      color: rgba(255,255,255,0.5);
-      font-weight: 600;
-      font-size: 25px;
+      color: #bac0cc;
+      font-weight: 400;
+      font-size: 20px;
     }
 
     .yearselector{
       display: inline-block;
       width: auto;
-      background: #2a2e56;
+      background: #ffffff;
       border: none;
-      color: #fff;
-      font-weight: bold;
+      color: #101010;
+      font-weight: 600;
     }
 
     .container-fluid{
@@ -174,7 +158,7 @@
     }
 
     .table td{
-      color:#ffffff;
+      color: #101010;
       border-bottom:none !important;
       padding: 10px 10px !important;
     }
@@ -188,9 +172,9 @@
     }
 
     span.block_name{
-      color: #ffffff;
+      color: #101010;
       font-weight: 600;
-      border-bottom: solid 1px rgba(255,255,255,0.1);
+      border-bottom: solid 1px #f5f6fa;
       width: 100%;
       display: block;
       padding-bottom: 10px;
@@ -208,6 +192,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
     <script src="{% static "js/main.js" %}"></script>
   </body>
 </html>

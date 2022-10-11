@@ -199,7 +199,7 @@ export default class App extends Component {
                     label: '# of Tomatoes',
                     data: counts,
                     backgroundColor: [
-                        '#7b71ff', '#f9939b', '#3fe7bf', '#9bcafe', '#7c59ff'
+                        '#6f52ec', '#ff4c62', '#33d69f', '#fdb700', '#4cb7ff'
                     ],
                     borderWidth: 0,
                     borderColor: '#1f2940',
@@ -235,7 +235,7 @@ export default class App extends Component {
                             padding: 20,
                             usePointStyle: true,
                             // This more specific font property overrides the global property
-                            color: "white",
+                            color: "##101010",
                             font: {
                                 size: 14,
                                 family: 'Source Sans Pro'
@@ -270,7 +270,7 @@ export default class App extends Component {
 
         var colors = [
             // '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
-            '#7b71ff', '#f9939b', '#3fe7bf', '#9bcafe', '#7c59ff'
+            '#6f52ec', '#ff4c62', '#33d69f', '#fdb700', '#4cb7ff'
         ]
 
         var dataSet = [];
@@ -358,7 +358,7 @@ export default class App extends Component {
                     x: {
                         ticks: {
                             beginAtZero: true,
-                            color: "white",
+                            color: "#101010",
                             fontFamily: "Source Sans Pro",
                         },
                         stacked: true,
@@ -367,7 +367,7 @@ export default class App extends Component {
                         ticks: {
                             beginAtZero: true,
                             stepSize: 1,
-                            color: "white",
+                            color: "#101010",
                             fontFamily: "Source Sans Pro",
                         },
                         stacked: true
@@ -378,7 +378,7 @@ export default class App extends Component {
                         position: 'top',
                         labels: {
                             usePointStyle: true,
-                            color: "white",
+                            color: "#101010",
                             padding: 20,
                             font: {
                                 size: 14,
@@ -462,6 +462,7 @@ export default class App extends Component {
         console.log(this.state);
         return (
             <React.Fragment>
+                <div className="sidebar"></div>
                 <div className="content">
                     <div className="books-stats">
                         <div className="container-fluid">
@@ -527,21 +528,12 @@ export default class App extends Component {
 
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-9">
                                 <div className="books-per-month"><span className="block_name">Boeken per maand per genre</span><canvas id="chart"></canvas></div>
                             </div>
-                            
-                        </div>
-                    </div>
 
-                    <div className="container-fluid">
-                        <div className="row">
                             <div className="col-md-3">
-                                <div className="genresPercent"><span className="block_name">Genres</span><canvas id="chartGenres"></canvas></div>
-                            </div>
-                            <div className="col-md-3">
-                                {/* <div className="books-per-country"><canvas id="countryChart"></canvas></div> */}
-                                <div className="books-per-country">
+                            <div className="books-per-country">
                                     <span className="block_name">Landen</span>
                                 <table id="DataTable" class="showHead table responsive nowrap" width="100%">
                                     <thead>
@@ -569,20 +561,13 @@ export default class App extends Component {
                                     </tbody>
                                     </table>
                                 </div>
+                                <div className="genresPercent"><span className="block_name">Genres</span><canvas id="chartGenres"></canvas></div>
                             </div>
-                            <div className="col-md-3">
-                            <div className="books-per-country">
-                            <span className="block_name">Schrijvers</span>
-                            </div>
-                            </div>
-
-                            <div className="col-md-3">
-                            <div className="books-per-country">
-                            <span className="block_name">Favorieten (5 sterren)</span>
-                            </div>
-                            </div>
+                            
                         </div>
                     </div>
+
+                    
                 </div>
             </React.Fragment>
         )

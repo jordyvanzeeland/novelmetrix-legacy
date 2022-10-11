@@ -93,6 +93,26 @@ def books_per_country(request):
         return Response("No year header included")
 
 @api_view(['GET'])
+def books_per_author(request):
+    if request.META.get('HTTP_YEAR'):
+        data = []
+        df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+
+        countries = df.groupby(['author'])['author'].count().reset_index(name="count")
+        countries = countries.sort_values(by='count', ascending=False)
+
+        for index, row in countries.iterrows():
+
+            data.append({
+                "author": row['author'],
+                "count": int(row['count'])
+            })
+
+        return Response(data)
+    else:
+        return Response("No year header included")
+
+@api_view(['GET'])
 def getStats(request):
     if request.META.get('HTTP_YEAR'):
         data = []
@@ -116,6 +136,64 @@ def getStats(request):
         
 
         return Response(data[0])
+    else:
+        return Response("No year header included")
+
+@api_view(['GET'])
+def getStatsPages(request):
+    data = []
+    df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+    df = df.dropna()
+
+    df['pages'] = df['pages'].astype(int)
+
+    pages = df.groupby(['pages', 'name', 'author', 'rating'])['pages'].count().reset_index(name="count")
+    pages = pages.sort_values(by='pages', ascending=True)
+
+    shortestbook = pages.iloc[0]
+    longestbook = pages.iloc[-1]
+    avgPages = df["pages"].mean().astype(int)
+
+    shortestbook = {
+        "name": shortestbook["name"],
+        "author": shortestbook['author'],
+        "pages": shortestbook['pages'],
+        "rating": shortestbook['rating'].astype(int)
+    }
+
+    longestbook = {
+        "name": longestbook["name"],
+        "author": longestbook['author'],
+        "pages": longestbook['pages'],
+        "rating": longestbook['rating'].astype(int)
+    }
+
+    data = {
+        "longestbook": longestbook,
+        "shortestbook": shortestbook,
+        "avgbook": avgPages
+    }
+
+    return Response(data)
+
+@api_view(['GET'])
+def pages_per_month(request):
+    if request.META.get('HTTP_YEAR'):
+
+        data = []
+        df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+
+        # Filter array on genre and date
+        booksPerMonth = df.groupby(['pages', 'readed'])['pages'].count().reset_index(name="count")  
+        booksPerMonth = booksPerMonth.sort_values(by=['readed', 'count'], ascending=True)
+
+        for index, row in booksPerMonth.iterrows():
+            data.append({
+                "pages": row['pages'],
+                "readed": row['readed']
+            })
+        
+        return Response(data)
     else:
         return Response("No year header included")
 
