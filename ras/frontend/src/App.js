@@ -199,7 +199,7 @@ export default class App extends Component {
                     label: '# of Tomatoes',
                     data: counts,
                     backgroundColor: [
-                        '#6f52ec', '#ff4c62', '#33d69f', '#fdb700', '#4cb7ff'
+                        '#8066ee', '#58c8d6', '#fe4c62', '#49b8fd', '#ffbe0e'
                     ],
                     borderWidth: 0,
                     borderColor: '#1f2940',
@@ -226,7 +226,7 @@ export default class App extends Component {
                 }]
             },
             options: {
-                cutout: '50%',
+                cutout: '80%',
                 responsive: true,
                 plugins: {
                     legend: {
@@ -254,6 +254,16 @@ export default class App extends Component {
                         return this.height += 30;
                     }
                 }
+            },{
+                afterDraw: chart => {
+                    var ctx = chart.ctx;
+                    ctx.save();
+                    var image = new Image();      
+                    image.src = 'https://www.iconsdb.com/icons/preview/gray/book-xxl.png';
+                    var imageSize = 80;
+                    ctx.drawImage(image, chart.width / 2 - imageSize / 2, chart.height / 2 - imageSize / 6, imageSize, imageSize);
+                    ctx.restore();
+                  }
             }],
         });
     }
@@ -270,7 +280,7 @@ export default class App extends Component {
 
         var colors = [
             // '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
-            '#6f52ec', '#ff4c62', '#33d69f', '#fdb700', '#4cb7ff'
+            '#8066ee', '#58c8d6', '#fe4c62', '#49b8fd', '#ffbe0e'
         ]
 
         var dataSet = [];
@@ -459,11 +469,24 @@ export default class App extends Component {
     }
 
     render() {
-        console.log(this.state);
+        var url = window.location.href.split("/");
+
         return (
             <React.Fragment>
-                <div className="sidebar"></div>
+                <div className="sidebar">
+                    <div className={`menu-item ${ url && url[3] == "" ? 'selected' : ''}`}>
+                        <i class="fa fa-chart-bar"></i>
+                    </div>
+                    <div className={`menu-item ${ url && url[3] == "books" ? 'selected' : ''}`}>
+                        <i class="fa fa-book"></i>
+                    </div>
+                    
+                </div>
                 <div className="content">
+
+                    <h1>Dashboard</h1>
+                    <h2>Leesanalyse van Jordy van Zeeland</h2>
+
                     <div className="books-stats">
                         <div className="container-fluid">
                             <div className="row">

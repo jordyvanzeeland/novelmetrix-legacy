@@ -23,9 +23,6 @@
 
    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap" rel="stylesheet"> 
 
 
@@ -41,8 +38,25 @@
       font-family: 'Source Sans Pro', sans-serif;
     }
 
+    h1{
+      font-size: 30px;
+      font-weight: 500;
+      padding: 0 10px 0px 10px;
+      margin-bottom: 5px;
+    }
+
+    h2{
+      padding-left: 10px;
+      font-weight: 400;
+      font-size: 18px;
+      color: #a7adbd;
+      display: block;
+      margin-bottom: 50px;
+    }
+
+
     .content{
-      padding-left: 120px;
+      padding: 50px 50px 50px 110px;
     }
 
     .filter{
@@ -69,14 +83,37 @@
 
     .sidebar{
       background: #363a53;
-      width: 100px;
+      width: 70px;
       height: 100vh;
       position: fixed;
-      margin: -20px 0 0 0;
+      padding-top: 10px;
+    }
+
+    .sidebar .menu-item{
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    .sidebar .menu-item i{
+      font-size: 25px;
+      color: #727794;
+    }
+
+    .sidebar .menu-item.selected i{
+      color:#fff;
+    }
+
+    .sidebar svg{
+      color:#ffffff;
     }
 
     .books-stats{
       margin:20px 0;
+    }
+
+    .books-icon{
+      background:#000;
+      padding: 50px;
     }
 
     .books-stats .stat-block{
@@ -93,12 +130,12 @@
       color: #8066ee;
     }
     .books-stats .col-md-2:nth-child(2) i{
-      background: #fff5f6;
-      color: #fe4c62;
-    }
-    .books-stats .col-md-2:nth-child(3) i{
       background: #f1fcf8;
       color: #58c8d6;
+    }
+    .books-stats .col-md-2:nth-child(3) i{
+      background: #fff5f6;
+      color: #fe4c62;
     }
     .books-stats .col-md-2:nth-child(4) i{
       background: #f2f9ff;
@@ -135,7 +172,7 @@
     }
 
     .books-stats .stat-block .stats-label{
-      color: #bac0cc;
+      color: #a7adbd;
       font-weight: 400;
       font-size: 20px;
     }
