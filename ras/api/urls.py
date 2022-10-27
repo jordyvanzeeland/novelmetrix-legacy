@@ -2,6 +2,8 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+    path('books', getAllBooks),
+    path('books/challenge', getChallengeOfYear),
     path('books/years', getYears),
     path('books/stats', getStats),
 

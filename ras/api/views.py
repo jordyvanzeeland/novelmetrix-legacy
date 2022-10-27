@@ -17,6 +17,15 @@ def getBooksData():
 
     return df
 
+def getBookChallenge(year = None):
+    engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
+    if(year):
+        df = pd.read_sql('SELECT * FROM book_challenge where year = ' + year, engine)
+    else:
+        df = pd.read_sql('SELECT * FROM book_challenge', engine)
+
+    return df
+
 def filterData(df, datayear = None):
     df['readed'] = pd.to_datetime(df['readed'], format='%Y-%m-%d')
     df['readed'] = df['readed'].dt.strftime('%m-%Y')
@@ -27,6 +36,43 @@ def filterData(df, datayear = None):
 
     return df
 
+@api_view(['GET'])
+def getAllBooks(request):
+
+    data = []
+    books = getBooksData()
+
+    for index, row in books.iterrows():
+            data.append({
+                "id": row['id'],
+                "name": row['name'],
+                "author": row['author'],
+                "genre": row['genre'],
+                "author": row['author'],
+                "country": row['country'],
+                "country_code": row['country_code'],
+                "pages": row['pages'],
+                "readed": row['readed'],
+                "rating": row['rating'],
+            })
+
+    return Response(data)
+
+@api_view(['GET'])
+def getChallengeOfYear(request):
+    if request.META.get('HTTP_YEAR'):
+        data = []
+        df = getBookChallenge(request.META.get('HTTP_YEAR'))
+
+        for index, row in df.iterrows():
+            data.append({
+                "year": row['year'],
+                "nrofbooks": row['nrofbooks']
+            })
+
+        return Response(data)
+    else:
+        return Response("No year header included")
 
 @api_view(['GET'])
 def books_per_genre_per_month(request):
