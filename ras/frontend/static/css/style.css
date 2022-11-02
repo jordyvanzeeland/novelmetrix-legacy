@@ -1,0 +1,262 @@
+html, body{
+    background:#f8f8fa;
+    margin:0;
+    padding:0;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  h1{
+    font-size: 30px;
+    font-weight: 500;
+    padding: 0 10px 0px 10px;
+    margin-bottom: 5px;
+  }
+
+  h2{
+    padding-left: 10px;
+    font-weight: 400;
+    font-size: 18px;
+    color: #a7adbd;
+    display: block;
+    margin-bottom: 50px;
+  }
+
+
+  .content{
+    padding: 50px 50px 50px 110px;
+  }
+
+  .filter{
+    width:100%;
+    background:#1f2940;
+    padding: 20px 0;
+  }
+
+  .books-per-month{
+    height:700px;
+  }
+
+  .books-per-month canvas{
+    height:600px !important;
+  }
+  
+  .books-per-month, .genresPercent, .books-per-country, .book{
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 0px 1px rgb(0 0 0 / 3%);
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  .book .book-icon{
+    font-size: 60px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 40px;
+    color: #808080;
+  }
+
+  .book_rating{
+    margin-top: 5px;
+  }
+
+  .book_rating i{
+    font-family: "Font Awesome 5 Free";
+    color: #ffbe0e;
+  }
+
+  .book .book_pages{
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .book .book_title_author{
+    font-size: 16px;
+    color: #808080;
+  }
+
+  .sidebar{
+    background: #363a53;
+    width: 70px;
+    height: 100vh;
+    position: fixed;
+    padding-top: 10px;
+  }
+
+  .sidebar .menu-item{
+    text-align: center;
+    padding: 15px 0;
+  }
+
+  .sidebar .menu-item i{
+    font-size: 25px;
+    color: #727794;
+  }
+
+  .sidebar .menu-item.selected i{
+    color:#fff;
+  }
+
+  .sidebar svg{
+    color:#ffffff;
+  }
+
+  .books-stats{
+    margin:20px 0;
+  }
+
+  .books-icon{
+    background:#000;
+    padding: 50px;
+  }
+
+  .books-stats .stat-block, .stat-block{
+    background: #ffffff;
+    box-shadow: 0 2px 0px 1px rgb(0 0 0 / 3%);
+    padding: 15px 5px;
+    color: #101010;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .books-stats .col-md-2:nth-child(1) i{
+    background: #f8f5fc;
+    color: #8066ee;
+  }
+  .books-stats .col-md-2:nth-child(2) i{
+    background: #f1fcf8;
+    color: #58c8d6;
+  }
+  .books-stats .col-md-2:nth-child(3) i{
+    background: #fff5f6;
+    color: #fe4c62;
+  }
+  .books-stats .col-md-2:nth-child(4) i{
+    background: #f2f9ff;
+    color: #49b8fd;
+  }
+  .books-stats .col-md-2:nth-child(5) i{
+    background: #fffaee;
+    color: #ffbe0e;
+  }
+  .books-stats .col-md-2:nth-child(6) i{
+    background: #f8f5fc;
+    color: #8066ee;
+  }
+
+  .books-stats .stat-block i{
+    font-weight: 900;
+    font-size: 25px;
+    border-radius: 50%;
+    padding: 17px;
+    width: 65px;
+    height: 65px;
+    line-height: 30px;
+    text-align: center;
+    background: #696ffc;
+    /* box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.3); */
+  }
+
+  .books-stats .stat-block .stats-number, .stats-number{
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  .books-stats .stat-block .stats-label, .stats-label{
+    color: #a7adbd;
+    font-weight: 400;
+    font-size: 20px;
+  }
+
+  .yearselector{
+    display: inline-block;
+    width: auto;
+    background: #ffffff;
+    border: none;
+    color: #101010;
+    font-weight: 600;
+  }
+
+  .container-fluid{
+    margin-bottom:20px !important;
+  }
+
+  .table{
+    border-bottom: none !important;
+  }
+
+  .table td{
+    color: #101010;
+    border-bottom:none !important;
+    padding: 10px 10px !important;
+  }
+
+  .table td img{
+    margin-right:5px;
+  }
+
+  #DataTable thead{
+    display:none !important;
+  }
+
+  span.block_name{
+    color: #101010;
+    font-weight: 600;
+    border-bottom: solid 1px #f5f6fa;
+    width: 100%;
+    display: block;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .progress{
+    background: #f8f8fa;
+    height: 50px;
+    border: solid 2px #efefef;
+    padding: 5px;
+    border-radius: 0;
+    margin: 0 15px 15px 15px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .progress-bar{
+    background-color: #8066ee;
+    position: relative;
+    overflow: visible;
+    border-right: solid 2px #333;
+  }
+
+  .progress-bar-number{
+    position: absolute;
+    right: 0;
+    background: #333;
+    border-radius: 50%;
+    padding: 10px;
+    top: -20px;
+    right: -20px;
+  }
+
+  .loading-screen-overlay{
+    background: #f8f8fa;
+    width:100%;
+    height:100vh;
+    position: fixed;
+    z-index: 1;
+    top:0;
+  }
+
+  .loading-screen{
+    width: 100%;
+    position: fixed;
+    background: #f8f8fa;
+    z-index: 1;
+    text-align: center;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }

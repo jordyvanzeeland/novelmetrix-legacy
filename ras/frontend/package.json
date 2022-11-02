@@ -30,6 +30,7 @@
     "datatables.net": "^1.12.1",
     "datatables.net-dt": "^1.12.1",
     "jquery": "^3.6.1",
+    "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.3.0"
   }
 }

@@ -83,7 +83,7 @@ def books_per_genre_per_month(request):
 
         # Filter array on genre and date
         booksPerMonth = df.groupby(['genre','readed'])['genre'].count().reset_index(name="count")  
-        booksPerMonth = booksPerMonth.sort_values(by=['readed', 'count'], ascending=False)
+        booksPerMonth = booksPerMonth.sort_values(by=['genre', 'readed', 'count'], ascending=False)
 
         for index, row in booksPerMonth.iterrows():
             data.append({
