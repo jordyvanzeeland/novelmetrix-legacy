@@ -13,7 +13,7 @@ import json
 
 def getBooksData():
     engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
-    df = pd.read_sql('SELECT * FROM api_books', engine, parse_dates={'readed': {'format': '%m-%Y'}})
+    df = pd.read_sql('SELECT * FROM api_books ORDER BY readed', engine, parse_dates={'readed': {'format': '%m-%Y'}})
 
     return df
 

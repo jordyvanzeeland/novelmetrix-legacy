@@ -32,7 +32,7 @@ export default class Countries extends Component {
             <React.Fragment>
                 <div className="books-per-country">
                     <span className="block_name">Landen</span>
-                    <table id="DataTable" className="showHead table responsive nowrap" width="100%">
+                    <table id="DataTable" className="table responsive nowrap" width="100%">
                         <thead>
                             <tr>
                                 <th>#</th>

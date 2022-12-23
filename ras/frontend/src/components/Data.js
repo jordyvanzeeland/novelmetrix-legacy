@@ -1,3 +1,13 @@
+export const getAllBooks = () => {
+    return fetch('/api/books', {
+        "method": "GET",
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
+
 export const getStats = (year) => {
     return fetch('/api/books/stats', {
         "method": "GET",
