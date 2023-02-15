@@ -1,12 +1,14 @@
 from sqlite3 import connect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Books
 import pandas as pd
 import ras.settings
+import math
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
 from sqlalchemy import create_engine
-from .serializers import BooksSerializer
 from django.db.models import Q
 from django.templatetags.static import static
 import json
@@ -253,3 +255,24 @@ def getYears(request):
     years = df.groupby('year')['year'].count().reset_index(name="count")
 
     return Response(years['year'])
+
+@api_view(['GET'])
+def predictAmountBooks(request):
+    books_data = pd.read_csv("api/static/books_data.csv")
+
+    books_data = books_data.dropna()
+
+    model = LinearRegression()
+
+    X = books_data[['year']]
+    Y = books_data['books_read']
+    model.fit(X.values, Y.values)
+
+    current_year = 2023
+    predict_books = model.predict([[current_year]])
+
+    return Response({
+        "year": current_year,
+        "amount": math.floor(predict_books[0])
+    })
+    # return Response(f"The amount of books i'm gonna read in {current_year} is {math.floor(predict_books[0])}")
