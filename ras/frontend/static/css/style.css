@@ -30,7 +30,7 @@ html, body{
 
 
   .content{
-    padding: 50px 50px 50px 240px;
+    padding: 30px;
   }
 
   .filter{
@@ -84,9 +84,8 @@ html, body{
 
   .sidebar{
     background: #363a53;
-    width: 200px;
-    height: 100vh;
-    position: fixed;
+    width: 100%;
+    height: 54px;
   }
 
   .sidebar .menu-item{
@@ -115,6 +114,7 @@ html, body{
     list-style-type: none;
     font-size: 14px;
     font-weight: 400;
+    display: inline-block;
   }
   
   .sidebar ul li a {
@@ -129,13 +129,12 @@ html, body{
   
   .sidebar ul li:has(> a.active) {
     background: #333f54 !important;
-    border-left: solid 3px #8066ee;
+    border-bottom: solid 3px #8066ee;
   }
   
   .sidebar ul li a.active {
     color: #ffffff;
     background: rgba(0,0,0,0.2) !important;
-    border-left: solid 3px #8066ee;
   }
   
   .sidebar ul li a.active i {
@@ -197,11 +196,11 @@ html, body{
 
   .books-stats .stat-block i{
     font-weight: 900;
-    font-size: 25px;
+    font-size: 22px;
     border-radius: 50%;
-    padding: 17px;
-    width: 65px;
-    height: 65px;
+    padding: 11px;
+    width: 50px;
+    height: 50px;
     line-height: 30px;
     text-align: center;
     background: #696ffc;
@@ -212,14 +211,14 @@ html, body{
     font-weight: 600;
     display: inline-block;
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 18px;
     margin-right: 10px;
   }
 
   .books-stats .stat-block .stats-label, .stats-label{
     color: #a7adbd;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .yearselector{

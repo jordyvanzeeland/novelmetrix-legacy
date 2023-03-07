@@ -51,7 +51,6 @@ function Booklist(){
         <React.Fragment>
             <Sidebar />
             <div className="content">
-                <h1>Boekenlijst</h1>
 
                 <Filters />
 

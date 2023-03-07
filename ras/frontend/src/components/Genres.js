@@ -16,7 +16,7 @@ export default class Genres extends Component {
                 genres: genres
             })
 
-            initDoughnut(this.state.genres, this.props.year);
+            initDoughnut(genres, this.props.year);
         })
     }
 

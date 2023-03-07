@@ -37,7 +37,7 @@ export default class Challenge extends Component {
     }
 
     render() {
-        var challengePercentage = (this.state.totalbooks / this.state.challenge) * 100
+        var challengePercentage = Math.round((this.state.totalbooks / this.state.challenge) * 100, 0)
 
         return (
             <React.Fragment>

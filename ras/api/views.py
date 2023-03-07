@@ -276,3 +276,26 @@ def predictAmountBooks(request):
         "amount": math.floor(predict_books[0])
     })
     # return Response(f"The amount of books i'm gonna read in {current_year} is {math.floor(predict_books[0])}")
+
+@api_view(['GET'])
+def avg_ratings_per_month(request):
+    datayear = request.META.get('HTTP_YEAR')
+
+    if datayear:
+        data = []
+
+        # Get CSV file with book data
+        df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+
+        avgratingspermonth = df.groupby('readed')['rating'].mean().reset_index(name="rating")
+
+        for index, row in avgratingspermonth.iterrows():
+
+            data.append({
+                "date": row['readed'],
+                "rating": int(row['rating'])
+            })
+
+        return Response(data)
+    else:
+        return Response("No year header included")

@@ -1,4 +1,4 @@
-export const initChart = (data, year) => {
+export const initChart = (data, ratings, year) => {
 
     /*
     ----------------------------------
@@ -53,6 +53,41 @@ export const initChart = (data, year) => {
             })
         })
     }
+
+    /*
+        ----------------------------------
+             Avarage ratings per month
+        ----------------------------------
+        */
+
+        var avgRatings = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        for (var j = 0; j < 12; j++) {
+
+            if (j < 9) {
+                var month = "0" + (j + 1)
+            } else {
+                month = (j + 1)
+            }
+
+            for (var i = 0; i < ratings.length; i++) {
+                if (ratings[i].date == month + '-' + year) {
+                    avgRatings[j] = ratings[i].rating;
+                }
+            }
+        }
+
+        dataSet.push({
+            label: 'Gemiddelde beoordeling',
+            data: avgRatings,
+            backgroundColor: '#ffa500',
+            borderColor: '#ffa500',
+            tension: 0.4,
+            type: 'line',
+            order: 1
+        })
+
+        console.log(dataSet);
 
     /*
     ----------------------------------
@@ -136,6 +171,8 @@ export const initChart = (data, year) => {
 }
 
 export const initDoughnut = (data) => {
+
+    console.log(data);
 
     var labels = [];
     var counts = [];
@@ -226,16 +263,6 @@ export const initDoughnut = (data) => {
                     fitValue.bind(chart.legend)();
                     return this.height += 30;
                 }
-            }
-        }, {
-            afterDraw: chart => {
-                var ctx = chart.ctx;
-                ctx.save();
-                var image = new Image();
-                image.src = 'https://www.iconsdb.com/icons/preview/gray/book-xxl.png';
-                var imageSize = 80;
-                ctx.drawImage(image, chart.width / 2 - imageSize / 2, chart.height / 2 - imageSize / 6, imageSize, imageSize);
-                ctx.restore();
             }
         }],
     });

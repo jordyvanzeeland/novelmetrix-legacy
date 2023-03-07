@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getBooksPerYearPerGenres } from "./Data.js";
+import { getAvgRatings, getBooksPerYearPerGenres } from "./Data.js";
 import { initChart } from "./Charts.js";
 
 export default class Books extends Component {
@@ -16,7 +16,11 @@ export default class Books extends Component {
                 books: books
             })
 
-            initChart(books, this.props.year);
+            getAvgRatings(this.props.year).then(ratings => {
+                initChart(books, ratings, this.props.year);
+            })
+
+            
         })
     }
 

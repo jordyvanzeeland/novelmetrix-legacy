@@ -18,6 +18,7 @@ urlpatterns = [
     
     path('books/genres', books_per_genre_per_month),
     path('books/genres/count', countGenres),
+    path('books/ratings', avg_ratings_per_month),
     path('books/authors', books_per_author),
     path('books/countries', books_per_country),
 

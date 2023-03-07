@@ -95,3 +95,16 @@ export const getGenresCount = (year) => {
             return data;
         })
 }
+
+export const getAvgRatings = (year) => {
+    return fetch('/api/books/ratings', {
+        "method": "GET",
+        "headers": {
+            "year": year
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}

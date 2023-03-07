@@ -26,17 +26,11 @@ export default class Dashboard extends Component {
     }
 
     componentDidMount() {
-
-        setTimeout(() =>{
-            document.getElementById("loading-overlay").style.display = "none";
-        }, 1000);
-
         getReadingYears().then(data => {
             this.setState({
                 readingYears: data
             })
         })
-
     }
 
     render() {
@@ -46,9 +40,6 @@ export default class Dashboard extends Component {
             <React.Fragment>
                 <Sidebar />
                 <div className="content">
-
-                    <h1>Dashboard</h1>
-
                     <div className="books-stats">
                         <div className="container-fluid">
                             <div className="row">
