@@ -6,8 +6,9 @@ import Countries from "../components/Countries";
 import Pages from "../components/Pages";
 import Genres from "../components/Genres";
 import Books from "../components/Books";
-import { getReadingYears } from "../components/Data.js";
+import { getRatingsCount, getReadingYears } from "../components/Data.js";
 import Sidebar from "../components/Sidebar";
+import Ratings from "../components/Ratings";
 
 export default class Dashboard extends Component {
     
@@ -30,6 +31,10 @@ export default class Dashboard extends Component {
             this.setState({
                 readingYears: data
             })
+        })
+
+        getRatingsCount(this.state.year).then(data => {
+            console.log(data);
         })
     }
 
@@ -65,14 +70,15 @@ export default class Dashboard extends Component {
 
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-md-9">
+                            <div className="col-md-8">
                                 <Books year={this.state.year} />
                                 <Pages year={this.state.year} />
                             </div>
 
-                            <div className="col-md-3">
+                            <div className="col-md-4">
                                 <Countries year={this.state.year} />
                                 <Genres year={this.state.year} />
+                                <Ratings year={this.state.year} />
                             </div>
                         </div>
                     </div>

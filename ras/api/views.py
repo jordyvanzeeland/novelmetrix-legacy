@@ -299,3 +299,27 @@ def avg_ratings_per_month(request):
         return Response(data)
     else:
         return Response("No year header included")
+
+@api_view(['GET'])
+def countRatings(request):
+    datayear = request.META.get('HTTP_YEAR')
+
+    if datayear:
+        data = []
+
+        # Get CSV file with book data
+        df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+
+        countratings = df.groupby('rating')['rating'].count().reset_index(name="count")
+        countratings = countratings.sort_values(by='rating', ascending=False)
+
+        for index, row in countratings.iterrows():
+
+            data.append({
+                "rating": int(row['rating']),
+                "count": int(row['count'])
+            })
+
+        return Response(data)
+    else:
+        return Response("No year header included")

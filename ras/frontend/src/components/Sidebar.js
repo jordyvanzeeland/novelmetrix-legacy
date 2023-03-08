@@ -9,6 +9,7 @@ function Sidebar(){
                     <li><NavLink to="/"><i className="fa fa-chart-bar"></i> Dashboard</NavLink></li>
                     <li><NavLink to="/booklist"><i className="fas fa-book"></i> Boekenlijst</NavLink></li>
                 </ul>
+                
             </div>
         </React.Fragment>
     )

@@ -108,3 +108,16 @@ export const getAvgRatings = (year) => {
             return data;
         })
 }
+
+export const getRatingsCount = (year) => {
+    return fetch('/api/books/ratings/count', {
+        "method": "GET",
+        "headers": {
+            "year": year
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
