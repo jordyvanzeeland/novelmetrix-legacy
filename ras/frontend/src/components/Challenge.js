@@ -10,7 +10,7 @@ export default class Challenge extends Component {
         }
     }
 
-    getComponentData(){
+    getComponentData() {
         var $this = this;
 
         getStats(this.props.year).then(data => {
@@ -42,21 +42,15 @@ export default class Challenge extends Component {
         return (
             <React.Fragment>
                 {this.state.challenge && this.state.challenge !== 0 ?
-                    <div className="container-fluid">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="stat-block">
-                                    <span className="block_name">Book Challenge</span>
-                                    <div className="progress">
-                                        <div className="progress-bar progress-bar-striped" role="progressbar" style={{ width: challengePercentage + '%' }} aria-valuenow={challengePercentage} aria-valuemin="0" aria-valuemax="100">
-                                            <div className="progress-bar-number">{challengePercentage}%</div>
-                                        </div>
-                                    </div>
-
-                                    <span className="stats-number">{this.state.totalbooks}</span><span className="stats-label">van de</span><span className="stats-number">{this.state.challenge}</span><span className="stats-label">boeken gelezen</span>
-                                </div>
+                    <div className="stat-block" style={{ marginBottom: '20px' }}>
+                        <span className="block_name">Book Challenge</span>
+                        <div className="progress">
+                            <div className="progress-bar progress-bar-striped" role="progressbar" style={{ width: challengePercentage + '%' }} aria-valuenow={challengePercentage} aria-valuemin="0" aria-valuemax="100">
+                                <div className="progress-bar-number">{challengePercentage}%</div>
                             </div>
                         </div>
+
+                        <span className="stats-number">{this.state.totalbooks}</span><span className="stats-label">van de</span><span className="stats-number">{this.state.challenge}</span><span className="stats-label">boeken gelezen</span>
                     </div>
                     : ''}
             </React.Fragment>
