@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.views.decorators.csrf import csrf_exempt
 from .views import *
 from .login import *
 
@@ -23,6 +24,6 @@ urlpatterns = [
     path('books/authors', books_per_author),
     path('books/countries', books_per_country),
 
-    path('auth/login', login),
+    path('auth/login', csrf_exempt(login)),
     
 ]

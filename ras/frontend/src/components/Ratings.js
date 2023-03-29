@@ -83,7 +83,7 @@ export default class Ratings extends Component {
 
                                 return(
                                     <tr>
-                                        <td style={{width: '120px'}} className='book_rating' dangerouslySetInnerHTML={{__html: ratingstars}}></td>
+                                        <td style={{width: '150px'}} className='book_rating' dangerouslySetInnerHTML={{__html: ratingstars}}></td>
                                         <td style={{width: '257px'}}>
                                             <div className="progress">
                                                 <div className="progress-bar progress-bar-striped" role="progressbar" style={{ width: rating_percentage + '%' }} aria-valuenow={rating_percentage} aria-valuemin="0" aria-valuemax="100">

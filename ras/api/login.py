@@ -12,6 +12,7 @@ def login(request):
     password = request.POST.get('password')
 
     User = get_user_model()
+
     try:
         user = User.objects.get(username=username)
 
