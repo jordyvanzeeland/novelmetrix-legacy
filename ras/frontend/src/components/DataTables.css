@@ -21,6 +21,19 @@
     text-decoration: none;
 }
 
+.content-manage #DataTable i {
+    color: #ffffff;
+}
+
+.content-manage #DataTable button{
+    text-align: center;
+}
+
+.content-manage #DataTable button i{
+    margin:auto;
+    font-size: 14px;
+}
+
 #DataTable i {
     color: #ffbe0e;
     margin-right:10px;

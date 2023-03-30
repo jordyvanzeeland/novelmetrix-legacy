@@ -33,6 +33,33 @@ html, body{
     padding: 30px;
   }
 
+  .content-manage{
+    padding: 30px;
+    margin-left:200px;
+  }
+
+  .content-manage .search-bar, .content-manage .search-bar input{
+    width:100%
+  }
+
+  .content-manage .dataTables_filter, .content-manage .dataTables_filter label, .content-manage .dataTables_filter label input{
+    width:100%;
+  }
+
+  .content-manage .DataTable_Container{
+    margin-top:0 !important;
+  }
+
+  .content-manage .btn-success{
+    float: right;
+    font-size: 14px;
+    padding: 7px 20px;
+  }
+
+  .content-manage .btn-warning{
+    margin-right:5px;
+  }
+
   .filter{
     width:100%;
     background:#1f2940;
@@ -81,6 +108,75 @@ html, body{
     font-size: 16px;
     color: #808080;
   }
+
+  .sidebar-manage{
+    padding: 15px 10px;
+    background: #363a53;
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    padding-top: 10px;
+  }
+
+  .sidebar-manage .menu-item{
+    text-align: center;
+    padding: 15px 0;
+  }
+
+  .sidebar-manage .menu-item i{
+    font-size: 25px;
+    color: #727794;
+  }
+
+  .sidebar-manage .menu-item.selected i{
+    color:#fff;
+  }
+
+  .sidebar-manage svg{
+    color:#ffffff;
+  }
+
+  .sidebar-manage ul {
+    padding: 0;
+    margin:0;
+  }
+  
+  .sidebar-manage ul li {
+    list-style-type: none;
+    font-size: 14px;
+    font-weight: 400;
+    display: block;
+  }
+  
+  .sidebar-manage ul li a {
+    color: #a9b7d0;
+    text-decoration: none;
+    padding: 12px 15px;
+    display:block;
+    width:100%;
+    border-radius: 10px;
+  }
+  
+  .sidebar-manage ul li a.active {
+    color: #ffffff;
+    background: rgba(0,0,0,0.3) !important;
+  }
+  
+  .sidebar-manage ul li a.active i {
+    color: #8066ee;
+  }
+  
+  .sidebar-manage i {
+    color: #a9b7d0;
+    font-size: 13px;
+    width: 10px;
+    display: inline-block;
+    text-align: center;
+    line-height: 1;
+    margin-right: 12px;
+  }
+
+  /* -------------------------------- */
 
   .sidebar{
     background: #363a53;
