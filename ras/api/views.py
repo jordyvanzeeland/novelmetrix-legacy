@@ -61,6 +61,27 @@ def getAllBooks(request):
     return Response(data)
 
 @api_view(['GET'])
+def getAllChallenges(request):
+    data = []
+    df = getBookChallenge()
+
+    for index, row in df.iterrows():
+
+        books = filterData(getBooksData(), str(row['year']))
+        books = books.dropna()
+
+        totalBooksRead = books['name'].count()
+
+        data.append({
+            "id": row['id'],
+            "year": row['year'],
+            "nrofbooks": row['nrofbooks'],
+            "booksread": totalBooksRead
+        })
+
+    return Response(data)
+
+@api_view(['GET'])
 def getChallengeOfYear(request):
     if request.META.get('HTTP_YEAR'):
         data = []

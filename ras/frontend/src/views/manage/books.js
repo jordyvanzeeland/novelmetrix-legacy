@@ -15,12 +15,12 @@ function ManageBooks() {
     var navigate = useNavigate();
 
     useEffect(() => {
-        if(!localStorage.getItem("token") || localStorage.getItem("token") && localStorage.getItem("token") === ''){
+        if (!localStorage.getItem("token") || localStorage.getItem("token") && localStorage.getItem("token") === '') {
             // window.location.href = "/login";
             navigate("/login")
         }
 
-        document.title = "Boekenlijst - Reading Analytics System";
+        document.title = "Boeken - Beheer - Reading Analytics System";
 
         import("../../components/Data.js").then(module => {
             return module.getAllBooks().then(data => {
@@ -46,7 +46,7 @@ function ManageBooks() {
             <SidebarManage />
             <div className="content-manage">
                 <h1>Boeken beheren <button type="button" class="btn btn-success">Toevoegen</button></h1>
-                
+
 
                 <div className="DataTable_Container">
                     <table id="DataTable" className="showHead table responsive nowrap" width="100%">

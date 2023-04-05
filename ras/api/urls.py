@@ -6,6 +6,9 @@ from .login import *
 urlpatterns = [
     path('books', getAllBooks),
     path('books/challenge', getChallengeOfYear),
+    path('books/challenges', getAllChallenges),
+    path('books/challenges/insert', addChallenge),
+    path('books/challenges/<int:id>/delete', deleteChallenge),
     path('books/years', getYears),
     path('books/stats', getStats),
     path('books/predict', predictAmountBooks),

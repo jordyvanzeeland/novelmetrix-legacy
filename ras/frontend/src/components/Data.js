@@ -1,6 +1,50 @@
+import { readCookie } from "../Functions";
+
 export const getAllBooks = () => {
     return fetch('/api/books', {
         "method": "GET",
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
+
+export const getAllChallenges = () => {
+    return fetch('/api/books/challenges', {
+        "method": "GET",
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
+
+export const insertChallenge = (data) => {
+    return fetch('/api/books/challenges/insert', {
+        "method": "POST",
+        "headers": {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            'Content-Type': 'application/x-www-form-urlencoded',
+            "X-CSRFToken": readCookie('csrftoken')
+        },
+        "body": data
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
+
+export const deleteChallenge = (id) => {
+    return fetch('/api/books/challenges/' + id + '/delete', {
+        "method": "DELETE",
+        "headers": {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            'Content-Type': 'application/x-www-form-urlencoded',
+            "X-CSRFToken": readCookie('csrftoken'),
+            "challengeid": id
+        }
     })
         .then(response => response.json())
         .then(data => {

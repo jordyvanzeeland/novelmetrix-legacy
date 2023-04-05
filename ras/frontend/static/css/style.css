@@ -60,6 +60,10 @@ html, body{
     margin-right:5px;
   }
 
+  .content-manage .modal{
+    background:rgba(0,0,0,0.3);
+  }
+
   .filter{
     width:100%;
     background:#1f2940;
