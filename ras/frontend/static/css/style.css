@@ -3,6 +3,9 @@ html, body{
     margin:0;
     padding:0;
     font-family: 'Source Sans Pro', sans-serif;
+    letter-spacing: .3px;
+    font-weight: 400;
+    color:#333;
   }
 
   h1{
@@ -78,12 +81,12 @@ html, body{
     height:600px !important;
   }
   
-  .books-per-month, .genresPercent, .books-per-country, .book, .ratings{
+  .books-per-month, .genresPercent, .books-per-country, .book, .ratings, .readed{
     background: #ffffff;
     padding: 20px;
-    box-shadow: 0 2px 0px 1px rgb(0 0 0 / 3%);
+    -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
+    box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
     margin-bottom: 20px;
-    border-radius: 10px;
   }
 
   .book .book-icon{
@@ -257,19 +260,20 @@ html, body{
 
   .books-stats .stat-block, .stat-block{
     background: #ffffff;
-    box-shadow: 0 2px 0px 1px rgb(0 0 0 / 3%);
+    -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
+    box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
     padding: 15px 5px;
-    color: #101010;
+    color: #333;
     text-align: center;
-    border-radius: 10px;
   }
 
   .chooseYear{
-    float: right;
-    margin-top: 10px;
-    padding: 12px 15px;
-    border-radius: 10px;
-    font-size:14px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: #404e67;
+    padding: 10px;
+    text-align: center;
   }
 
   .chooseYear i{
@@ -321,17 +325,18 @@ html, body{
   }
 
   .books-stats .stat-block .stats-number, .stats-number{
-    font-weight: 600;
+    font-weight: 400;
     display: inline-block;
     margin-left: 10px;
-    font-size: 18px;
+    font-size: 16px;
     margin-right: 10px;
+    color: #333;
   }
 
   .books-stats .stat-block .stats-label, .stats-label{
     color: #a7adbd;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .yearselector{
@@ -359,6 +364,7 @@ html, body{
 
   .table td img{
     margin-right:5px;
+    width:20px;
   }
 
   .showHead thead{
@@ -372,13 +378,14 @@ html, body{
   
 
   span.block_name{
-    color: #101010;
-    font-weight: 600;
+    color: #333;
+    font-weight: 400;
     border-bottom: solid 1px #f5f6fa;
     width: 100%;
     display: block;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    letter-spacing: .3px;
   }
 
   .stat-block .progress{
@@ -393,14 +400,14 @@ html, body{
   }
 
   .stat-block .progress-bar{
-    background-color: #8066ee;
+    background-color: #404e67;
     position: relative;
     overflow: visible;
     border-right: solid 2px #333;
   }
 
   .progress-bar{
-    background-color: #8066ee;
+    background-color: #404e67;
     position: relative;
     overflow: visible;
   }
@@ -413,6 +420,7 @@ html, body{
     padding: 10px;
     top: -20px;
     right: -20px;
+    letter-spacing: .3px;
   }
 
   .loading-screen-overlay{

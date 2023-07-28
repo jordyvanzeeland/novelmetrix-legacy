@@ -4,6 +4,7 @@ from rest_framework.response import Response
 import pandas as pd
 import ras.settings
 import math
+from pymongo import MongoClient
 
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
@@ -12,6 +13,7 @@ from sqlalchemy import create_engine
 from django.db.models import Q
 from django.templatetags.static import static
 import json
+
 
 def getBooksData():
     engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
@@ -59,6 +61,34 @@ def getAllBooks(request):
             })
 
     return Response(data)
+
+@api_view(['GET'])
+def getBooksByYear(request):
+    if request.META.get('HTTP_YEAR'):
+        data = []
+        df = getBooksData()
+        df['readed'] = pd.to_datetime(df['readed'], format='%Y-%m-%d')
+        df['readed'] = df['readed'].dt.strftime('%Y-%m-%d')
+        df = df.where(df['readed'].str.contains(request.META.get('HTTP_YEAR')))
+        df = df.fillna('')
+
+        for index, row in df.iterrows():
+            if row['id'] and row['id'] != '':
+                data.append({
+                    "id": row['id'],
+                    "name": row['name'],
+                    "author": row['author'],
+                    "genre": row['genre'],
+                    "author": row['author'],
+                    "country": row['country'],
+                    "country_code": row['country_code'],
+                    "pages": row['pages'],
+                    "readed": row['readed'],
+                    "rating": row['rating'],
+                })
+
+        return Response(data)
+
 
 @api_view(['GET'])
 def getAllChallenges(request):

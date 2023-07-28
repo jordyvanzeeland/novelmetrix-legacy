@@ -1,8 +1,21 @@
 import { readCookie } from "../Functions";
 
 export const getAllBooks = () => {
+    return fetch('/api/books/all', {
+        "method": "GET",
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
+
+export const getBooksByYear = (year) => {
     return fetch('/api/books', {
         "method": "GET",
+        "headers": {
+            "year": year
+        }
     })
         .then(response => response.json())
         .then(data => {

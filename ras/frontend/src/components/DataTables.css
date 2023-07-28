@@ -6,6 +6,15 @@
     padding-top:15px !important;
 }
 
+#DataTable td {
+    color: #333;
+    font-size: 14px;
+    height: 40px;
+    font-weight: 400;
+    vertical-align: middle;
+    letter-spacing: .3px;
+}
+
 .DataTable_Container {
     margin: 0 !important;
     margin-top:30px !important;
@@ -61,6 +70,7 @@
 
 #DataTable{
     margin-bottom:0;
+    box-shadow: none !important;
 }
 
 #DataTable .openAlarm .pictogram {
@@ -84,12 +94,11 @@
 #DataTable td{
     padding:10px;
     color: #000000;
-    font-size: 15px;
-    height: 45px;
+    font-size: 14px;
+    height: 0px;
     font-weight: 400;
     vertical-align: middle;
-    padding-left: 20px !important;
-    border-top: 1px solid #efefef;
+    border-top: none;
     border-bottom: none;
 }
 
@@ -200,14 +209,14 @@
 
 .DataTable_Container .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     background: none !important;
-    background-color: #8066ee !important;
-    border-color: #8066ee !important;
+    background-color: #404e67 !important;
+    border-color: #404e67 !important;
     color: #fff !important;
 }
 
 .DataTable_Container .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     background: none !important;
-    background-color: #eaebec !important;
+    background-color: #404e67 !important;
     color: #000 !important;
 }
 

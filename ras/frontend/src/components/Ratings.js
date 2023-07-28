@@ -59,7 +59,7 @@ export default class Ratings extends Component {
         return (
             <React.Fragment>
                 <div className="ratings">
-                    <span className="block_name">Waarderingen ({this.state.totalRatings})</span>
+                    <span className="block_name">Ratings</span>
                     <table id="DataTable" className="table responsive nowrap" width="100%">
                         <thead>
                             <tr>
@@ -83,10 +83,10 @@ export default class Ratings extends Component {
 
                                 return(
                                     <tr>
-                                        <td style={{width: '150px'}} className='book_rating' dangerouslySetInnerHTML={{__html: ratingstars}}></td>
+                                        <td style={{width: '200px'}} className='book_rating' dangerouslySetInnerHTML={{__html: ratingstars}}></td>
                                         <td style={{width: '257px'}}>
                                             <div className="progress">
-                                                <div className="progress-bar progress-bar-striped" role="progressbar" style={{ width: rating_percentage + '%' }} aria-valuenow={rating_percentage} aria-valuemin="0" aria-valuemax="100">
+                                                <div className="progress-bar" role="progressbar" style={{ width: rating_percentage + '%' }} aria-valuenow={rating_percentage} aria-valuemin="0" aria-valuemax="100">
                                                     {/* <div className="progress-bar-number">{rating_percentage}%</div> */}
                                                 </div>
                                             </div>

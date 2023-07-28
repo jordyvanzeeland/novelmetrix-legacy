@@ -1,9 +1,6 @@
 import React, { Component, lazy, Suspense } from "react";
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { ColorRing } from 'react-loader-spinner'
-import Login from "./views/login";
-import ManageBooks from "./views/manage/books";
-import ManageChallenges from "./views/manage/challenges";
 
 const Dashboard = lazy(() => import("./views/dashboard"));
 const Booklist = lazy(() => import("./views/booklist"));
@@ -21,17 +18,13 @@ function App() {
                             ariaLabel="blocks-loading"
                             wrapperStyle={{}}
                             wrapperClass="blocks-wrapper"
-                            colors={['#8066ee', '#58c8d6', '#fe4c62', '#49b8fd', '#ffbe0e']}
+                            colors={['#404e67', '#01a9ac', '#64c5b1', '#1ABB9C']}
                         />
                         <span>Data wordt geladen...</span>
                     </div>
                 </div>}>
                 <Routes>
                     <Route exact path="/" element={<Dashboard />} />
-                    <Route exact path="/booklist" element={<Booklist />} />
-                    <Route exact path="/login" element={<Login />} />
-                    <Route exact path="/manage" element={<ManageBooks />} />
-                    <Route exact path="/manage/challenges" element={<ManageChallenges />} />
                 </Routes>
             </Suspense>
         </Router>

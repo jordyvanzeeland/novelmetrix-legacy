@@ -35,7 +35,6 @@ export default class Countries extends Component {
                     <table id="DataTable" className="table responsive nowrap" width="100%">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Land</th>
                                 <th>Boeken</th>
                             </tr>
@@ -45,7 +44,6 @@ export default class Countries extends Component {
                                 var code = country.code.toLowerCase();
                                 return (
                                     <tr key={i}>
-                                        <td>{i + 1}</td>
                                         <td><img src={`https://flagcdn.com/32x24/${code}.png`} /> {country.country}</td>
                                         <td>{country.count}</td>
                                     </tr>

@@ -45,7 +45,7 @@ export default class Challenge extends Component {
                     <div className="stat-block" style={{ marginBottom: '20px' }}>
                         <span className="block_name">Book Challenge</span>
                         <div className="progress">
-                            <div className="progress-bar progress-bar-striped" role="progressbar" style={{ width: challengePercentage + '%' }} aria-valuenow={challengePercentage} aria-valuemin="0" aria-valuemax="100">
+                            <div className="progress-bar" role="progressbar" style={{ width: challengePercentage + '%' }} aria-valuenow={challengePercentage} aria-valuemin="0" aria-valuemax="100">
                                 <div className="progress-bar-number">{challengePercentage}%</div>
                             </div>
                         </div>

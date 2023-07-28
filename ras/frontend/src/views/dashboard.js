@@ -4,8 +4,8 @@ import Countries from "../components/Countries";
 import Genres from "../components/Genres";
 import Books from "../components/Books";
 import { getRatingsCount, getReadingYears } from "../components/Data.js";
-import Sidebar from "../components/Sidebar";
 import Ratings from "../components/Ratings";
+import Readed from "../components/Readed";
 
 export default class Dashboard extends Component {
 
@@ -40,25 +40,24 @@ export default class Dashboard extends Component {
 
         return (
             <React.Fragment>
-                <div className="chooseYear">
-                    <i className="fa fa-calendar"></i>
-                    <span className="stats-number">
-                        <select className="yearselector" value={this.state.year} onChange={(event) => this.changeYear(event)}>
-                            {this.state.readingYears.map((year, i) => {
-                                return (<option key={i} value={year}>{year}</option>)
-                            })}
-                        </select>
-                    </span>
-                </div>
-
-                <Sidebar />
                 <div className="content">
+                    <div className="chooseYear">
+                        <i className="fa fa-calendar"></i>
+                        <span className="stats-number" style={{ marginRight: '0px' }}>
+                            <select className="yearselector" value={this.state.year} onChange={(event) => this.changeYear(event)}>
+                                {this.state.readingYears.map((year, i) => {
+                                    return (<option key={i} value={year}>{year}</option>)
+                                })}
+                            </select>
+                        </span>
+                    </div>
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-8">
                                 <Challenge year={this.state.year} />
                                 <Books year={this.state.year} />
                                 {/* <Pages year={this.state.year} /> */}
+                                <Readed year={this.state.year} />
                             </div>
 
                             <div className="col-md-4">

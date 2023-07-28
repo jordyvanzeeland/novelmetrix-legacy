@@ -10,7 +10,7 @@ export const initChart = (data, ratings, year) => {
 
     var colors = [
         // '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
-        '#8066ee', '#58c8d6', '#fe4c62', '#49b8fd', '#ffbe0e'
+        '#404e67', '#01a9ac', '#64c5b1', '#1ABB9C'
     ]
 
     var dataSet = [];
@@ -133,7 +133,8 @@ export const initChart = (data, ratings, year) => {
                 x: {
                     ticks: {
                         beginAtZero: true,
-                        color: "#101010",
+                        color: "#333",
+                        size: 12,
                         fontFamily: "Source Sans Pro",
                     },
                     stacked: true,
@@ -142,7 +143,8 @@ export const initChart = (data, ratings, year) => {
                     ticks: {
                         beginAtZero: true,
                         stepSize: 1,
-                        color: "#101010",
+                        color: "#333",
+                        size: 12,
                         fontFamily: "Source Sans Pro",
                     },
                     stacked: true
@@ -153,10 +155,11 @@ export const initChart = (data, ratings, year) => {
                     position: 'top',
                     labels: {
                         usePointStyle: true,
-                        color: "#101010",
+                        color: "#333",
                         padding: 20,
                         font: {
-                            size: 14,
+                            size: 12,
+                            weight: 400,
                             family: 'Source Sans Pro',
                         }
                     }
@@ -209,7 +212,7 @@ export const initDoughnut = (data) => {
                 label: '# of Tomatoes',
                 data: counts,
                 backgroundColor: [
-                    '#8066ee', '#58c8d6', '#fe4c62', '#49b8fd', '#ffbe0e'
+                    '#404e67', '#01a9ac', '#64c5b1', '#1ABB9C'
                 ],
                 borderWidth: 0,
                 borderColor: '#1f2940',
@@ -245,9 +248,9 @@ export const initDoughnut = (data) => {
                         padding: 20,
                         usePointStyle: true,
                         // This more specific font property overrides the global property
-                        color: "##101010",
+                        color: "#333",
                         font: {
-                            size: 14,
+                            size: 12,
                             family: 'Source Sans Pro'
                         }
                     }

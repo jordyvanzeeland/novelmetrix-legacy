@@ -4,7 +4,8 @@ from .views import *
 from .login import *
 
 urlpatterns = [
-    path('books', getAllBooks),
+    path('books/all', getAllBooks),
+    path('books', getBooksByYear),
     path('books/challenge', getChallengeOfYear),
     path('books/challenges', getAllChallenges),
     path('books/challenges/insert', addChallenge),
