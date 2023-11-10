@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
 html, body{
     background:#f8f8fa;
     margin:0;
     padding:0;
-    font-family: 'Source Sans Pro', sans-serif;
+    /* font-family: 'Source Sans Pro', sans-serif; */
+    font-family: 'Poppins', sans-serif;
     letter-spacing: .3px;
     font-weight: 400;
     color:#333;
@@ -34,6 +37,8 @@ html, body{
 
   .content{
     padding: 30px;
+    padding-top: 90px;
+    padding-left: 230px;
   }
 
   .content-manage{
@@ -73,19 +78,15 @@ html, body{
     padding: 20px 0;
   }
 
-  .books-per-month{
-    height:700px;
-  }
-
   .books-per-month canvas{
-    height:600px !important;
+    height:500px !important;
   }
   
   .books-per-month, .genresPercent, .books-per-country, .book, .ratings, .readed{
     background: #ffffff;
     padding: 20px;
-    -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
-    box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
+    -webkit-box-shadow: 0px 1px 1px 1px #eee;
+    box-shadow: 0px 1px 1px 1px #eee;
     margin-bottom: 20px;
   }
 
@@ -116,82 +117,16 @@ html, body{
     color: #808080;
   }
 
-  .sidebar-manage{
-    padding: 15px 10px;
-    background: #363a53;
+  .sidebar{
+    background: #343d50;
+    z-index:1;
     width: 200px;
     height: 100vh;
     position: fixed;
     padding-top: 10px;
   }
 
-  .sidebar-manage .menu-item{
-    text-align: center;
-    padding: 15px 0;
-  }
-
-  .sidebar-manage .menu-item i{
-    font-size: 25px;
-    color: #727794;
-  }
-
-  .sidebar-manage .menu-item.selected i{
-    color:#fff;
-  }
-
-  .sidebar-manage svg{
-    color:#ffffff;
-  }
-
-  .sidebar-manage ul {
-    padding: 0;
-    margin:0;
-  }
-  
-  .sidebar-manage ul li {
-    list-style-type: none;
-    font-size: 14px;
-    font-weight: 400;
-    display: block;
-  }
-  
-  .sidebar-manage ul li a {
-    color: #a9b7d0;
-    text-decoration: none;
-    padding: 12px 15px;
-    display:block;
-    width:100%;
-    border-radius: 10px;
-  }
-  
-  .sidebar-manage ul li a.active {
-    color: #ffffff;
-    background: rgba(0,0,0,0.3) !important;
-  }
-  
-  .sidebar-manage ul li a.active i {
-    color: #8066ee;
-  }
-  
-  .sidebar-manage i {
-    color: #a9b7d0;
-    font-size: 13px;
-    width: 10px;
-    display: inline-block;
-    text-align: center;
-    line-height: 1;
-    margin-right: 12px;
-  }
-
-  /* -------------------------------- */
-
-  .sidebar{
-    background: #363a53;
-    width: 100%;
-    padding: 15px 10px;
-  }
-
-  .sidebar .menu-item{
+  /* .sidebar .menu-item{
     text-align: center;
     padding: 15px 0;
   }
@@ -218,7 +153,7 @@ html, body{
     list-style-type: none;
     font-size: 14px;
     font-weight: 400;
-    display: inline-block;
+    display: block;
   }
   
   .sidebar ul li a {
@@ -247,7 +182,51 @@ html, body{
     text-align: center;
     line-height: 1;
     margin-right: 12px;
-  }
+  } */
+
+  .sidebar h3{
+    color: rgba(255,255,255,0.3);
+    font-size:12px;
+    padding-bottom:5px;
+}
+
+.sidebar ul{
+    padding:0;
+    margin:0;
+    margin-top:10px;
+}
+
+.sidebar ul li{
+    color:rgba(255,255,255,0.5);
+    list-style-type: none;
+    font-weight: 300;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 15px 25px;
+}
+
+.sidebar ul .active li{
+    background:rgba(0,0,0,0.3);
+}
+
+.sidebar ul li i{
+    margin-right:5px;
+    color: rgba(255,255,255,0.5);
+    width:15px;
+}
+
+.sidebar ul a{
+    text-decoration: none;
+}
+
+.sidebar ul .active li {
+  color: #ffffff;
+  background: rgba(0,0,0,0.3) !important;
+}
+
+.sidebar ul .active li i {
+  color: #48a5a9;
+}
 
   .books-stats{
     margin:20px 0;
@@ -260,30 +239,36 @@ html, body{
 
   .books-stats .stat-block, .stat-block{
     background: #ffffff;
-    -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
-    box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);
+    -webkit-box-shadow: 0px 1px 1px 1px #eee;
+    box-shadow: 0px 1px 1px 1px #eee;
     padding: 15px 5px;
     color: #333;
     text-align: center;
+    margin-bottom: 20px;
   }
 
   .chooseYear{
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background: #404e67;
     padding: 10px;
-    text-align: center;
+    color:#333;
+  }
+
+  .chooseYear span{
+    display: inline-block;
+    color:#333;
   }
 
   .chooseYear i{
-    color: #a9b7d0;
+    color: #333;
+    font-size:13px;
+    margin-right: 10px;
   }
 
   .chooseYear select{
-    font-size:16px;
+    font-size:13px;
     background: none;
-    color:#ffffff;
+    color:#333;
+    border: solid 1px #eee;
+    padding: 5px;
   }
 
   .chooseYear select:focus-visible{
@@ -311,7 +296,7 @@ html, body{
     color: #8066ee;
   } */
 
-  .books-stats .stat-block i{
+  .stat-block i{
     font-weight: 900;
     font-size: 22px;
     border-radius: 50%;
@@ -320,15 +305,26 @@ html, body{
     height: 50px;
     line-height: 30px;
     text-align: center;
-    background: #696ffc;
+    background: #343d50;
+    color:#ffffff;
+    float:left;
+    margin-left:15px;
     /* box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.3); */
   }
 
+  .col-md-4:nth-child(2) .stat-block i{
+    background:#01a9ac;
+  }
+
+  .col-md-4:nth-child(3) .stat-block i{
+    background:#ffbe0e;
+  }
+
   .books-stats .stat-block .stats-number, .stats-number{
-    font-weight: 400;
+    font-weight: 600;
     display: inline-block;
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 20px;
     margin-right: 10px;
     color: #333;
   }
@@ -336,7 +332,8 @@ html, body{
   .books-stats .stat-block .stats-label, .stats-label{
     color: #a7adbd;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 12px;
+    display: block;
   }
 
   .yearselector{
@@ -354,12 +351,15 @@ html, body{
 
   .table{
     border-bottom: none !important;
+    margin-bottom: 0;
   }
 
   .table td{
     color: #101010;
     border-bottom:none !important;
     padding: 10px 10px !important;
+    font-size: 13px;
+    font-weight: 300;
   }
 
   .table td img{
@@ -379,13 +379,14 @@ html, body{
 
   span.block_name{
     color: #333;
-    font-weight: 400;
+    font-weight: 500;
     border-bottom: solid 1px #f5f6fa;
     width: 100%;
     display: block;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    letter-spacing: .3px;
+    letter-spacing: 0px;
+    font-size: 13px;
   }
 
   .stat-block .progress{
@@ -498,3 +499,97 @@ html, body{
     background: #363a53;
     border: none;
   }
+
+  .flag-icon{
+    margin-right: 5px !important;
+  }
+
+  /* Login screen */
+
+  .login_overlay{
+    background: #eee;
+    position: absolute;
+    width:100%;
+    height:100%;
+  }
+
+  .login{
+    width:350px;
+    min-height:300px;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 5px;
+    
+}
+
+.login form{
+  background:#ffffff;
+  box-shadow: 1px 1px 1px rgba(0,0,0,.05);
+  padding: 30px;
+}
+
+.login img{
+  display: block;
+  width: 200px;
+  margin:auto;
+  margin-bottom:30px;
+}
+
+  .login .login_logo{
+    width: 120px;
+    margin: auto;
+    margin-top: -65px;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.login .login_logo img{
+    width:100%;
+}
+
+.login form input{
+    background:#f9f9f9;
+    border:none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size:13px;
+}
+
+.login form .icon{
+    position: absolute;
+    right: 44px;
+    margin-top: 7px;
+}
+
+.login form .icon i{
+    color:#aaa;
+    font-size:13px;
+}
+
+.login form button{
+    background:#364c67;
+    width:100%;
+    border: none;
+    padding: 10px 15px;
+    font-size: 13px;
+}
+
+.login form button:hover{
+    background:#122235;
+}
+
+.topbar{
+  background: #ffffff;
+  width: 100%;
+  min-height: 50px;
+  position: absolute;
+  box-shadow: 0px 1px 1px 1px #eee;
+  padding-left:230px;
+}
+
+.stats{
+  margin-bottom:20px;
+}

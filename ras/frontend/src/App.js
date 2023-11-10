@@ -1,9 +1,9 @@
 import React, { Component, lazy, Suspense } from "react";
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { ColorRing } from 'react-loader-spinner'
+import Login from "./views/login";
 
 const Dashboard = lazy(() => import("./views/dashboard"));
-const Booklist = lazy(() => import("./views/booklist"));
 
 function App() {
     return (
@@ -24,7 +24,8 @@ function App() {
                     </div>
                 </div>}>
                 <Routes>
-                    <Route exact path="/" element={<Dashboard />} />
+                    <Route exact path="/" element={localStorage.getItem('token') ? <Dashboard /> : <Login />} />
+                    {/* <Route exact path="/login" element={<Login />} /> */}
                 </Routes>
             </Suspense>
         </Router>

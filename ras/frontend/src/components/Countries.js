@@ -1,58 +1,49 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+import 'flag-icon-css/css/flag-icons.min.css';
 import { getCountries } from "./Data.js";
 
-export default class Countries extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            countries: []
+const Countries = (props) => {
+    const [countries, setCountries] = useState([]);
+
+    const getData = async () => {
+        const data = await import("./Data.js");
+        const yearcountries = await data.getCountries(props.year);
+
+        if(yearcountries){
+            setCountries(yearcountries);
         }
     }
 
-    getComponentData() {
-        getCountries(this.props.year).then(countries => {
-            this.setState({
-                countries: countries
-            })
-        })
-    }
+    useEffect(() => {
+        getData();
+    }, [props.year]);
 
-    componentDidMount() {
-        this.getComponentData();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.year !== this.props.year) {
-            this.getComponentData();
-        }
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <div className="books-per-country">
-                    <span className="block_name">Landen</span>
-                    <table id="DataTable" className="table responsive nowrap" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Land</th>
-                                <th>Boeken</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.countries.map((country, i) => {
-                                var code = country.code.toLowerCase();
-                                return (
-                                    <tr key={i}>
-                                        <td><img src={`https://flagcdn.com/32x24/${code}.png`} /> {country.country}</td>
-                                        <td>{country.count}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </React.Fragment>
-        )
-    }
+    return (
+        <React.Fragment>
+            <div className="books-per-country">
+                <span className="block_name">Landen</span>
+                <table id="DataTable" className="table responsive nowrap" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Land</th>
+                            <th>Boeken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {countries.map((country, i) => {
+                            var code = country.code.toLowerCase();
+                            return (
+                                <tr key={i}>
+                                    <td><span className={`flag-icon flag-icon-${code} mx2`}></span> {country.country}</td>
+                                    <td>{country.count}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        </React.Fragment>
+    )
 }
+
+export default Countries;

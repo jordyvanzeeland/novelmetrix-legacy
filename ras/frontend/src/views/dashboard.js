@@ -1,75 +1,58 @@
-import React, { Component } from "react";
-import Challenge from "../components/Challenge";
-import Countries from "../components/Countries";
+import React, { useEffect, useState } from "react";
 import Genres from "../components/Genres";
 import Books from "../components/Books";
-import { getRatingsCount, getReadingYears } from "../components/Data.js";
 import Ratings from "../components/Ratings";
-import Readed from "../components/Readed";
+import Stats from "../components/Stats";
+import Sidebar from "../components/Sidebar";
 
-export default class Dashboard extends Component {
+const Dashboard = (props) => {
+    const [year, setYear] = useState(new Date().getFullYear());
+    const [readingYears, setReadingYears] = useState([]);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            year: new Date().getFullYear(),
-            readingYears: [],
-        }
+    const getData = async () => {
+        const data = await import("../components/Data.js");
+        const getYears = await data.getReadingYears();
+        setReadingYears(getYears);
     }
 
-    changeYear(event) {
-        this.setState({
-            year: event.target.value
-        })
-    }
+    useEffect(() => {
+        getData();
+    }, [year]);
 
-    componentDidMount() {
-        getReadingYears().then(data => {
-            this.setState({
-                readingYears: data
-            })
-        })
-
-        getRatingsCount(this.state.year).then(data => {
-            console.log(data);
-        })
-    }
-
-    render() {
-        var url = window.location.href.split("/");
-
-        return (
-            <React.Fragment>
-                <div className="content">
-                    <div className="chooseYear">
+    return (
+        <React.Fragment>
+            <div className="topbar">
+                <div className="chooseYear">
                         <i className="fa fa-calendar"></i>
+                        <span className="stats-label" style={{ marginRight: '0px' }}>Selecteer jaar</span>
                         <span className="stats-number" style={{ marginRight: '0px' }}>
-                            <select className="yearselector" value={this.state.year} onChange={(event) => this.changeYear(event)}>
-                                {this.state.readingYears.map((year, i) => {
+                            <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
+                                {readingYears.map((year, i) => {
                                     return (<option key={i} value={year}>{year}</option>)
                                 })}
                             </select>
                         </span>
                     </div>
-                    <div className="container-fluid">
-                        <div className="row">
-                            <div className="col-md-8">
-                                <Challenge year={this.state.year} />
-                                <Books year={this.state.year} />
-                                {/* <Pages year={this.state.year} /> */}
-                                <Readed year={this.state.year} />
-                            </div>
+            </div>
+            <Sidebar />
+            <div className="content">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-8">
+                            <Stats year={year} />
+                            <Books year={year} />
+                        </div>
 
-                            <div className="col-md-4">
-                                
-                                <Genres year={this.state.year} />
-                                <Countries year={this.state.year} />
-                                <Ratings year={this.state.year} />
-                            </div>
+                        <div className="col-md-4">
+                            
+                            <Genres year={year} />
+                            <Ratings year={year} />
                         </div>
                     </div>
                 </div>
-            </React.Fragment>
-        )
-    }
+            </div>
+        </React.Fragment>
+    )
 }
+
+export default Dashboard;

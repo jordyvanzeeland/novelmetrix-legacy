@@ -131,21 +131,27 @@ export const initChart = (data, ratings, year) => {
             },
             scales: {
                 x: {
+                    grid:{
+                        display: false,
+                    },
                     ticks: {
                         beginAtZero: true,
                         color: "#333",
-                        size: 12,
-                        fontFamily: "Source Sans Pro",
+                        size: 11,
+                        fontFamily: "Poppins",
                     },
                     stacked: true,
                 },
                 y: {
+                    grid:{
+                        display: false,
+                    },
                     ticks: {
                         beginAtZero: true,
                         stepSize: 1,
                         color: "#333",
-                        size: 12,
-                        fontFamily: "Source Sans Pro",
+                        size: 11,
+                        fontFamily: "Poppins",
                     },
                     stacked: true
                 }
@@ -158,15 +164,15 @@ export const initChart = (data, ratings, year) => {
                         color: "#333",
                         padding: 20,
                         font: {
-                            size: 12,
-                            weight: 400,
-                            family: 'Source Sans Pro',
+                            size: 11,
+                            weight: 300,
+                            family: 'Poppins',
                         }
                     }
                 }
             },
             tooltips: {
-                bodyFont: 'Source Sans Pro'
+                bodyFont: 'Poppins'
             }
         },
         plugins: [legendMargin],
@@ -239,6 +245,7 @@ export const initDoughnut = (data) => {
             }]
         },
         options: {
+            showAllTooltips: true,
             cutout: '80%',
             responsive: true,
             plugins: {
@@ -250,8 +257,9 @@ export const initDoughnut = (data) => {
                         // This more specific font property overrides the global property
                         color: "#333",
                         font: {
-                            size: 12,
-                            family: 'Source Sans Pro'
+                            size: 11,
+                            weight: 300,
+                            family: 'Poppins'
                         }
                     }
                 }

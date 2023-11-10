@@ -1,43 +1,31 @@
-import React, { Component } from 'react';
-import { getGenresCount } from "./Data.js";
-import { initDoughnut } from "./Charts.js";
+import React, { useEffect } from 'react';
 
-export default class Genres extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            genres: []
+const Genres = (props) => {
+    const getData = async () => {
+        const [data, charts] = await Promise.all([
+            await import("./Data.js"),
+            await import("./Charts.js")
+        ]);
+        
+        const yeargenres = await data.getGenresCount(props.year);
+
+        if(yeargenres){
+            charts.initDoughnut(yeargenres, props.year);
         }
     }
 
-    getComponentData() {
-        getGenresCount(this.props.year).then(genres => {
-            this.setState({
-                genres: genres
-            })
+    useEffect(() => {
+        getData();
+    }, [props.year]);
 
-            initDoughnut(genres, this.props.year);
-        })
-    }
-
-    componentDidMount() {
-        this.getComponentData();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.year !== this.props.year) {
-            this.getComponentData();
-        }
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <div className="genresPercent">
-                    <span className="block_name">Genres</span>
-                    <canvas id="chartGenres"></canvas>
-                </div>
-            </React.Fragment>
-        )
-    }
+    return (
+        <React.Fragment>
+            <div className="genresPercent">
+                <span className="block_name">Genres</span>
+                <canvas id="chartGenres"></canvas>
+            </div>
+        </React.Fragment>
+    )
 }
+
+export default Genres;

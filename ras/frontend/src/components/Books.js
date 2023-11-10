@@ -1,47 +1,32 @@
-import React, { Component } from 'react';
-import { getAvgRatings, getBooksPerYearPerGenres } from "./Data.js";
-import { initChart } from "./Charts.js";
+import React, { useEffect } from 'react';
 
-export default class Books extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            books: []
+const Books = (props) => {
+    const getData = async () => {
+        const [data, charts] = await Promise.all([
+            import("./Data.js"),
+            import("./Charts.js")
+        ]);
+
+        const yearbooks = await data.getBooksPerYearPerGenres(props.year);
+
+        if(yearbooks){
+            const ratings = await data.getAvgRatings(props.year);
+            charts.initChart(yearbooks, ratings, props.year);
         }
     }
 
-    getComponentData() {
-        getBooksPerYearPerGenres(this.props.year).then(books => {
-            this.setState({
-                books: books
-            })
+    useEffect(() => {
+        getData();
+    }, [props.year]);
 
-            getAvgRatings(this.props.year).then(ratings => {
-                initChart(books, ratings, this.props.year);
-            })
-
-            
-        })
-    }
-
-    componentDidMount() {
-        this.getComponentData();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.year !== this.props.year) {
-            this.getComponentData();
-        }
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <div className="books-per-month">
-                    <span className="block_name">Boeken per maand per genre</span>
-                    <canvas id="chart"></canvas>
-                </div>
-            </React.Fragment>
-        )
-    }
+    return (
+        <React.Fragment>
+            <div className="books-per-month">
+                <span className="block_name">Boeken per maand per genre</span>
+                <canvas id="chart"></canvas>
+            </div>
+        </React.Fragment>
+    )
 }
+
+export default Books;

@@ -30,6 +30,7 @@
     "css-loader": "^6.7.3",
     "datatables.net": "^1.13.1",
     "datatables.net-dt": "^1.13.1",
+    "flag-icon-css": "^4.1.7",
     "jquery": "^3.6.1",
     "moment": "^2.29.4",
     "react-loader-spinner": "^5.3.4",

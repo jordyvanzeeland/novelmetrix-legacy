@@ -1,88 +1,52 @@
-import React, { Component } from 'react';
-import { getStats, getReadingYears } from "./Data.js";
+import React, { useEffect, useState } from 'react';
 
-export default class BookStats extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            readingYears: [],
-            totalbooks: 0,
-            totalpages: 0,
-            totalauthors: 0,
-            totalcountries: 0,
-            totalgenres: 0,
-        }
+const BookStats = (props) =>{
+    const [totalbooks, setTotalbooks] = useState(0);
+    const [totalgenres, setTotalgenres] = useState(0);
+
+    const getData = async () => {
+        const data = await import("./Data.js");
+        const stats = await data.getStats(props.year);
+
+        setTotalbooks(stats.totalbooks);
+        setTotalgenres(stats.totalgenres);
     }
 
-    getComponentData(){
-        var $this = this;
+    useEffect(() => {
+        getData();
+    }, [props.year])
 
-        getStats(this.props.year).then(data => {
-            $this.setState({
-                totalbooks: data.totalbooks,
-                totalpages: data.totalpages,
-                totalauthors: data.totalauthors,
-                totalcountries: data.totalcountries,
-                totalgenres: data.totalgenres
-            })
-        });
-
-        getReadingYears().then(data => {
-            this.setState({
-                readingYears: data
-            })
-        });
-    }
-
-    componentDidMount() {
-        this.getComponentData();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.year !== this.props.year) {
-            this.getComponentData();
-        }
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <div className="col-md-2">
+    return (
+        <React.Fragment>
+            <div className='row'>
+                <div className="col-md-4">
                     <div className="stat-block">
-                        <i className="fa fa-book"></i>
-                        <span className="stats-number">{this.state.totalbooks}</span>
-                        <span className="stats-label">Boeken</span>
+                        <i class="fas fa-book-open"></i>   
+                        <span className="stats-label">Gelezen boeken:</span>
+                        <span className="stats-number">{totalbooks}</span>
+                        
                     </div>
                 </div>
-                <div className="col-md-2">
+                
+                <div className="col-md-4">
                     <div className="stat-block">
-                        <i className="fa fa-book-open"></i>
-                        <span className="stats-number">{this.state.totalpages}</span>
-                        <span className="stats-label">Bladzijdes</span>
+                        <i class="fas fa-book-open"></i>   
+                        <span className="stats-label">Genres:</span>
+                        <span className="stats-number">{totalgenres}</span>
+                        
                     </div>
                 </div>
-                <div className="col-md-2">
+
+                <div className="col-md-4">
                     <div className="stat-block">
-                        <i className="fa fa-pen"></i>
-                        <span className="stats-number">{this.state.totalauthors}</span>
-                        <span className="stats-label">Schrijvers</span>
+                        <i class="fas fa-star"></i> 
+                        <span className="stats-label">Jaarbeoordeling:</span>
+                        <span className="stats-number">7</span>
                     </div>
                 </div>
-                <div className="col-md-2">
-                    <div className="stat-block">
-                        <i className="fa fa-book"></i>
-                        <span className="stats-number">{this.state.totalgenres}</span>
-                        <span className="stats-label">Genres</span>
-                    </div>
-                </div>
-                <div className="col-md-2">
-                    <div className="stat-block">
-                        <i className="fa fa-globe"></i>
-                        <span className="stats-number">{this.state.totalcountries}</span>
-                        <span className="stats-label">Landen</span>
-                    </div>
-                </div>
-            </React.Fragment>
-        )
-    }
+            </div>
+        </React.Fragment>
+    )
 }
+
+export default BookStats;
