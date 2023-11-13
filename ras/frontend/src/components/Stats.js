@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 const BookStats = (props) =>{
     const [totalbooks, setTotalbooks] = useState(0);
     const [totalgenres, setTotalgenres] = useState(0);
+    const [yearrating, setYearrating] = useState(0);
 
     const getData = async () => {
         const data = await import("./Data.js");
@@ -10,6 +11,7 @@ const BookStats = (props) =>{
 
         setTotalbooks(stats.totalbooks);
         setTotalgenres(stats.totalgenres);
+        setYearrating(stats.avgyearrating);
     }
 
     useEffect(() => {
@@ -21,7 +23,7 @@ const BookStats = (props) =>{
             <div className='row'>
                 <div className="col-md-4">
                     <div className="stat-block">
-                        <i class="fas fa-book-open"></i>   
+                        <i className="fas fa-book-open"></i>   
                         <span className="stats-label">Gelezen boeken:</span>
                         <span className="stats-number">{totalbooks}</span>
                         
@@ -30,7 +32,7 @@ const BookStats = (props) =>{
                 
                 <div className="col-md-4">
                     <div className="stat-block">
-                        <i class="fas fa-book-open"></i>   
+                        <i className="fas fa-book-open"></i>   
                         <span className="stats-label">Genres:</span>
                         <span className="stats-number">{totalgenres}</span>
                         
@@ -39,9 +41,9 @@ const BookStats = (props) =>{
 
                 <div className="col-md-4">
                     <div className="stat-block">
-                        <i class="fas fa-star"></i> 
+                        <i className="fas fa-star"></i> 
                         <span className="stats-label">Jaarbeoordeling:</span>
-                        <span className="stats-number">7</span>
+                        <span className="stats-number">{yearrating}</span>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import Genres from "../components/Genres";
 import Books from "../components/Books";
 import Ratings from "../components/Ratings";
 import Stats from "../components/Stats";
+import Challenge from "../components/Challenge";
 import Sidebar from "../components/Sidebar";
 
 const Dashboard = (props) => {
@@ -37,9 +38,15 @@ const Dashboard = (props) => {
             <Sidebar />
             <div className="content">
                 <div className="container-fluid">
+                    {/* <div className="row">
+                        <div className="col-md-12">
+                            
+                        </div>
+                    </div> */}
                     <div className="row">
                         <div className="col-md-8">
                             <Stats year={year} />
+                            <Challenge year={year} />
                             <Books year={year} />
                         </div>
 

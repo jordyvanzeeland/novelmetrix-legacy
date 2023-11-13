@@ -44,7 +44,7 @@ const Ratings = (props) => {
         <React.Fragment>
             <div className="ratings">
                 <span className="block_name">Ratings</span>
-                <table id="DataTable" className="table responsive nowrap" width="100%">
+                <table className="ratingstable responsive nowrap" width="100%">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -53,11 +53,9 @@ const Ratings = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {ratings.map((rating) => {
+                        {ratings.map((rating, i) => {
                             var ratingstars = '';
                             var rating_percentage = rating[1] / totalRatings * 100;
-
-                            console.log(rating[1], totalRatings);
 
                             if (rating[0]) {
                                 for (var i = 0; i < rating[0]; i++) {
@@ -66,7 +64,7 @@ const Ratings = (props) => {
                             }
 
                             return(
-                                <tr>
+                                <tr key={i}>
                                     <td style={{width: '200px'}} className='book_rating' dangerouslySetInnerHTML={{__html: ratingstars}}></td>
                                     <td style={{width: '257px'}}>
                                         <div className="progress">

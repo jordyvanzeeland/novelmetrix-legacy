@@ -87,8 +87,6 @@ export const initChart = (data, ratings, year) => {
             order: 1
         })
 
-        console.log(dataSet);
-
     /*
     ----------------------------------
          Stacked bar chart
@@ -181,7 +179,6 @@ export const initChart = (data, ratings, year) => {
 
 export const initDoughnut = (data) => {
 
-    console.log(data);
 
     var labels = [];
     var counts = [];

@@ -1,59 +1,35 @@
-import React, { Component } from 'react';
-import { getChallenge, getStats } from "./Data.js";
+import React, { useEffect, useState } from 'react';
 
-export default class Challenge extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            readingYears: [],
-            challenge: 0
-        }
+const Challenge = (props) => {
+    const [challenge, setChallenge] = useState(0);
+    const [challengePercentage, setChallengePercentage] = useState(0)
+
+    const getData = async () => {
+        const data = await import("./Data.js");
+        const stats = await data.getStats(props.year);
+        const yearchallenge = await data.getChallenge(props.year);
+        setChallenge(yearchallenge ? yearchallenge[0].nrofbooks : 0);
+        setChallengePercentage(Math.round((stats.totalbooks / yearchallenge[0].nrofbooks) * 100, 0))
     }
 
-    getComponentData() {
-        var $this = this;
+    useEffect(() => {
+        getData();
+    }, [props.year])
 
-        getStats(this.props.year).then(data => {
-            $this.setState({
-                totalbooks: data.totalbooks
-            })
-        });
-
-        getChallenge(this.props.year).then(data => {
-            this.setState({
-                challenge: data && data.length > 0 ? data[0].nrofbooks : 0
-            })
-        });
-    }
-
-    componentDidMount() {
-        this.getComponentData();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.year !== this.props.year) {
-            this.getComponentData();
-        }
-    }
-
-    render() {
-        var challengePercentage = Math.round((this.state.totalbooks / this.state.challenge) * 100, 0)
-
-        return (
-            <React.Fragment>
-                {this.state.challenge && this.state.challenge !== 0 ?
-                    <div className="stat-block" style={{ marginBottom: '20px' }}>
-                        <span className="block_name">Book Challenge</span>
-                        <div className="progress">
-                            <div className="progress-bar" role="progressbar" style={{ width: challengePercentage + '%' }} aria-valuenow={challengePercentage} aria-valuemin="0" aria-valuemax="100">
-                                <div className="progress-bar-number">{challengePercentage}%</div>
-                            </div>
+    return (
+        <React.Fragment>
+            {challenge && challenge !== 0 ?
+                <div className="stat-block challenge" style={{ marginBottom: '20px' }}>
+                    <span className="block_name">Book Challenge ({challenge} boeken)</span>
+                    <div className="progress">
+                        <div className="progress-bar" role="progressbar" style={{ width: challengePercentage + '%' }} aria-valuenow={challengePercentage} aria-valuemin="0" aria-valuemax="100">
+                            <div className="progress-bar-number">{challengePercentage}%</div>
                         </div>
-
-                        <span className="stats-number">{this.state.totalbooks}</span><span className="stats-label">van de</span><span className="stats-number">{this.state.challenge}</span><span className="stats-label">boeken gelezen</span>
                     </div>
-                    : ''}
-            </React.Fragment>
-        )
-    }
+                </div>
+                : ''}
+        </React.Fragment>
+    )
 }
+
+export default Challenge;

@@ -3,11 +3,12 @@ from django.views.decorators.csrf import csrf_exempt
 from .views import *
 from .modules.auth import *
 from .modules.crud import *
+from .modules.challenges import *
 from .modules.pandas import *
 
 urlpatterns = [
     path('books/all', getAllBooks),
-    path('books', getBooksByYear),
+    # path('books', getBooksByYear),
     path('books/years', getYears),
     path('books/stats', getStats),
     path('books/insert', addBook),
@@ -17,6 +18,11 @@ urlpatterns = [
     path('books/genres/count', countGenres),
     path('books/ratings', avg_ratings_per_month),
     path('books/ratings/count', countRatings),
-    path('books/countries', books_per_country),
+    # path('books/countries', books_per_country),
     path('auth/login', csrf_exempt(login)),
+
+    path('books/challenge', getChallengeOfYear),
+    path('books/challenges', getAllChallenges),
+    path('books/challenges/insert', addChallenge),
+    path('books/challenges/<int:id>/delete', deleteChallenge),
 ]

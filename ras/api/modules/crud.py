@@ -8,33 +8,53 @@ from django.http import JsonResponse
 import pandas as pd
 from rest_framework.response import Response
 
-def getBooksData():
-    engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
-    df = pd.read_sql('SELECT * FROM api_books ORDER BY readed', engine, parse_dates={'readed': {'format': '%m-%Y'}})
+engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
+conn = engine.connect()
 
-    return df
+# -------------------------------
+# Get all books in the database
+# -------------------------------
 
 @api_view(['GET'])
 def getAllBooks(request):
+    if(request.headers.get('Authorization')):
+        token = request.headers.get('Authorization').split(' ')[1]
 
-    data = []
-    books = getBooksData()
+        try:
+            User = get_user_model()
+            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+            user = User.objects.get(id=payload['id'])
 
-    for index, row in books.iterrows():
-            data.append({
-                "id": row['id'],
-                "name": row['name'],
-                "author": row['author'],
-                "genre": row['genre'],
-                "author": row['author'],
-                "country": row['country'],
-                "country_code": row['country_code'],
-                "pages": row['pages'],
-                "readed": row['readed'],
-                "rating": row['rating'],
-            })
+            if(user):
+                books = pd.read_sql('SELECT * FROM api_books ORDER BY readed', engine, parse_dates={'readed': {'format': '%m-%Y'}})
+                data = []
 
-    return Response(data)
+                for index, row in books.iterrows():
+                    data.append({
+                        "id": row['id'],
+                        "name": row['name'],
+                        "author": row['author'],
+                        "genre": row['genre'],
+                        "author": row['author'],
+                        "country": row['country'],
+                        "country_code": row['country_code'],
+                        "pages": row['pages'],
+                        "readed": row['readed'],
+                        "rating": row['rating'],
+                    })
+
+                return Response(data)
+            else:
+                return JsonResponse({'error': 'No user detected'}, safe=False)
+
+        except (jwt.DecodeError, User.DoesNotExist):
+            return JsonResponse({'error': 'Token invalid'}, safe=False)
+    else:
+        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+
+# -------------------------------
+# Add a book into the database
+# -------------------------------
 
 @api_view(['POST'])
 def addBook(request):
@@ -49,8 +69,6 @@ def addBook(request):
             user = User.objects.get(id=payload['id'])
 
             if(user):
-                engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
-                conn = engine.connect()
                 conn.execute(text("INSERT INTO api_books (name, author, genre, country, country_code, pages, readed, rating) VALUES ('" + str(book['name']) + "', '" + str(book['author']) + "', '" + str(book['genre']) + "', '" + str(book['country']) + "', '" + str(book['country_code']) + "', " + str(book['pages']) + ", '" + str(book['readed']) + "', " + str(book['rating']) + ")"))
                 return JsonResponse("OK", safe=False)
             else:
@@ -59,7 +77,11 @@ def addBook(request):
         except (jwt.DecodeError, User.DoesNotExist):
             return JsonResponse({'error': 'Token invalid'}, safe=False)
     else:
-        return JsonResponse({'error': 'testing'}, safe=False)
+        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+
+# -------------------------------
+# Update a book in the database
+# -------------------------------
 
 @api_view(['PUT'])
 def updateBook(request):
@@ -75,10 +97,7 @@ def updateBook(request):
             user = User.objects.get(id=payload['id'])
 
             if(user):
-                engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
-                conn = engine.connect()
                 conn.execute(text("UPDATE api_books set name='" + str(book['name']) + "', author='" + str(book['author']) + "', genre='" + str(book['genre']) + "', country='" + str(book['country']) + "', country_code='" + str(book['country_code']) + "', pages='" + str(book['pages']) + "', readed='" + str(book['readed']) + "', rating='" + str(book['rating']) + "' WHERE id=" + str(bookid)))
-
                 return JsonResponse("OK", safe=False)
             else:
                 return JsonResponse({'error': 'No user detected'}, safe=False)
@@ -86,7 +105,12 @@ def updateBook(request):
         except (jwt.DecodeError, User.DoesNotExist):
             return JsonResponse({'error': 'Token invalid'}, safe=False)
     else:
-        return JsonResponse({'error': 'No Token'}, safe=False)
+        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+
+
+# -------------------------------
+# Delete a book in the database
+# -------------------------------
 
 @api_view(['DELETE'])
 def deleteBook(request):
@@ -100,8 +124,6 @@ def deleteBook(request):
             user = User.objects.get(id=payload['id'])
 
             if(user):
-                engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
-                conn = engine.connect()
                 conn.execute(text("DELETE FROM api_books WHERE id = " + str(bookid)))
                 return JsonResponse("OK", safe=False)
             else:
@@ -110,4 +132,4 @@ def deleteBook(request):
         except (jwt.DecodeError, User.DoesNotExist):
             return JsonResponse({'error': 'Token invalid'}, safe=False)
     else:
-        return JsonResponse({'error': 'No Token'}, safe=False)
+        return JsonResponse({'error': 'Unauthorized'}, safe=False)
