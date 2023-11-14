@@ -18,9 +18,9 @@ const Sidebar = () => {
                 </ul>
 
                 <ul className="bottom-menu">
-                    <NavLink to={'/settings'} exact="true">
+                    {/* <NavLink to={'/settings'} exact="true">
                         <li><i className="fas fa-cog"></i> Instellingen</li>
-                    </NavLink>
+                    </NavLink> */}
                     <li><i className="fas fa-power-off"></i> Uitloggen</li>
                 </ul>
         </div>

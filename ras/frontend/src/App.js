@@ -4,6 +4,7 @@ import { ColorRing } from 'react-loader-spinner'
 import Login from "./views/login";
 import Books from "./views/bookslist";
 import BooksList from "./views/bookslist";
+import Challenges from "./views/challenges";
 
 const Dashboard = lazy(() => import("./views/dashboard"));
 
@@ -28,6 +29,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={localStorage.getItem('token') ? <Dashboard /> : <Login />} />
                     <Route exact path="/books" element={<BooksList />} />
+                    <Route exact path="/challenges" element={<Challenges />} />
                     {/* <Route exact path="/login" element={<Login />} /> */}
                 </Routes>
             </Suspense>

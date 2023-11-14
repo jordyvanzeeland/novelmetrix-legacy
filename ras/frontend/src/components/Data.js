@@ -26,15 +26,15 @@ export const getAllBooks = () => {
 //         })
 // }
 
-// export const getAllChallenges = () => {
-//     return fetch('/api/books/challenges', {
-//         "method": "GET",
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             return data;
-//         })
-// }
+export const getAllChallenges = () => {
+    return fetch('/api/books/challenges', {
+        "method": "GET",
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
 
 export const insertChallenge = (data) => {
     return fetch('/api/books/challenges/insert', {
