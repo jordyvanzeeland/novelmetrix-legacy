@@ -60,24 +60,3 @@ def getStats(request):
         return Response(data[0])
     else:
         return Response("No year header included")
-
-
-@api_view(['GET'])
-def predictAmountBooks(request):
-    books_data = pd.read_csv("api/static/books_data.csv")
-
-    books_data = books_data.dropna()
-
-    model = LinearRegression()
-
-    X = books_data[['year']]
-    Y = books_data['books_read']
-    model.fit(X.values, Y.values)
-
-    current_year = 2023
-    predict_books = model.predict([[current_year]])
-
-    return Response({
-        "year": current_year,
-        "amount": math.floor(predict_books[0])
-    })

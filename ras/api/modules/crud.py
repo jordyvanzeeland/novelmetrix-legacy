@@ -7,6 +7,7 @@ from sqlalchemy.sql import text
 from django.http import JsonResponse
 import pandas as pd
 from rest_framework.response import Response
+from .functions import isAuthorized, getBooksData, filterData
 
 engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
 conn = engine.connect()
@@ -18,37 +19,29 @@ conn = engine.connect()
 @api_view(['GET'])
 def getAllBooks(request):
     if(request.headers.get('Authorization')):
-        token = request.headers.get('Authorization').split(' ')[1]
+        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
 
-        try:
-            User = get_user_model()
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-            user = User.objects.get(id=payload['id'])
+        if(isLoggedIn):
+            books = getBooksData(request.headers.get('userid'))
+            data = []
 
-            if(user):
-                books = pd.read_sql('SELECT * FROM api_books ORDER BY readed', engine, parse_dates={'readed': {'format': '%m-%Y'}})
-                data = []
+            for index, row in books.iterrows():
+                data.append({
+                    "id": row['id'],
+                    "name": row['name'],
+                    "author": row['author'],
+                    "genre": row['genre'],
+                    "author": row['author'],
+                    "country": row['country'],
+                    "country_code": row['country_code'],
+                    "pages": row['pages'],
+                    "readed": row['readed'],
+                    "rating": row['rating'],
+                })
 
-                for index, row in books.iterrows():
-                    data.append({
-                        "id": row['id'],
-                        "name": row['name'],
-                        "author": row['author'],
-                        "genre": row['genre'],
-                        "author": row['author'],
-                        "country": row['country'],
-                        "country_code": row['country_code'],
-                        "pages": row['pages'],
-                        "readed": row['readed'],
-                        "rating": row['rating'],
-                    })
-
-                return Response(data)
-            else:
-                return JsonResponse({'error': 'No user detected'}, safe=False)
-
-        except (jwt.DecodeError, User.DoesNotExist):
-            return JsonResponse({'error': 'Token invalid'}, safe=False)
+            return Response(data)
+        else:
+            return JsonResponse({'error': 'No user detected'}, safe=False)
     else:
         return JsonResponse({'error': 'Unauthorized'}, safe=False)
 
@@ -59,23 +52,13 @@ def getAllBooks(request):
 @api_view(['POST'])
 def addBook(request):
     if(request.headers.get('Authorization')):
-        token = request.headers.get('Authorization').split(' ')[1]
-        book = request.POST.get('book')
-        book = json.loads(book)
+        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
 
-        try:
-            User = get_user_model()
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-            user = User.objects.get(id=payload['id'])
-
-            if(user):
-                conn.execute(text("INSERT INTO api_books (name, author, genre, country, country_code, pages, readed, rating) VALUES ('" + str(book['name']) + "', '" + str(book['author']) + "', '" + str(book['genre']) + "', '" + str(book['country']) + "', '" + str(book['country_code']) + "', " + str(book['pages']) + ", '" + str(book['readed']) + "', " + str(book['rating']) + ")"))
-                return JsonResponse("OK", safe=False)
-            else:
-                return JsonResponse({'error': 'No user detected'}, safe=False)
-
-        except (jwt.DecodeError, User.DoesNotExist):
-            return JsonResponse({'error': 'Token invalid'}, safe=False)
+        if(isLoggedIn):
+            conn.execute(text("INSERT INTO api_books (name, author, genre, country, country_code, pages, readed, rating) VALUES ('" + str(book['name']) + "', '" + str(book['author']) + "', '" + str(book['genre']) + "', '" + str(book['country']) + "', '" + str(book['country_code']) + "', " + str(book['pages']) + ", '" + str(book['readed']) + "', " + str(book['rating']) + ")"))
+            return JsonResponse("OK", safe=False)
+        else:
+            return JsonResponse({'error': 'No user detected'}, safe=False)
     else:
         return JsonResponse({'error': 'Unauthorized'}, safe=False)
 
@@ -86,24 +69,17 @@ def addBook(request):
 @api_view(['PUT'])
 def updateBook(request):
     if(request.headers.get('Authorization')):
-        token = request.headers.get('Authorization').split(' ')[1]
-        book = request.POST.get('book')
-        book = json.loads(book)
-        bookid = request.headers.get('bookid')
+        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
 
-        try:
-            User = get_user_model()
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-            user = User.objects.get(id=payload['id'])
+        if(isLoggedIn):
+            book = request.POST.get('book')
+            book = json.loads(book)
+            bookid = request.headers.get('bookid')
 
-            if(user):
-                conn.execute(text("UPDATE api_books set name='" + str(book['name']) + "', author='" + str(book['author']) + "', genre='" + str(book['genre']) + "', country='" + str(book['country']) + "', country_code='" + str(book['country_code']) + "', pages='" + str(book['pages']) + "', readed='" + str(book['readed']) + "', rating='" + str(book['rating']) + "' WHERE id=" + str(bookid)))
-                return JsonResponse("OK", safe=False)
-            else:
-                return JsonResponse({'error': 'No user detected'}, safe=False)
-
-        except (jwt.DecodeError, User.DoesNotExist):
-            return JsonResponse({'error': 'Token invalid'}, safe=False)
+            conn.execute(text("UPDATE api_books set name='" + str(book['name']) + "', author='" + str(book['author']) + "', genre='" + str(book['genre']) + "', country='" + str(book['country']) + "', country_code='" + str(book['country_code']) + "', pages='" + str(book['pages']) + "', readed='" + str(book['readed']) + "', rating='" + str(book['rating']) + "' WHERE id=" + str(bookid)))
+            return JsonResponse("OK", safe=False)
+        else:
+            return JsonResponse({'error': 'No user detected'}, safe=False)
     else:
         return JsonResponse({'error': 'Unauthorized'}, safe=False)
 
@@ -115,21 +91,14 @@ def updateBook(request):
 @api_view(['DELETE'])
 def deleteBook(request):
     if(request.headers.get('Authorization')):
-        token = request.headers.get('Authorization').split(' ')[1]
-        bookid = request.headers.get('bookid')
+        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
 
-        try:
-            User = get_user_model()
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-            user = User.objects.get(id=payload['id'])
-
-            if(user):
-                conn.execute(text("DELETE FROM api_books WHERE id = " + str(bookid)))
-                return JsonResponse("OK", safe=False)
-            else:
-                return JsonResponse({'error': 'No user detected'}, safe=False)
-
-        except (jwt.DecodeError, User.DoesNotExist):
-            return JsonResponse({'error': 'Token invalid'}, safe=False)
+        if(isLoggedIn):
+            bookid = request.headers.get('bookid')
+            
+            conn.execute(text("DELETE FROM api_books WHERE id = " + str(bookid)))
+            return JsonResponse("OK", safe=False)
+        else:
+            return JsonResponse({'error': 'No user detected'}, safe=False)
     else:
         return JsonResponse({'error': 'Unauthorized'}, safe=False)

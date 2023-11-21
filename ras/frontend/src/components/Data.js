@@ -4,7 +4,8 @@ export const getAllBooks = () => {
     return fetch('/api/books/all', {
         "method": "GET",
         "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
         },
     })
         .then(response => response.json())
@@ -13,22 +14,13 @@ export const getAllBooks = () => {
         })
 }
 
-// export const getBooksByYear = (year) => {
-//     return fetch('/api/books', {
-//         "method": "GET",
-//         "headers": {
-//             "year": year
-//         }
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             return data;
-//         })
-// }
-
 export const getAllChallenges = () => {
     return fetch('/api/books/challenges', {
         "method": "GET",
+        "headers": {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
+        },
     })
         .then(response => response.json())
         .then(data => {
@@ -73,7 +65,8 @@ export const getStats = (year) => {
         "method": "GET",
         "headers": {
             "year": year,
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
         }
     })
         .then(response => response.json())
@@ -86,7 +79,8 @@ export const getChallenge = (year) => {
     return fetch('/api/books/challenge', {
         "method": "GET",
         "headers": {
-            "year": year
+            "year": year,
+            "userid": localStorage.getItem('id')
         }
     })
         .then(response => response.json())
@@ -99,7 +93,8 @@ export const getReadingYears = () => {
     return fetch('/api/books/years', {
         "method": "GET",
         "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
         }
     })
         .then(response => response.json())
@@ -108,39 +103,13 @@ export const getReadingYears = () => {
         })
 }
 
-// export const getCountries = (year) => {
-//     return fetch('/api/books/countries', {
-//         "method": "GET",
-//         "headers": {
-//             "year": year
-//         }
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             return data;
-//         })
-// }
-
-// export const getShortestLongestBook = (year) => {
-//     return fetch('/api/books/pages/stats', {
-//         "method": "GET",
-//         "headers": {
-//             "year": year,
-//             "Authorization": "Bearer " + localStorage.getItem("token")
-//         }
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             return data;
-//         })
-// }
-
 export const getBooksPerYearPerGenres = (year) => {
     return fetch('/api/books/genres', {
         "method": "GET",
         "headers": {
             "year": year,
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
         }
     })
         .then(response => response.json())
@@ -154,7 +123,8 @@ export const getGenresCount = (year) => {
         "method": "GET",
         "headers": {
             "year": year,
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
         }
     })
         .then(response => response.json())
@@ -168,7 +138,8 @@ export const getAvgRatings = (year) => {
         "method": "GET",
         "headers": {
             "year": year,
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
         }
     })
         .then(response => response.json())
@@ -182,7 +153,8 @@ export const getRatingsCount = (year) => {
         "method": "GET",
         "headers": {
             "year": year,
-            "Authorization": "Bearer " + localStorage.getItem("token")
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
         }
     })
         .then(response => response.json())

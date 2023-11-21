@@ -5,6 +5,7 @@ from .modules.auth import *
 from .modules.crud import *
 from .modules.challenges import *
 from .modules.pandas import *
+from .modules.predictions import *
 
 urlpatterns = [
     path('books/all', getAllBooks),
@@ -25,4 +26,5 @@ urlpatterns = [
     path('books/challenges', getAllChallenges),
     path('books/challenges/insert', addChallenge),
     path('books/challenges/<int:id>/delete', deleteChallenge),
+    path('books/challenges/prediction/train', predict_next_year),
 ]

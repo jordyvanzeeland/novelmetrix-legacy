@@ -20,9 +20,26 @@ def isAuthorized(authtoken):
     else:
         return JsonResponse({'error': 'Unauthorized'}, safe=False)
 
-def getBooksData():
+def getBooksData(userid, year = None):
     engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
-    df = pd.read_sql('SELECT * FROM api_books ORDER BY readed', engine, parse_dates={'readed': {'format': '%m-%Y'}})
+    
+    if year:
+        sql = 'SELECT * FROM api_books WHERE userid = ' + userid + ' AND year = ' + str(year) + ' ORDER BY readed'
+    else:
+        sql = 'SELECT * FROM api_books WHERE userid = ' + userid + ' ORDER BY readed'
+    
+    df = pd.read_sql(sql, engine, parse_dates={'readed': {'format': '%m-%Y'}})
+
+    return df
+
+def getBookChallenge(userid, year = None):
+    engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
+    if year:
+        sql = 'SELECT * FROM book_challenge WHERE userid = ' + userid + ' AND year = ' + year
+    else:
+        sql = 'SELECT * FROM book_challenge WHERE userid = ' + userid
+    
+    df = pd.read_sql(sql, engine)
 
     return df
 

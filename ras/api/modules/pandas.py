@@ -15,7 +15,7 @@ def getYears(request):
         isLoggedIn = isAuthorized(request.headers.get('Authorization'));
 
         if(isLoggedIn):
-            df = filterData(getBooksData())
+            df = filterData(getBooksData(request.headers.get('userid')))
             df['readed'] = pd.to_datetime(df['readed'], errors='coerce')
             df['year']= df['readed'].dt.year
             years = df.groupby('year')['year'].count().reset_index(name="count")
@@ -38,7 +38,7 @@ def books_per_genre_per_month(request):
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
                 data = []
-                df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+                df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
                 booksPerMonth = df.groupby(['genre','readed'])['genre'].count().reset_index(name="count")  
                 booksPerMonth = booksPerMonth.sort_values(by=['genre', 'readed', 'count'], ascending=False)
 
@@ -70,7 +70,7 @@ def countGenres(request):
             if request.META.get('HTTP_YEAR'):
                 
                 data = []
-                df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+                df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
                 
                 genres = df.groupby('genre')['genre'].count().reset_index(name="count")
                 genres = genres.sort_values(by='count', ascending=False)
@@ -101,7 +101,7 @@ def getStats(request):
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
                 data = []
-                df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+                df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
                 df = df.dropna()
                 statsTotalBooks = df['name'].count()
                 statsTotalGenres = df['genre'].nunique()
@@ -133,7 +133,7 @@ def avg_ratings_per_month(request):
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
                 data = []
-                df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+                df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
                 avgratingspermonth = df.groupby('readed')['rating'].mean().reset_index(name="rating")
 
                 for index, row in avgratingspermonth.iterrows():
@@ -163,7 +163,7 @@ def countRatings(request):
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
                 data = []
-                df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+                df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
                 countratings = df.groupby('rating')['rating'].count().reset_index(name="count")
                 countratings = countratings.sort_values(by='rating', ascending=False)
 
