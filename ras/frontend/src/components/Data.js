@@ -162,3 +162,35 @@ export const getRatingsCount = (year) => {
             return data;
         })
 }
+
+export const insertBook = (book) => {
+    return fetch('/api/books/insert', {
+        "method": "POST",
+        "headers": {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "userid": localStorage.getItem('id')
+        },
+        "body": JSON.stringify(book)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
+
+export const deleteBook = (bookid) => {
+    return fetch('/api/books/delete', {
+        "method": "DELETE",
+        "headers": {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id'),
+            "bookid": bookid
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}

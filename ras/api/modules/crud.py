@@ -31,10 +31,6 @@ def getAllBooks(request):
                     "name": row['name'],
                     "author": row['author'],
                     "genre": row['genre'],
-                    "author": row['author'],
-                    "country": row['country'],
-                    "country_code": row['country_code'],
-                    "pages": row['pages'],
                     "readed": row['readed'],
                     "rating": row['rating'],
                 })
@@ -55,7 +51,11 @@ def addBook(request):
         isLoggedIn = isAuthorized(request.headers.get('Authorization'));
 
         if(isLoggedIn):
-            conn.execute(text("INSERT INTO api_books (name, author, genre, country, country_code, pages, readed, rating) VALUES ('" + str(book['name']) + "', '" + str(book['author']) + "', '" + str(book['genre']) + "', '" + str(book['country']) + "', '" + str(book['country_code']) + "', " + str(book['pages']) + ", '" + str(book['readed']) + "', " + str(book['rating']) + ")"))
+            userid = request.headers.get('userid')
+            book = request.body
+            book = json.loads(book)
+
+            conn.execute(text("INSERT INTO api_books (userid, name, author, genre, readed, rating) VALUES ('" + str(userid) + "', '" + str(book['name']) + "', '" + str(book['author']) + "', '" + str(book['genre']) + "', '" + str(book['readed']) + "', " + str(book['rating']) + ")"))
             return JsonResponse("OK", safe=False)
         else:
             return JsonResponse({'error': 'No user detected'}, safe=False)
@@ -76,7 +76,7 @@ def updateBook(request):
             book = json.loads(book)
             bookid = request.headers.get('bookid')
 
-            conn.execute(text("UPDATE api_books set name='" + str(book['name']) + "', author='" + str(book['author']) + "', genre='" + str(book['genre']) + "', country='" + str(book['country']) + "', country_code='" + str(book['country_code']) + "', pages='" + str(book['pages']) + "', readed='" + str(book['readed']) + "', rating='" + str(book['rating']) + "' WHERE id=" + str(bookid)))
+            conn.execute(text("UPDATE api_books set name='" + str(book['name']) + "', author='" + str(book['author']) + "', genre='" + str(book['genre']) + "', readed='" + str(book['readed']) + "', rating='" + str(book['rating']) + "' WHERE id=" + str(bookid)))
             return JsonResponse("OK", safe=False)
         else:
             return JsonResponse({'error': 'No user detected'}, safe=False)

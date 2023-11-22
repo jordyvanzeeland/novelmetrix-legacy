@@ -2,6 +2,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
+
+    const logout = () => {
+        localStorage.clear();
+        window.location.href = "/";
+    }
+
     return(
         <div className="sidebar">
                 <img className="logo_text" src="/static/images/logo_white.png" style={{ width: '100%', padding: '10px 25px' }}/>
@@ -18,10 +24,7 @@ const Sidebar = () => {
                 </ul>
 
                 <ul className="bottom-menu">
-                    {/* <NavLink to={'/settings'} exact="true">
-                        <li><i className="fas fa-cog"></i> Instellingen</li>
-                    </NavLink> */}
-                    <li><i className="fas fa-power-off"></i> Uitloggen</li>
+                    <li><button onClick={() => logout()}><i className="fas fa-power-off"></i> Uitloggen</button></li>
                 </ul>
         </div>
     )
