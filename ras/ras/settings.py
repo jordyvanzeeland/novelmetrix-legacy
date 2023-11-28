@@ -57,7 +57,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
+    'http://localhost:8000', 'https://novelmetrix.nl', 'http://novelmetrix.nl'
 )
 
 ROOT_URLCONF = 'ras.urls'

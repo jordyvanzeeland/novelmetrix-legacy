@@ -79,6 +79,7 @@ export const getChallenge = (year) => {
     return fetch('/api/books/challenge', {
         "method": "GET",
         "headers": {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
             "year": year,
             "userid": localStorage.getItem('id')
         }

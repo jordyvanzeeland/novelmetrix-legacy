@@ -32,11 +32,10 @@ const Login = (props) => {
         formData.append('username', username);
         formData.append('password', password);
 
-        return authFetch(`http://localhost:8000/api/auth/login?username=${username}&password=${password}`, {
+        return authFetch(`/api/auth/login?username=${username}&password=${password}`, {
             method: 'POST',
             body: formData
         }).then(res => {
-            console.log(res.user);
             if(res.user){
                 localStorage.setItem('id', res.user.id);
                 localStorage.setItem('name', res.user.name);
