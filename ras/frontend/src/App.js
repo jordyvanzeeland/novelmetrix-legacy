@@ -5,6 +5,7 @@ import Login from "./views/login";
 import Books from "./views/bookslist";
 import BooksList from "./views/bookslist";
 import Challenges from "./views/challenges";
+import { Register } from "./views/register";
 
 const Dashboard = lazy(() => import("./views/dashboard"));
 
@@ -28,6 +29,7 @@ function App() {
                 </div>}>
                 <Routes>
                     <Route exact path="/" element={localStorage.getItem('token') ? <Dashboard /> : <Login />} />
+                    <Route exact path="/register" element={<Register />} />
                     <Route exact path="/books" element={<BooksList />} />
                     <Route exact path="/challenges" element={<Challenges />} />
                     {/* <Route exact path="/login" element={<Login />} /> */}

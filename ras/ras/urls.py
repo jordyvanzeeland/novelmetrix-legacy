@@ -23,6 +23,7 @@ urlpatterns = [
     path('books/', include('frontend.urls')),
     path('challenges/', include('frontend.urls')),
     path('login/', include('frontend.urls')),
+    path('register/', include('frontend.urls')),
     path('manage/', include('frontend.urls')),
     path('manage/challenges', include('frontend.urls'))
 ]

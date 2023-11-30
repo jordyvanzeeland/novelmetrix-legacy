@@ -21,6 +21,7 @@ urlpatterns = [
     path('books/ratings/count', countRatings),
     # path('books/countries', books_per_country),
     path('auth/login', csrf_exempt(login)),
+    path('auth/register', csrf_exempt(register)),
 
     path('books/challenge', getChallengeOfYear),
     path('books/challenges', getAllChallenges),

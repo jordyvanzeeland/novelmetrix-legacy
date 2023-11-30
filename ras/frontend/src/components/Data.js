@@ -1,5 +1,16 @@
 import { readCookie } from "../Functions";
 
+export const registerUser = (formData) => {
+    return fetch(`/api/auth/register`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+}
+
 export const getAllBooks = () => {
     return fetch('/api/books/all', {
         "method": "GET",
