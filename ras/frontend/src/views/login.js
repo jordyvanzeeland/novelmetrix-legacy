@@ -5,6 +5,8 @@ const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loggedin, setLoggedin] = useState(false);
+    const [hasError, setHasError] = useState(false);
+    const [error, setError] = useState(null);
     
     const getToken = (idToken) => {
         localStorage.getItem('token');
@@ -32,7 +34,16 @@ const Login = (props) => {
         const formData = new FormData();
         formData.append('username', username);
         formData.append('password', password);
+        const user = await getUser(username, password, formData);
 
+        if(user.error){
+            setHasError(true);
+            setError(user.error)
+        }
+        
+    }
+
+    const getUser = (username, password, formData) => {
         return authFetch(`/api/auth/login?username=${username}&password=${password}`, {
             method: 'POST',
             body: formData
@@ -46,19 +57,19 @@ const Login = (props) => {
                 setToken(res.token);
                 return Promise.resolve(res);
             }
+            else if(res.error){
+                return res;
+            }
         })
     }
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         const res = await login(username, password);
-        console.log(res);
 
-        if(res.user.id){
+        if(res && res.user && res.user.id){
             setLoggedin(true);
             window.location.href = "/";
-        }else{
-            alert("Inlogegevens zijn onjuist. Probeer het opnieuw");
         }
     }
 
@@ -101,21 +112,23 @@ const Login = (props) => {
             <div className='login'>
                 <img className="logo_text" src="/static/images/logo.png" />
 
+                {hasError && error === 'UserNotExist' && (<div id='err_msg' className="alert alert-danger" style={{ textAlign: 'center' }}>Deze gebruiker heeft geen account</div>)}
+                {hasError && error === 'WrongCredentials' && (<div id='err_msg' className="alert alert-danger" style={{ textAlign: 'center' }}>De ingevulde gegevens zijn onjuist.</div>)}
+
                 <form onSubmit={(event) => handleFormSubmit(event)}>
                     <div className="mb-3">
                         <span className='icon'>
                             <i className="fas fa-user"></i>
                         </span>
-                        <input type="text" onChange={handleChange} className="form-control" name="username" id="username" placeholder="Gebruikersnaam" aria-describedby="emailHelp" />
+                        <input type="text" onChange={handleChange} className="form-control" name="username" id="username" placeholder="Gebruikersnaam" aria-describedby="emailHelp" required/>
                     </div>
                     <div className="mb-3">
                         <span className='icon'>
                             <i className="fas fa-key"></i>
                         </span>
-                        <input type="password" onChange={handleChange} className="form-control" name="password" id="password" placeholder="Wachtwoord"/>
+                        <input type="password" onChange={handleChange} className="form-control" name="password" id="password" placeholder="Wachtwoord" required/>
                     </div>
                     <button type="submit" className="btn btn-primary">Inloggen</button>
-                    <div id='err_msg'></div>
                 </form>
                 <Link className="btn" to="/register" style={{ width: '100%', marginTop: '15px' }}>Maak een account aan</Link>
             </div>

@@ -28,9 +28,9 @@ def login(request):
                 "token": token
             })
         else:
-            return JsonResponse({'error': 'Wrong credentials'})
+            return JsonResponse({'error': 'WrongCredentials'})
     except User.DoesNotExist:
-        return JsonResponse({'error': 'User does not exist'})
+        return JsonResponse({'error': 'UserNotExist'})
     
 @api_view(['POST'])
 def register(request):

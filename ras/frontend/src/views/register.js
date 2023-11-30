@@ -31,7 +31,7 @@ export const Register = (props) => {
                 <img className="logo_text" src="/static/images/logo.png" />
 
                 {isRegistered &&(
-                    <div id="ok_msg" class="alert alert-success" style={{ marginTop: '20px' }}>Account aangemaakt! Klik <Link to="/">hier</Link> om in te loggen.</div>
+                    <div id="ok_msg" class="alert alert-success" style={{ marginTop: '20px', textAlign: 'center' }}>Account aangemaakt! Klik <Link to="/">hier</Link> om in te loggen.</div>
                 )}
 
                 <form onSubmit={(event) => handleFormSubmit(event)}>
