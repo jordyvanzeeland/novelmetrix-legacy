@@ -34,34 +34,44 @@ const Login = (props) => {
         const formData = new FormData();
         formData.append('username', username);
         formData.append('password', password);
-        const user = await getUser(username, password, formData);
+
+        const data = await import("../components/Data.js");
+        const user = await data.loginUser(username, password, formData);
 
         if(user.error){
             setHasError(true);
             setError(user.error)
+        }else{
+            localStorage.setItem('id', user.user.id);
+            localStorage.setItem('name', user.user.name);
+            localStorage.setItem('username', user.user.username);
+            localStorage.setItem('email', user.user.email);
+
+            setToken(user.token);
+            window.location.reload();
         }
         
     }
 
-    const getUser = (username, password, formData) => {
-        return authFetch(`/api/auth/login?username=${username}&password=${password}`, {
-            method: 'POST',
-            body: formData
-        }).then(res => {
-            if(res.user){
-                localStorage.setItem('id', res.user.id);
-                localStorage.setItem('name', res.user.name);
-                localStorage.setItem('username', res.user.username);
-                localStorage.setItem('email', res.user.email);
+    // const getUser = (username, password, formData) => {
+    //     return authFetch(`/api/auth/login?username=${username}&password=${password}`, {
+    //         method: 'POST',
+    //         body: formData
+    //     }).then(res => {
+    //         if(res.user){
+    //             localStorage.setItem('id', res.user.id);
+    //             localStorage.setItem('name', res.user.name);
+    //             localStorage.setItem('username', res.user.username);
+    //             localStorage.setItem('email', res.user.email);
 
-                setToken(res.token);
-                return Promise.resolve(res);
-            }
-            else if(res.error){
-                return res;
-            }
-        })
-    }
+    //             setToken(res.token);
+    //             return Promise.resolve(res);
+    //         }
+    //         else{
+    //             return res;
+    //         }
+    //     })
+    // }
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();

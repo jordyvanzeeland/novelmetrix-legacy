@@ -11,6 +11,17 @@ export const registerUser = (formData) => {
     })
 }
 
+export const loginUser = (username, password, formData) => {
+    return fetch(`/api/auth/login?username=${username}&password=${password}`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+}
+
 export const getAllBooks = () => {
     return fetch('/api/books/all', {
         "method": "GET",

@@ -673,3 +673,68 @@ html, body{
   height: 35px;
   padding: 0 10px 0 0px;
 }
+
+/* Mobile app */
+
+@media screen and (max-width: 768px) {
+  .content{
+    padding: 0;
+  }
+
+  .sidebar{
+    text-align: center;
+    height: auto;
+    width: 100%;
+    bottom: 0;
+    padding:0;
+  }
+
+  .sidebar img{
+    display:none;
+  }
+
+  .sidebar ul li label{
+    display:none;
+  }
+
+  .sidebar ul{
+    margin-top:0;
+  }
+
+  .sidebar ul li, .sidebar ul a{
+    display:inline-block;
+  }
+
+  .sidebar ul li{
+    padding: 20px 25px;
+    text-align: center;
+  }
+
+  .sidebar ul li i{
+    margin-right:0;
+    width: auto;
+    font-size: 18px;
+  }
+
+  .topbar{
+    padding-left:0;
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .stat-block i{
+    display: block;
+    float:none;
+    margin: auto;
+    margin-bottom: 15px;
+  }
+
+  .content-manage{
+    margin-left:0;
+  }
+
+  .login{
+    width: 100%;
+  }
+}
