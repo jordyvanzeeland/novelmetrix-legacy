@@ -23,18 +23,16 @@ def getAllBooks(request):
 
         if(isLoggedIn):
             books = getBooksData(request.headers.get('userid'))
-            data = []
-
-            for index, row in books.iterrows():
-                data.append({
-                    "id": row['id'],
-                    "name": row['name'],
-                    "author": row['author'],
-                    "genre": row['genre'],
-                    "readed": row['readed'],
-                    "rating": row['rating'],
-                })
-
+            
+            data = books.apply(lambda row: {
+                "id": row['id'], 
+                "name": row['name'], 
+                "author": row['author'], 
+                "genre": row['genre'], 
+                "readed": row['readed'], 
+                "rating": row['rating']
+            }, axis=1).tolist()
+            
             return Response(data)
         else:
             return JsonResponse({'error': 'No user detected'}, safe=False)

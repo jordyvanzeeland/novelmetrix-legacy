@@ -15,13 +15,15 @@ const Sidebar = () => {
                     <NavLink to={'/'} exact="true">
                         <li><i className="fas fa-chart-line"></i> <label>Dashboard</label></li>
                     </NavLink>
+
+                    <span>Beheer</span>
                     <NavLink to={'/books'} exact="true">
                         <li><i className="fas fa-book"></i> <label>Boeken</label></li>
                     </NavLink>
                     <NavLink to={'/challenges'} exact="true">
                         <li><i className="fas fa-tasks"></i> <label>Challenges</label></li>
                     </NavLink>
-                    <li><button onClick={() => logout()}><i className="fas fa-power-off"></i> <label>Uitloggen</label></button></li>
+                    <li className="bottom-menu"><button onClick={() => logout()}><i className="fas fa-power-off"></i> <label>Uitloggen</label></button></li>
                 </ul>
 
                 {/* <ul className="bottom-menu">

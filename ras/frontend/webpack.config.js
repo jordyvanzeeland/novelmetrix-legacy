@@ -31,12 +31,12 @@ module.exports = {
     minimize: true,
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       "process.env": {
         // This has effect on the react lib size
         NODE_ENV: JSON.stringify("development"),
       },
     }),
-    new CleanWebpackPlugin()
   ],
 };

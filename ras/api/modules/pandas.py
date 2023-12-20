@@ -37,18 +37,16 @@ def books_per_genre_per_month(request):
 
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
-                data = []
                 df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
                 booksPerMonth = df.groupby(['genre','readed'])['genre'].count().reset_index(name="count")  
                 booksPerMonth = booksPerMonth.sort_values(by=['genre', 'readed', 'count'], ascending=False)
-
-                for index, row in booksPerMonth.iterrows():
-                    data.append({
-                        "genre": row['genre'],
-                        "readed": row['readed'],
-                        "count": row['count']
-                    })
                 
+                data = booksPerMonth.apply(lambda row: {
+                    'genre': row['genre'], 
+                    'readed': row['readed'], 
+                    'count': row['count']
+                }, axis=1).tolist()
+
                 return Response(data)
             else:
                 return JsonResponse({'error': 'No year in header'}, safe=False)
@@ -68,19 +66,15 @@ def countGenres(request):
 
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
-                
-                data = []
                 df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
-                
                 genres = df.groupby('genre')['genre'].count().reset_index(name="count")
                 genres = genres.sort_values(by='count', ascending=False)
-
-                for index, row in genres.iterrows():
-                    data.append({
-                        "genre": row['genre'],
-                        "count": int(row['count'])
-                    })
-
+                
+                data = genres.apply(lambda row: {
+                    'genre': row['genre'], 
+                    'count': int(row['count'])
+                }, axis=1).tolist()
+                
                 return Response(data)
             else:
                 return JsonResponse({'error': 'No year in header'}, safe=False)
@@ -132,16 +126,14 @@ def avg_ratings_per_month(request):
 
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
-                data = []
                 df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
                 avgratingspermonth = df.groupby('readed')['rating'].mean().reset_index(name="rating")
-
-                for index, row in avgratingspermonth.iterrows():
-                    data.append({
-                        "date": row['readed'],
-                        "rating": int(row['rating'])
-                    })
-
+                
+                data = avgratingspermonth.apply(lambda row: {
+                    'date': row['readed'], 
+                    'rating': int(row['rating'])
+                }, axis=1).tolist()
+                
                 return Response(data)
             else:
                 return JsonResponse({'error': 'No year in header'}, safe=False)
@@ -162,17 +154,15 @@ def countRatings(request):
 
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
-                data = []
                 df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
                 countratings = df.groupby('rating')['rating'].count().reset_index(name="count")
                 countratings = countratings.sort_values(by='rating', ascending=False)
-
-                for index, row in countratings.iterrows():
-                    data.append({
-                        "rating": int(row['rating']),
-                        "count": int(row['count'])
-                    })
-
+                
+                data = countratings.apply(lambda row: {
+                    'rating': int(row['rating']), 
+                    'count': int(row['count'])
+                }, axis=1).tolist()
+                
                 return Response(data)
             else:
                 return JsonResponse({'error': 'No year in header'}, safe=False)

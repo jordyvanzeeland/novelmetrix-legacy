@@ -15,20 +15,14 @@ def getAllChallenges(request):
         isLoggedIn = isAuthorized(request.headers.get('Authorization'));
 
         if(isLoggedIn):
-            data = []
             df = getBookChallenge(request.headers.get('userid'))
 
-            for index, row in df.iterrows():
-                books = filterData(getBooksData(request.headers.get('userid')), str(row['year']))
-                books = books.dropna()
-                totalBooksRead = books['name'].count()
-
-                data.append({
-                    "id": row['id'],
-                    "year": row['year'],
-                    "nrofbooks": row['nrofbooks'],
-                    "booksread": totalBooksRead
-                })
+            data = df.apply(lambda row: {
+                "id": row['id'],
+                "year": row['year'],
+                "nrofbooks": row['nrofbooks'],
+                "booksread": filterData(getBooksData(request.headers.get('userid')), str(row['year'])).dropna()['name'].count()
+            }, axis=1).tolist()
 
             return Response(data)
         else:
@@ -43,15 +37,8 @@ def getChallengeOfYear(request):
 
         if(isLoggedIn):
             if request.META.get('HTTP_YEAR'):
-                data = []
                 df = getBookChallenge(request.headers.get('userid'), request.META.get('HTTP_YEAR'))
-
-                for index, row in df.iterrows():
-                    data.append({
-                        "year": row['year'],
-                        "nrofbooks": row['nrofbooks']
-                    })
-
+                data = df.apply(lambda row: {'year': row['year'], 'nrofbooks': row['nrofbooks']}, axis=1).tolist()
                 return Response(data)
             else:
                 return JsonResponse({'error': 'No year header included'}, safe=False)

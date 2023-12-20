@@ -65,6 +65,7 @@ const BooksList = (props) => {
                             <tr>
                                 <th>Boek</th>
                                 <th>Schrijver</th>
+                                <th>Genre</th>
                                 <th>Gelezen op</th>
                                 <th>Rating</th>
                                 <th>Acties</th>
@@ -76,6 +77,7 @@ const BooksList = (props) => {
                                     <tr key={book.id}>
                                         <td>{book.name}</td>
                                         <td>{book.author}</td>
+                                        <td>{book.genre}</td>
                                         <td>{moment(book.readed).format('MMMM YYYY')}</td>
                                         <td><i class='fas fa-star'></i> {book.rating}</td>
                                         <td>
