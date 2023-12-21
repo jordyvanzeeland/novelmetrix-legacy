@@ -18,26 +18,22 @@ conn = engine.connect()
 
 @api_view(['GET'])
 def getAllBooks(request):
-    if(request.headers.get('Authorization')):
-        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
+    try:
+        authorization_token = request.headers.get('Authorization')
+        isLoggedIn = isAuthorized(authorization_token)
 
-        if(isLoggedIn):
-            books = getBooksData(request.headers.get('userid'))
-            
-            data = books.apply(lambda row: {
-                "id": row['id'], 
-                "name": row['name'], 
-                "author": row['author'], 
-                "genre": row['genre'], 
-                "readed": row['readed'], 
-                "rating": row['rating']
-            }, axis=1).tolist()
-            
-            return Response(data)
-        else:
-            return JsonResponse({'error': 'No user detected'}, safe=False)
-    else:
-        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        if not authorization_token:
+            return JsonResponse({'error': 'No authorization token'}, safe=False)
+
+        if not isLoggedIn:
+            return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        
+        books = getBooksData(request.headers.get('userid'))
+        data = books.to_dict(orient='records')
+        return Response(data)
+    
+    except Exception as e:
+        return JsonResponse({'error': 'An error occurred: {}'.format(str(e))}, safe=False)
 
 # -------------------------------
 # Add a book into the database
@@ -45,20 +41,32 @@ def getAllBooks(request):
 
 @api_view(['POST'])
 def addBook(request):
-    if(request.headers.get('Authorization')):
-        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
+    try:
+        authorization_token = request.headers.get('Authorization')
+        isLoggedIn = isAuthorized(authorization_token)
 
-        if(isLoggedIn):
-            userid = request.headers.get('userid')
-            book = request.body
-            book = json.loads(book)
+        if not authorization_token:
+            return JsonResponse({'error': 'No authorization token'}, safe=False)
 
-            conn.execute(text("INSERT INTO api_books (userid, name, author, genre, readed, rating) VALUES ('" + str(userid) + "', '" + str(book['name']) + "', '" + str(book['author']) + "', '" + str(book['genre']) + "', '" + str(book['readed']) + "', " + str(book['rating']) + ")"))
-            return JsonResponse("OK", safe=False)
-        else:
-            return JsonResponse({'error': 'No user detected'}, safe=False)
-    else:
-        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        if not isLoggedIn:
+            return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        
+        userid = request.headers.get('userid')
+        book_data = json.loads(request.body)
+        query = text("INSERT INTO api_books (userid, name, author, genre, readed, rating) VALUES (:userid, :name, :author, :genre, :readed, :rating)")
+        conn.execute(query, {
+            'userid': userid,
+            'name': book_data['name'],
+            'author': book_data['author'],
+            'genre': book_data['genre'],
+            'readed': book_data['readed'],
+            'rating': book_data['rating']
+        })
+
+        return JsonResponse("OK", safe=False)
+        
+    except Exception as e:
+        return JsonResponse({'error': 'An error occurred: {}'.format(str(e))}, safe=False)
 
 # -------------------------------
 # Update a book in the database
@@ -66,21 +74,32 @@ def addBook(request):
 
 @api_view(['PUT'])
 def updateBook(request):
-    if(request.headers.get('Authorization')):
-        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
+    try:
+        authorization_token = request.headers.get('Authorization')
+        isLoggedIn = isAuthorized(authorization_token)
 
-        if(isLoggedIn):
-            book = request.POST.get('book')
-            book = json.loads(book)
-            bookid = request.headers.get('bookid')
+        if not authorization_token:
+            return JsonResponse({'error': 'No authorization token'}, safe=False)
 
-            conn.execute(text("UPDATE api_books set name='" + str(book['name']) + "', author='" + str(book['author']) + "', genre='" + str(book['genre']) + "', readed='" + str(book['readed']) + "', rating='" + str(book['rating']) + "' WHERE id=" + str(bookid)))
-            return JsonResponse("OK", safe=False)
-        else:
-            return JsonResponse({'error': 'No user detected'}, safe=False)
-    else:
-        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        if not isLoggedIn:
+            return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        
+        book_data = json.loads(request.POST.get('book'))
+        bookid = request.headers.get('bookid')
+        query = text("UPDATE api_books SET name=:name, author=:author, genre=:genre, readed=:readed, rating=:rating WHERE id=:bookid")
+        conn.execute(query, {
+            'name': book_data['name'],
+            'author': book_data['author'],
+            'genre': book_data['genre'],
+            'readed': book_data['readed'],
+            'rating': book_data['rating'],
+            'bookid': bookid
+        })
 
+        return JsonResponse("OK", safe=False)
+        
+    except Exception as e:
+        return JsonResponse({'error': 'An error occurred: {}'.format(str(e))}, safe=False)
 
 # -------------------------------
 # Delete a book in the database
@@ -88,15 +107,23 @@ def updateBook(request):
 
 @api_view(['DELETE'])
 def deleteBook(request):
-    if(request.headers.get('Authorization')):
-        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
+    try:
+        authorization_token = request.headers.get('Authorization')
+        isLoggedIn = isAuthorized(authorization_token)
 
-        if(isLoggedIn):
-            bookid = request.headers.get('bookid')
-            
-            conn.execute(text("DELETE FROM api_books WHERE id = " + str(bookid)))
-            return JsonResponse("OK", safe=False)
-        else:
-            return JsonResponse({'error': 'No user detected'}, safe=False)
-    else:
-        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        if not authorization_token:
+            return JsonResponse({'error': 'No authorization token'}, safe=False)
+
+        if not isLoggedIn:
+            return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        
+        bookid = request.headers.get('bookid')
+        query = text("DELETE FROM api_books WHERE id=:bookid")
+        conn.execute(query, {
+            'bookid': bookid
+        })
+
+        return JsonResponse("OK", safe=False)
+        
+    except Exception as e:
+        return JsonResponse({'error': 'An error occurred: {}'.format(str(e))}, safe=False)
