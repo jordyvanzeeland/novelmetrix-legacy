@@ -44,7 +44,7 @@ const Ratings = (props) => {
         <React.Fragment>
             <div className="ratings">
                 <span className="block_name">Ratings</span>
-                <table className="ratingstable responsive nowrap" width="100%">
+                {ratings && ratings.length > 0 ? <table className="ratingstable responsive nowrap" width="100%">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -68,7 +68,7 @@ const Ratings = (props) => {
                                     <td style={{width: '200px'}} className='book_rating' dangerouslySetInnerHTML={{__html: ratingstars}}></td>
                                     <td style={{width: '257px'}}>
                                         <div className="progress">
-                                            <div className="progress-bar" role="progressbar" style={{ width: rating_percentage + '%' }} aria-valuenow={rating_percentage} aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="progress-bar" role="progressbar" style={{ width: rating_percentage ? rating_percentage : 0 + '%' }} aria-valuenow={rating_percentage ? rating_percentage : 0} aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </td>
                                     <td>{rating[1]}</td>
@@ -76,7 +76,7 @@ const Ratings = (props) => {
                             )
                         })}
                     </tbody>
-                </table>
+                </table> : <div className='no-data-msg'>Geen data beschikbaar</div> }
             </div>
         </React.Fragment>
     )

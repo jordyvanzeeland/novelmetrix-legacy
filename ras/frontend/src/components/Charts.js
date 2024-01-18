@@ -94,7 +94,8 @@ export const initChart = (data, ratings, year) => {
     */
 
     $("canvas#chart").remove();
-    $("div.books-per-month").append('<canvas id="chart"></canvas>');
+    data && data.length > 0 ? $(".no-data-msg").remove() : $("canvas#chartGenres").remove();
+    data && data.length > 0 ? $("div.books-per-month").append('<canvas id="chart"></canvas>') : $("div.books-per-month").append('<div class="no-data-msg">Geen data beschikbaar</div>');
 
     const legendMargin = {
         id: 'legendMargin',
@@ -136,7 +137,6 @@ export const initChart = (data, ratings, year) => {
                         beginAtZero: true,
                         color: "#333",
                         size: 11,
-                        fontFamily: "Poppins",
                     },
                     stacked: true,
                 },
@@ -149,7 +149,6 @@ export const initChart = (data, ratings, year) => {
                         stepSize: 1,
                         color: "#333",
                         size: 11,
-                        fontFamily: "Poppins",
                     },
                     stacked: true
                 }
@@ -163,14 +162,9 @@ export const initChart = (data, ratings, year) => {
                         padding: 20,
                         font: {
                             size: 11,
-                            weight: 300,
-                            family: 'Poppins',
                         }
                     }
                 }
-            },
-            tooltips: {
-                bodyFont: 'Poppins'
             }
         },
         plugins: [legendMargin],
@@ -178,8 +172,6 @@ export const initChart = (data, ratings, year) => {
 }
 
 export const initDoughnut = (data) => {
-
-
     var labels = [];
     var counts = [];
 
@@ -204,8 +196,9 @@ export const initDoughnut = (data) => {
     };
 
     $("canvas#chartGenres").remove();
-    $("div.genresPercent").append('<canvas id="chartGenres"></canvas>');
-
+    data && data.length > 0 ? $(".no-data-msg").remove() : $("canvas#chartGenres").remove();
+    data && data.length > 0 ? $("div.genresPercent").append('<canvas id="chartGenres"></canvas>') : $("div.genresPercent").append('<div class="no-data-msg">Geen data beschikbaar</div>');
+    
     var ctx = document.getElementById("chartGenres");
     var myChart = new Chart(ctx, {
         type: 'pie',
@@ -255,8 +248,6 @@ export const initDoughnut = (data) => {
                         color: "#333",
                         font: {
                             size: 11,
-                            weight: 300,
-                            family: 'Poppins'
                         }
                     }
                 }

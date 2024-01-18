@@ -59,7 +59,7 @@ def addChallenge(request):
             if(year and challenge):
                 engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
                 conn = engine.connect()
-                conn.execute(text("INSERT INTO book_challenge (year, nrofbooks) VALUES ('" + str(year) + "', '" + str(challenge) + "')"))
+                conn.execute(text("INSERT INTO book_challenge (userid, year, nrofbooks) VALUES ('" + str(request.headers.get('userid')) + "', '" + str(year) + "', '" + str(challenge) + "')"))
                 return JsonResponse("OK", safe=False)
             else:
                 return JsonResponse({'error': 'No year and challenge detected'}, safe=False)

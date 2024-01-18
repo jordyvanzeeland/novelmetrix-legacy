@@ -56,7 +56,8 @@ export const insertChallenge = (data) => {
         "headers": {
             "Authorization": "Bearer " + localStorage.getItem("token"),
             'Content-Type': 'application/x-www-form-urlencoded',
-            "X-CSRFToken": readCookie('csrftoken')
+            "X-CSRFToken": readCookie('csrftoken'),
+            "userid": localStorage.getItem('id')
         },
         "body": data
     })

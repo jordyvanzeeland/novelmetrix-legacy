@@ -108,16 +108,20 @@ def getStats(request):
         
         df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
         df = df.dropna()
-        statsTotalBooks = df['name'].count()
-        statsTotalGenres = df['genre'].nunique()
-        avgratingsperyear = round(df['rating'].mean(), 0)
 
-        data = {
-            'totalbooks': statsTotalBooks,
-            'totalgenres': statsTotalGenres,
-            'avgyearrating': avgratingsperyear
-        }
+        if not df.empty:
+            statsTotalBooks = df['name'].count()
+            statsTotalGenres = df['genre'].nunique()
+            avgratingsperyear = round(df['rating'].mean(), 0)
 
+            data = {
+                'totalbooks': statsTotalBooks,
+                'totalgenres': statsTotalGenres,
+                'avgyearrating': avgratingsperyear
+            }
+        else:
+            data = {}
+            
         return Response(data)
 
     except Exception as e:

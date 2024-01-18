@@ -43,20 +43,16 @@ def filterData(df, datayear = None):
 @api_view(['GET'])
 def getStats(request):
     if request.META.get('HTTP_YEAR'):
-        data = []
         df = filterData(getBooksData(), request.META.get('HTTP_YEAR'))
+        print(df)
         df = df.dropna()
 
         statsTotalBooks = df['name'].count()
         statsTotalGenres = df['genre'].nunique()
 
-
-        data.append({
+        return Response({
             'totalbooks': statsTotalBooks,
             'totalgenres': statsTotalGenres
         })
-        
-
-        return Response(data[0])
     else:
         return Response("No year header included")

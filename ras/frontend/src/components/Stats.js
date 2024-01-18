@@ -25,7 +25,7 @@ const BookStats = (props) =>{
                     <div className="stat-block">
                         <i className="fas fa-book-open"></i>   
                         <span className="stats-label">Gelezen boeken:</span>
-                        <span className="stats-number">{totalbooks}</span>
+                        <span className="stats-number">{totalbooks ? totalbooks : 0}</span>
                         
                     </div>
                 </div>
@@ -34,7 +34,7 @@ const BookStats = (props) =>{
                     <div className="stat-block">
                         <i className="fas fa-book-open"></i>   
                         <span className="stats-label">Genres:</span>
-                        <span className="stats-number">{totalgenres}</span>
+                        <span className="stats-number">{totalgenres ? totalgenres : 0}</span>
                         
                     </div>
                 </div>
@@ -43,7 +43,7 @@ const BookStats = (props) =>{
                     <div className="stat-block">
                         <i className="fas fa-star"></i> 
                         <span className="stats-label">Jaarbeoordeling:</span>
-                        <span className="stats-number">{yearrating}</span>
+                        <span className="stats-number">{yearrating? yearrating : 0}</span>
                     </div>
                 </div>
             </div>

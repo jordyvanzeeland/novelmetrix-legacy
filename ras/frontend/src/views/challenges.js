@@ -76,6 +76,7 @@ const Challenges = (props) => {
                             {challenges.map((challenge, i) => {
 
                                 var challengePercentage = Math.round((challenge.booksread / challenge.nrofbooks) * 100, 0);
+                                console.log(challengePercentage);
 
                                 return (
                                     <tr key={challenge.id}>
@@ -84,8 +85,8 @@ const Challenges = (props) => {
                                         <td>{challenge.booksread}</td>
                                         <td>
                                             <div className="progress">
-                                                <div className="progress-bar progress-bar" role="progressbar" style={{ width: challengePercentage + '%' }} aria-valuenow={challengePercentage} aria-valuemin="0" aria-valuemax="100">
-                                                    <div className="progress-bar-number">{challengePercentage}%</div>
+                                                <div className="progress-bar progress-bar" role="progressbar" style={{ width: challengePercentage ? challengePercentage : 0 + '%' }} aria-valuenow={challengePercentage ? challengePercentage : 0} aria-valuemin="0" aria-valuemax="100">
+                                                    <div className="progress-bar-number">{challengePercentage ? challengePercentage : 0}%</div>
                                                 </div>
                                             </div>
                                         </td>

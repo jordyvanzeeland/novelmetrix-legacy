@@ -7,13 +7,19 @@ import Challenge from "../components/Challenge";
 import Sidebar from "../components/Sidebar";
 
 const Dashboard = (props) => {
-    const [year, setYear] = useState(new Date().getFullYear());
+    const currentyear = new Date().getFullYear();
+    const [year, setYear] = useState(currentyear);
     const [readingYears, setReadingYears] = useState([]);
 
     const getData = async () => {
         const data = await import("../components/Data.js");
         const getYears = await data.getReadingYears();
         setReadingYears(getYears);
+    }
+
+    const logout = () => {
+        localStorage.clear();
+        window.location.href = "/";
     }
 
     useEffect(() => {
@@ -23,19 +29,28 @@ const Dashboard = (props) => {
     return (
         <React.Fragment>
             <div className="topbar">
+                <img className="logo" src="/static/images/logo_white.png" />
                 <div className="chooseYear">
-                        <i className="fa fa-calendar"></i>
-                        <span className="stats-label" style={{ marginRight: '0px' }}>Selecteer jaar</span>
-                        <span className="stats-number" style={{ marginRight: '0px' }}>
-                            <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
-                                {readingYears.map((year, i) => {
-                                    return (<option key={i} value={year}>{year}</option>)
-                                })}
-                            </select>
-                        </span>
-                    </div>
+                    <i className="fa fa-calendar"></i>
+                    <span className="stats-number" style={{ marginRight: '0px' }}>
+                        <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
+                            {readingYears.map((year, i) => {
+                                return (<option key={i} value={year}>{year}</option>)
+                            })}
+                            {!readingYears.includes(currentyear) ? <option key={currentyear} value={currentyear}>{currentyear}</option> : ''}
+                        </select>
+                    </span>
+                </div>
+
+                <div className="topbar_right">
+                    <ul>
+                        <li><i className="fas fa-book"></i></li>
+                        <li style={{ borderRight: "solid 1px rgba(255,255,255,0.5)", paddingRight: '20px' }}><i className="fas fa-tasks"></i></li>
+                        <li onClick={() => logout()}><i className="fas fa-power-off"></i></li>
+                    </ul>
+                </div>
             </div>
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className="content">
                 <div className="container-fluid">
                     {/* <div className="row">

@@ -28,8 +28,6 @@ html, body{
 
   .content{
     padding: 30px;
-    padding-top: 90px;
-    padding-left: 230px;
   }
 
   .content-manage{
@@ -283,7 +281,7 @@ html, body{
   border-top: solid 1px rgba(255,255,255,0.2);
 }
 
-.sidebar button{
+.topbar button{
   background: none;
     border: none;
     width: 100%;
@@ -312,26 +310,25 @@ html, body{
   }
 
   .chooseYear{
-    padding: 10px;
-    color:#333;
+    padding: 15px 25px;
+    color:#fff;
+    display: inline-block;
   }
 
   .chooseYear span{
     display: inline-block;
-    color:#333;
+    color:#fff;
   }
 
   .chooseYear i{
-    color: #333;
+    color: rgba(255,255,255,0.5);
     font-size:13px;
-    margin-right: 10px;
   }
 
   .chooseYear select{
     font-size:13px;
     background: none;
-    color:#333;
-    border: solid 1px #eee;
+    color:#fff;
     padding: 5px;
   }
 
@@ -339,26 +336,6 @@ html, body{
     border:none !important;
     outline: none !important;
   }
-  /* .books-stats .col-md-2:nth-child(2) i{
-    background: #f1fcf8;
-    color: #58c8d6;
-  }
-  .books-stats .col-md-2:nth-child(3) i{
-    background: #fff5f6;
-    color: #fe4c62;
-  }
-  .books-stats .col-md-2:nth-child(4) i{
-    background: #f2f9ff;
-    color: #49b8fd;
-  }
-  .books-stats .col-md-2:nth-child(5) i{
-    background: #fffaee;
-    color: #ffbe0e;
-  }
-  .books-stats .col-md-2:nth-child(6) i{
-    background: #f8f5fc;
-    color: #8066ee;
-  } */
 
   .stat-block i{
     font-weight: 900;
@@ -373,7 +350,6 @@ html, body{
     color:#ffffff;
     float:left;
     margin-left:15px;
-    /* box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.3); */
   }
 
   .col-md-4:nth-child(2) .stat-block i{
@@ -387,16 +363,13 @@ html, body{
   .books-stats .stat-block .stats-number, .stats-number{
     font-weight: 600;
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 5px;
     font-size: 20px;
     margin-right: 10px;
     color: #333;
   }
 
   .books-stats .stat-block .stats-label, .stats-label{
-    color: #a7adbd;
-    font-weight: 400;
-    font-size: 12px;
     display: block;
   }
 
@@ -655,12 +628,43 @@ html, body{
 }
 
 .topbar{
-  background: #ffffff;
+  background: #343d50;
   width: 100%;
   min-height: 50px;
-  position: absolute;
   box-shadow: 0px 1px 1px 1px #eee;
-  padding-left:230px;
+  padding-left:30px;
+}
+
+.topbar .logo{
+  width:150px;
+  display:inline-block;
+  padding: 15px 0;
+}
+
+.topbar_right{
+  float:right;
+  padding: 25px 0;
+  margin-right: 30px;
+}
+
+.topbar_right ul{
+  margin: 0;
+}
+
+.topbar_right ul li{
+  list-style-type: none;
+  display: inline-block;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.topbar_right ul li i{
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+}
+
+.topbar_right ul li:hover i{
+  color: #ffffff;
 }
 
 .stats{

@@ -22,8 +22,8 @@ const Challenge = (props) => {
                 <div className="stat-block challenge" style={{ marginBottom: '20px' }}>
                     <span className="block_name">Book Challenge ({challenge} boeken)</span>
                     <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={{ width: challengePercentage + '%' }} aria-valuenow={challengePercentage} aria-valuemin="0" aria-valuemax="100">
-                            <div className="progress-bar-number">{challengePercentage}%</div>
+                        <div className="progress-bar" role="progressbar" style={{ width: challengePercentage ? challengePercentage + '%' : 0 + '%' }} aria-valuenow={challengePercentage ? challengePercentage : 0} aria-valuemin="0" aria-valuemax="100">
+                            <div className="progress-bar-number">{challengePercentage ? challengePercentage : 0}%</div>
                         </div>
                     </div>
                 </div>
