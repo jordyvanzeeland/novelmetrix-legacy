@@ -24,7 +24,7 @@ def getBooksData(userid, year = None):
     engine = create_engine('mysql+mysqldb://' + ras.settings.DATABASES['default']['USER'] + ':' + ras.settings.DATABASES['default']['PASSWORD'] + '@' + ras.settings.DATABASES['default']['HOST'] + ':3306/' + ras.settings.DATABASES['default']['NAME'])
     
     if year:
-        sql = 'SELECT * FROM api_books WHERE userid = ' + userid + ' AND year = ' + str(year) + ' ORDER BY readed'
+        sql = "SELECT * FROM api_books WHERE userid = " + userid + " AND  YEAR(readed) IN ('" + str(year) + "') ORDER BY readed"
     else:
         sql = 'SELECT * FROM api_books WHERE userid = ' + userid + ' ORDER BY readed'
     

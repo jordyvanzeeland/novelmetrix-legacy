@@ -22,6 +22,21 @@ export const loginUser = (username, password, formData) => {
     })
 }
 
+export const getBooksByYear = (year) => {
+    return fetch('/api/books', {
+        "method": "GET",
+        "headers": {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id'),
+            "year": year,
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
+
 export const getAllBooks = () => {
     return fetch('/api/books/all', {
         "method": "GET",

@@ -5,6 +5,23 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from .functions import isAuthorized, getBooksData, filterData
 
+@api_view(['GET'])
+def getBooksByYear(request):
+    if(request.headers.get('Authorization')):
+        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
+
+        if(isLoggedIn):
+            if request.META.get('HTTP_YEAR'):
+                df = getBooksData(request.headers.get('userid'), request.META.get('HTTP_YEAR'))
+                data = df.to_dict(orient='records')
+                return Response(data)
+            else:
+                return JsonResponse({'error': 'No year header included'}, safe=False)
+        else:
+            return JsonResponse({'error': 'No user detected'}, safe=False)
+    else:
+        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+
 # ----------------------
 # Get all reading years
 # ----------------------

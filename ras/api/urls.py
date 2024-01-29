@@ -9,7 +9,7 @@ from .modules.predictions import *
 
 urlpatterns = [
     path('books/all', getAllBooks),
-    # path('books', getBooksByYear),
+    path('books', getBooksByYear),
     path('books/years', getYears),
     path('books/stats', getStats),
     path('books/insert', addBook),

@@ -16,18 +16,14 @@ export const initDataTable = () => {
     table.destroy();  
     setTimeout(() => {  
         table = new DataTable('#DataTable', {
-            columnDefs: [
-                { width: '20%', targets: "_all" }
-            ],
-            fixedColumns: true,
+            autoWidth: true,
             language: {
               url: 'https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Dutch.json',
               search: "",
               searchPlaceholder: "Zoeken"
             },
             dom: 'rt<"bottom"pl><"clear">',
-            order: [],
-            "autoWidth": true
+            order: []
         });
     }, 300)
 }
