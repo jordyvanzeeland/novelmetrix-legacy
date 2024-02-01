@@ -84,13 +84,14 @@ const Dashboard = (props) => {
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <button type="button" onClick={() => { setShowModal(false) }} className="close" data-dismiss="modal" aria-label="Close">
-                                <i class="fas fa-times-circle"></i>
+                                <i className="fas fa-times-circle"></i>
                             </button>
                             <div className="DataTable_Container">
                                 <table id="DataTable" className="showHead table responsive nowrap" width="100%">
                                     <thead>
                                         <tr>
                                             <th>Gelezen boeken</th>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -118,9 +119,10 @@ const Dashboard = (props) => {
                                                             <div style={{ color: '#777' }} className="book-author">{book.author}</div>
                                                         </div>
                                                     </td>
-                                                    <td><i class='fas fa-star'></i> {book.rating}</td>
+                                                    <td><i className='fas fa-star'></i> {book.rating}</td>
+                                                    <td>{moment(book.readed).format("MMMM")}</td>
                                                     <td style={{ textAlign: 'right' }}>
-                                                        <button onClick={() => delBook(book.id)} type="button" class="btn btn-danger"><i className="fa fa-trash"></i></button>
+                                                        <button onClick={() => delBook(book.id)} type="button" className="btn btn-danger"><i className="fa fa-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             )

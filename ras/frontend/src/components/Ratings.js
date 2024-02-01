@@ -44,7 +44,7 @@ const Ratings = (props) => {
         <React.Fragment>
             <div className="ratings">
                 <span className="block_name">Ratings</span>
-                {ratings && ratings.length > 0 ? <table className="ratingstable responsive nowrap" width="100%">
+                <table className="ratingstable responsive nowrap" width="100%">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -76,7 +76,7 @@ const Ratings = (props) => {
                             )
                         })}
                     </tbody>
-                </table> : <div className='no-data-msg'>Geen data beschikbaar</div> }
+                </table>
             </div>
         </React.Fragment>
     )

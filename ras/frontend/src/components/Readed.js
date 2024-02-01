@@ -52,7 +52,7 @@ const Readed = (props) => {
                                     <td>{book.name}</td>
                                     <td>{book.author} <span className={`flag-icon flag-icon-${code} mx2`}></span></td>
                                     <td>{book.genre}</td>
-                                    <td><i class='fas fa-star'></i>{book.rating}</td>
+                                    <td><i className='fas fa-star'></i>{book.rating}</td>
                                 </tr>
                             )
                         })}

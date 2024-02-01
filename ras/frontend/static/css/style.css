@@ -119,7 +119,7 @@ html, body{
   }
 
   .books-per-month canvas{
-    height:500px !important;
+    max-height:700px !important;
   }
   
   .books-per-month, .genresPercent, .books-per-country, .book, .ratings, .readed{
