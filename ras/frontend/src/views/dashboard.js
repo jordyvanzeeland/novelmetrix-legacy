@@ -3,9 +3,10 @@ import Genres from "../components/Genres";
 import Books from "../components/Books";
 import Ratings from "../components/Ratings";
 import Stats from "../components/Stats";
-import Challenge from "../components/Challenge";
 import * as moment from 'moment';
 import "../components/DataTables.css";
+import Readed from "../components/Readed.js";
+import Sidebar from "../components/Sidebar.js";
 moment.locale('nl');
 
 const Dashboard = (props) => {
@@ -24,8 +25,19 @@ const Dashboard = (props) => {
         setReadingYears(getYears);
 
         const getbooks = await data.getBooksByYear(year);
-        setBooks(getbooks);
+        var months = [];
 
+        for(var i = 1; i < 13; i++){
+            months[i] = [];
+
+            getbooks.forEach(book => {
+                if(moment(book.readed).format("M") == i){
+                    months[i].push(book);
+                }
+            });
+        }
+        
+        setBooks(getbooks);
         functions.initDataTable();
     }
 
@@ -40,25 +52,13 @@ const Dashboard = (props) => {
 
     return (
         <React.Fragment>
+            <Sidebar />
             <div className="topbar">
                 <img className="logo" src="/static/images/logo_white.png" />
-                <div className="chooseYear">
-                    <i className="fa fa-calendar"></i>
-                    <span className="stats-number" style={{ marginRight: '0px' }}>
-                        <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
-                            {readingYears.map((year, i) => {
-                                return (<option key={i} value={year}>{year}</option>)
-                            })}
-                            {!readingYears.includes(currentyear) ? <option key={currentyear} value={currentyear}>{currentyear}</option> : ''}
-                        </select>
-                    </span>
-                </div>
 
                 <div className="topbar_right">
                     <ul>
-                        <li><i className="fas fa-book" onClick={() => {setShowModal(true)}}></i></li>
-                        {/* <li style={{ borderRight: "solid 1px rgba(255,255,255,0.5)", paddingRight: '20px' }}><i className="fas fa-tasks"></i></li> */}
-                        <li onClick={() => logout()}><i className="fas fa-power-off"></i></li>
+                        <li className="currentUser"><i class="fas fa-user-circle"></i> {localStorage.getItem('name')}</li>
                     </ul>
                 </div>
             </div>
@@ -67,72 +67,35 @@ const Dashboard = (props) => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-8">
-                            <Stats year={year} />
-                            {/* <Challenge year={year} /> */}
+                            <div className="row">
+                                <div className="col-md-4 col-sm-4">
+                                    <div className="stat-block">
+                                    <i className="fa fa-calendar"></i>  
+                                        <span className="stats-label">Selecteer jaar:</span>
+                                        <span className="stats-number">
+                                        <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
+                                            {readingYears.map((year, i) => {
+                                                return (<option key={i} value={year}>{year}</option>)
+                                            })}
+                                            {!readingYears.includes(currentyear) ? <option key={currentyear} value={currentyear}>{currentyear}</option> : ''}
+                                        </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                <Stats year={year} />
+                            </div>
+                            
                             <Books year={year} />
                         </div>
 
                         <div className="col-md-4">
-                            
                             <Genres year={year} />
                             <Ratings year={year} />
                         </div>
                     </div>
                 </div>
 
-                <div style={{ display: showModal === true ? 'block' : 'none' }} className="modal modal-books" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <button type="button" onClick={() => { setShowModal(false) }} className="close" data-dismiss="modal" aria-label="Close">
-                                <i className="fas fa-times-circle"></i>
-                            </button>
-                            <div className="DataTable_Container">
-                                <table id="DataTable" className="showHead table responsive nowrap" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Gelezen boeken</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {books.map((book, i) => {
-                                            var dotcolor = '';
-
-                                            if(book.genre === "Thriller"){
-                                                dotcolor = '#404e67';
-                                            }else if (book.genre === "Roman"){
-                                                dotcolor = '#01a9ac';
-                                            }else if(book.genre === 'Non-fictie'){
-                                                dotcolor = '#64c5b1';
-                                            }else{
-                                                dotcolor = '#1ABB9C';
-                                            }
-
-                                            return (
-                                                <tr key={book.id}>
-                                                    <td>
-                                                        <div className="dotgenre" style={{ display: 'inline-block', verticalAlign: 'top', marginTop: '5px', marginRight: '10px', width: '10px', height: '10px', borderRadius: '100%', background: dotcolor }}></div> 
-                                                        <div className="book-info" style={{ display: 'inline-block', verticalAlign: 'top' }}>
-                                                            {book.name}
-                                                            <div style={{ color: '#777' }} className="book-author">{book.author}</div>
-                                                        </div>
-                                                    </td>
-                                                    <td><i className='fas fa-star'></i> {book.rating}</td>
-                                                    <td>{moment(book.readed).format("MMMM")}</td>
-                                                    <td style={{ textAlign: 'right' }}>
-                                                        <button onClick={() => delBook(book.id)} type="button" className="btn btn-danger"><i className="fa fa-trash"></i></button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {showModal && (<Readed year={year} />)}
             </div>
         </React.Fragment>
     )

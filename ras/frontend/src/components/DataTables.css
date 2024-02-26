@@ -8,7 +8,7 @@
 
 #DataTable td {
     color: #333;
-    font-size: 12px;
+    font-size: 14px;
     height: 40px;
     font-weight: 300;
     vertical-align: middle;
@@ -56,7 +56,7 @@
     padding: 15px 20px;
     border-bottom: 1px solid #efefef;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
     color:#000000;
 }
 
@@ -72,19 +72,6 @@
     padding:14px;
 }
 
-#DataTable .openAlarm .pictogram {
-    /* display: inline-block;
-    padding: 0 0 0 0;
-    margin: 10px 10px 10px 10px;
-    background: rgb(255,0,0); */
-    display: inline-block;
-    margin: 10px 10px 10px 10px;
-    background: rgb(255,0,0);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
-    border-radius: 100%;
-    padding: 5px;
-}
-
 #DataTable tbody td:first-child{
     padding: 0rem;
 }
@@ -97,20 +84,6 @@
     vertical-align: middle;
     border-top: none;
     border-bottom: solid 1px #f8f8f8 !important;
-}
-
-#DataTable .openAlarm td{
-    padding:10px;
-    color: #000000;
-    font-size: 14px;
-    height: 45px;
-    font-weight: 400;
-    vertical-align: middle;
-    border-top: 1px solid #efefef;
-}
-
-#DataTable .openAlarm:first-child td{
-    border-top:none;
 }
 
 .DataTable_Container {
@@ -138,35 +111,8 @@
     margin-bottom: 0;
 }
 
-.DataTable_Container .historyAlarm .pictogram {
-    /* display: inline-block;
-    padding: 0 0 0 0;
-    margin: 10px 10px 10px 10px;
-    background: rgb(255,0,0); */
-    display: inline-block;
-    margin: 10px 10px 10px 10px;
-    background: rgb(255,0,0);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
-    border-radius: 100%;
-    padding: 5px;
-}
-
 .DataTable_Container .table tbody td:first-child{
     padding: 0rem;
-}
-
-.DataTable_Container .historyAlarm td{
-    padding:10px;
-    color: #000000;
-    font-size: 14px;
-    height: 45px;
-    font-weight: 100;
-    vertical-align: middle;
-    border-top: 1px solid #efefef;
-}
-
-.DataTable_Container .historyAlarm:first-child td{
-    border-top:none;
 }
 
 .DataTable_Container .dataTables_length{
@@ -218,7 +164,7 @@
 }
 
 .dataTables_wrapper .dataTables_paginate{
-    float:right;
+    text-align: center;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -233,7 +179,7 @@
     color: #333 !important;
     border: 1px solid transparent;
     border-radius: 2px;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .showHead thead{

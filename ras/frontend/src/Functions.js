@@ -22,7 +22,7 @@ export const initDataTable = () => {
               search: "",
               searchPlaceholder: "Zoeken"
             },
-            dom: 'rt<"bottom"pl><"clear">',
+            dom: 'rt<"bottom"p><"clear">',
             order: []
         });
     }, 300)

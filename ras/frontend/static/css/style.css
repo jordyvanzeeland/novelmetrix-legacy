@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 html, body{
-    background:#f8f8fa;
+    background:#fafdfb;
     margin:0;
     padding:0;
-    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    /* font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; */
+    font-family: "Poppins", sans-serif;
     letter-spacing: .3px;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
     color:#333;
   }
 
@@ -27,7 +31,7 @@ html, body{
 
 
   .content{
-    padding: 30px;
+    padding: 110px 30px 30px 100px;
   }
 
   .content-manage{
@@ -125,9 +129,11 @@ html, body{
   .books-per-month, .genresPercent, .books-per-country, .book, .ratings, .readed{
     background: #ffffff;
     padding: 20px;
-    -webkit-box-shadow: 0px 1px 1px 1px #eee;
-    box-shadow: 0px 1px 1px 1px #eee;
+    -webkit-box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69 .15);
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15);
     margin-bottom: 20px;
+    border-radius: 10px;
+    padding:30px;
   }
 
   .book .book-icon{
@@ -158,12 +164,11 @@ html, body{
   }
 
   .sidebar{
-    background: #343d50;
-    z-index:1;
-    width: 200px;
+    background: #333333;
+    width: 70px;
     height: 100vh;
     position: fixed;
-    padding-top: 10px;
+    padding-top: 67px;
   }
 
   .sidebar span{
@@ -239,7 +244,6 @@ html, body{
 .sidebar ul{
     padding:0;
     margin:0;
-    margin-top:10px;
 }
 
 .sidebar ul li{
@@ -248,7 +252,8 @@ html, body{
     font-weight: 300;
     cursor: pointer;
     font-size: 12px;
-    padding: 15px 25px;
+    padding: 20px 0px;
+    text-align: center;
 }
 
 .sidebar ul .active li{
@@ -259,10 +264,16 @@ html, body{
     margin-right:5px;
     color: rgba(255,255,255,0.5);
     width:15px;
+    font-size: 15px;
 }
 
 .sidebar ul a{
     text-decoration: none;
+}
+
+.sidebar button{
+  background: none;
+  border: none;
 }
 
 .sidebar ul .active li {
@@ -271,7 +282,7 @@ html, body{
 }
 
 .sidebar ul .active li i {
-  color: #48a5a9;
+  color: #ffffff;
 }
 
 .sidebar .bottom-menu{
@@ -301,10 +312,14 @@ html, body{
 
   .books-stats .stat-block, .stat-block{
     background: #ffffff;
-    -webkit-box-shadow: 0px 1px 1px 1px #eee;
-    box-shadow: 0px 1px 1px 1px #eee;
+    -webkit-box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15);
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15);
+    border-radius: 10px;
+    padding:30px !important;
     padding: 15px 5px;
-    color: #333;
+    color: #777;
+    font-weight: 300;
+    font-size: 14px;
     text-align: center;
     margin-bottom: 20px;
   }
@@ -321,7 +336,7 @@ html, body{
   }
 
   .chooseYear i{
-    color: rgba(255,255,255,0.5);
+    color: #ffffff;
     font-size:13px;
   }
 
@@ -339,25 +354,24 @@ html, body{
 
   .stat-block i{
     font-weight: 900;
-    font-size: 22px;
+    font-size: 30px;
     border-radius: 50%;
     padding: 11px;
     width: 50px;
     height: 50px;
     line-height: 30px;
     text-align: center;
-    background: #343d50;
-    color:#ffffff;
+    color: #405181;
     float:left;
     margin-left:15px;
   }
 
   .col-md-4:nth-child(2) .stat-block i{
-    background:#01a9ac;
+    color:#01a9ac;
   }
 
   .col-md-4:nth-child(3) .stat-block i{
-    background:#ffbe0e;
+    color:#64c5b1;
   }
 
   .books-stats .stat-block .stats-number, .stats-number{
@@ -371,6 +385,7 @@ html, body{
 
   .books-stats .stat-block .stats-label, .stats-label{
     display: block;
+    margin-bottom:5px;
   }
 
   .yearselector{
@@ -421,15 +436,14 @@ html, body{
   }
 
   span.block_name{
-    color: #333;
-    font-weight: 500;
+    color: #777;
+    font-weight: 300;
     border-bottom: solid 1px #f5f6fa;
     width: 100%;
     display: block;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    letter-spacing: 0px;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .stat-block .progress{
@@ -628,11 +642,11 @@ html, body{
 }
 
 .topbar{
-  background: #343d50;
+  background: #405181;
   width: 100%;
   min-height: 50px;
-  box-shadow: 0px 1px 1px 1px #eee;
   padding-left:30px;
+  position: fixed;
 }
 
 .topbar .logo{
@@ -643,7 +657,7 @@ html, body{
 
 .topbar_right{
   float:right;
-  padding: 25px 0;
+  padding: 23px 0;
   margin-right: 30px;
 }
 
@@ -659,7 +673,7 @@ html, body{
 }
 
 .topbar_right ul li i{
-  color: rgba(255,255,255,0.5);
+  color: #ffffff;
   font-size: 14px;
 }
 
@@ -721,7 +735,15 @@ html, body{
   margin:auto;
 }
 
+.currentUser{
+  color:#ffffff;
+}
 
+.currentUser i{
+  margin-right:5px;
+  font-size: 20px !important;
+  vertical-align: middle;
+}
 
 
 

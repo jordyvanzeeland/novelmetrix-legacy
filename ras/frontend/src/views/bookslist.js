@@ -6,8 +6,11 @@ moment.locale('nl');
 
 const BooksList = (props) => {
     var [books, setBooks] = useState([]);
+    const currentyear = new Date().getFullYear();
     const [showModal, setShowModal] = useState(false);
     const [months, setMonths] = useState([]);
+    const [year, setYear] = useState(currentyear);
+    const [readingYears, setReadingYears] = useState([]);
 
     const addBook = async (event) => {
         event.preventDefault();
@@ -44,6 +47,9 @@ const BooksList = (props) => {
             import("../Functions.js")
         ])
 
+        const getYears = await data.getReadingYears();
+        setReadingYears(getYears);
+
         const getbooks = await data.getAllBooks();
         setBooks(getbooks);
         functions.initDataTable();
@@ -56,7 +62,29 @@ const BooksList = (props) => {
     return (
         <React.Fragment>
             <Sidebar />
-            <div className="content-manage">
+            <div className="topbar">
+                <img className="logo" src="/static/images/logo_white.png" />
+                <div className="chooseYear">
+                    <i className="fa fa-calendar"></i>
+                    <span className="stats-number" style={{ marginRight: '0px' }}>
+                        <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
+                            {readingYears.map((year, i) => {
+                                return (<option key={i} value={year}>{year}</option>)
+                            })}
+                            {!readingYears.includes(currentyear) ? <option key={currentyear} value={currentyear}>{currentyear}</option> : ''}
+                        </select>
+                    </span>
+                </div>
+
+                <div className="topbar_right">
+                    <ul>
+                        <li><i className="fas fa-book" onClick={() => {setShowModal(true)}}></i></li>
+                        <li onClick={() => logout()}><i className="fas fa-power-off"></i></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div className="content">
                 <h1>Boeken beheren <button type="button" onClick={() => setShowModal(true)} className="btn btn-success btn-add">Toevoegen</button></h1>
 
                 <div className="DataTable_Container">

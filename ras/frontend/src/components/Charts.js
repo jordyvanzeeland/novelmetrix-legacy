@@ -1,4 +1,4 @@
-export const initChart = (data, ratings, year) => {
+export const initChart = (data, year) => {
 
     /*
     ----------------------------------
@@ -9,8 +9,7 @@ export const initChart = (data, ratings, year) => {
     var genres = [];
 
     var colors = [
-        // '#696ffc', '#7596fa', '#92adfe', '#abc0ff'
-        '#404e67', '#01a9ac', '#64c5b1', '#1ABB9C'
+        '#405181', '#01a9ac', '#64c5b1', '#1ABB9C'
     ]
 
     var dataSet = [];
@@ -53,39 +52,6 @@ export const initChart = (data, ratings, year) => {
             })
         })
     }
-
-    /*
-        ----------------------------------
-             Avarage ratings per month
-        ----------------------------------
-        */
-
-        var avgRatings = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-        for (var j = 0; j < 12; j++) {
-
-            if (j < 9) {
-                var month = "0" + (j + 1)
-            } else {
-                month = (j + 1)
-            }
-
-            for (var i = 0; i < ratings.length; i++) {
-                if (ratings[i].date == month + '-' + year) {
-                    avgRatings[j] = ratings[i].rating;
-                }
-            }
-        }
-
-        dataSet.push({
-            label: 'Gemiddelde beoordeling',
-            data: avgRatings,
-            backgroundColor: '#ffa500',
-            borderColor: '#ffa500',
-            tension: 0.4,
-            type: 'line',
-            order: 1
-        })
 
     /*
     ----------------------------------
@@ -208,7 +174,7 @@ export const initDoughnut = (data) => {
                 label: '# of Tomatoes',
                 data: counts,
                 backgroundColor: [
-                    '#404e67', '#01a9ac', '#64c5b1', '#1ABB9C'
+                    '#405181', '#01a9ac', '#64c5b1', '#1ABB9C'
                 ],
                 borderWidth: 0,
                 borderColor: '#1f2940',

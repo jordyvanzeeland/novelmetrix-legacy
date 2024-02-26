@@ -11,6 +11,7 @@ urlpatterns = [
     path('books/all', getAllBooks),
     path('books', getBooksByYear),
     path('books/years', getYears),
+    path('books/en', countEnBooks),
     path('books/stats', getStats),
     path('books/insert', addBook),
     path('books/delete', deleteBook),

@@ -20,13 +20,11 @@ const BookStats = (props) =>{
 
     return (
         <React.Fragment>
-            <div className='row'>
                 <div className="col-md-4 col-sm-4">
                     <div className="stat-block">
                         <i className="fas fa-book-open"></i>   
                         <span className="stats-label">Gelezen boeken:</span>
                         <span className="stats-number">{totalbooks ? totalbooks : 0}</span>
-                        
                     </div>
                 </div>
                 
@@ -38,15 +36,6 @@ const BookStats = (props) =>{
                         
                     </div>
                 </div>
-
-                <div className="col-md-4 col-sm-4">
-                    <div className="stat-block">
-                        <i className="fas fa-star"></i> 
-                        <span className="stats-label">Jaarbeoordeling:</span>
-                        <span className="stats-number">{yearrating? yearrating : 0}</span>
-                    </div>
-                </div>
-            </div>
         </React.Fragment>
     )
 }

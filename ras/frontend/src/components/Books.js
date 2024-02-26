@@ -10,8 +10,7 @@ const Books = (props) => {
         const yearbooks = await data.getBooksPerYearPerGenres(props.year);
 
         if(yearbooks){
-            const ratings = await data.getAvgRatings(props.year);
-            charts.initChart(yearbooks, ratings, props.year);
+            charts.initChart(yearbooks, props.year);
         }
     }
 

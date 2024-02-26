@@ -198,3 +198,33 @@ def countRatings(request):
 
     except Exception as e:
         return JsonResponse({'error': 'An error occurred: {}'.format(str(e))}, safe=False)
+    
+# -----------------------------
+# Count EN and NL books
+# -----------------------------
+
+@api_view(['GET'])
+def countEnBooks(request):
+    try:
+        authorization_token = request.headers.get('Authorization')
+        isLoggedIn = isAuthorized(authorization_token)
+
+        if not authorization_token:
+            return JsonResponse({'error': 'No authorization token'}, safe=False)
+
+        if not isLoggedIn:
+            return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        
+        if not request.META.get('HTTP_YEAR'):
+            return JsonResponse({'error': 'No year in header'}, safe=False)
+        
+        df = filterData(getBooksData(request.headers.get('userid')), request.META.get('HTTP_YEAR'))
+        countbooks = df.groupby('en')['en'].count().reset_index(name="count")
+        countbooks = countbooks.sort_values(by='count', ascending=False)
+        countbooks['lang'] = countbooks['en'].apply(lambda x: 'en' if x == 1 else 'nl')
+        data = [{"lang": lang, "count": int(count)} for lang, count in zip(countbooks['lang'], countbooks['count'])]
+
+        return Response(data)
+
+    except Exception as e:
+        return JsonResponse({'error': 'An error occurred: {}'.format(str(e))}, safe=False)
