@@ -7,12 +7,13 @@ import * as moment from 'moment';
 import "../components/DataTables.css";
 import Readed from "../components/Readed.js";
 import Sidebar from "../components/Sidebar.js";
+import 'flag-icon-css/css/flag-icons.min.css';
+import Languages from "../components/Languages.js";
 moment.locale('nl');
 
 const Dashboard = (props) => {
     const currentyear = new Date().getFullYear();
     const [year, setYear] = useState(currentyear);
-    const [books, setBooks] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [readingYears, setReadingYears] = useState([]);
 
@@ -21,29 +22,10 @@ const Dashboard = (props) => {
             import("../components/Data.js"),
             import("../Functions.js")
         ])
+
         const getYears = await data.getReadingYears();
         setReadingYears(getYears);
-
-        const getbooks = await data.getBooksByYear(year);
-        var months = [];
-
-        for(var i = 1; i < 13; i++){
-            months[i] = [];
-
-            getbooks.forEach(book => {
-                if(moment(book.readed).format("M") == i){
-                    months[i].push(book);
-                }
-            });
-        }
-        
-        setBooks(getbooks);
         functions.initDataTable();
-    }
-
-    const logout = () => {
-        localStorage.clear();
-        window.location.href = "/";
     }
 
     useEffect(() => {
@@ -89,6 +71,7 @@ const Dashboard = (props) => {
                         </div>
 
                         <div className="col-md-4">
+                            <Languages year={year} />
                             <Genres year={year} />
                             <Ratings year={year} />
                         </div>

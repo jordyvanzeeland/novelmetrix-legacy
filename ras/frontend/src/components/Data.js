@@ -202,6 +202,21 @@ export const getRatingsCount = (year) => {
         })
 }
 
+export const getLanguagesBooks = (year) => {
+    return fetch('/api/books/en', {
+        "method": "GET",
+        "headers": {
+            "year": year,
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "userid": localStorage.getItem('id')
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+}
+
 export const insertBook = (book) => {
     return fetch('/api/books/insert', {
         "method": "POST",

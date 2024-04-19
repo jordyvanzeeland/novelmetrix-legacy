@@ -678,6 +678,7 @@ html, body{
   min-height: 50px;
   padding-left:30px;
   position: fixed;
+  z-index:1;
 }
 
 .topbar .logo{

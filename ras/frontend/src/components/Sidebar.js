@@ -25,8 +25,7 @@ const Sidebar = () => {
         const insertbook = await data.insertBook(book);
 
         setShowModal(false);
-        await getData();
-        
+        window.location.reload();
     }
 
     return(

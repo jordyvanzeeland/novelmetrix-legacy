@@ -222,7 +222,8 @@ def countEnBooks(request):
         countbooks = df.groupby('en')['en'].count().reset_index(name="count")
         countbooks = countbooks.sort_values(by='count', ascending=False)
         countbooks['lang'] = countbooks['en'].apply(lambda x: 'en' if x == 1 else 'nl')
-        data = [{"lang": lang, "count": int(count)} for lang, count in zip(countbooks['lang'], countbooks['count'])]
+        countbooks['name'] = countbooks['en'].apply(lambda x: 'English' if x == 1 else 'Nederlands')
+        data = [{"lang": lang, "name": name, "count": int(count)} for lang, name, count in zip(countbooks['lang'], countbooks['name'], countbooks['count'])]
 
         return Response(data)
 
