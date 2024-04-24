@@ -207,6 +207,105 @@ export const initDoughnut = (data) => {
             plugins: {
                 legend: {
                     position: 'top',
+                    display: false,
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        // This more specific font property overrides the global property
+                        color: "#333",
+                        font: {
+                            size: 11,
+                        }
+                    }
+                }
+            }
+        },
+        plugins: [{
+            id: 'legendMargin',
+            beforeInit(chart, legend, options) {
+                const fitValue = chart.legend.fit;
+
+                chart.legend.fit = function fit() {
+                    fitValue.bind(chart.legend)();
+                    return this.height += 30;
+                }
+            }
+        }],
+    });
+}
+
+export const initDoughnut2 = (data) => {
+    console.log(data);
+    var labels = [];
+    var counts = [];
+
+    data.forEach((count) => {
+        if (!labels.includes(count.name)) {
+            labels.push(count.name)
+        }
+
+        counts.push(count.count)
+    })
+
+    const legendMargin = {
+        id: 'legendMargin',
+        beforeInit(chart, legend, options) {
+            const fitValue = chart.legend.fit;
+
+            chart.legend.fit = function fit() {
+                fitValue.bind(chart.legend)();
+                return this.height += 30;
+            }
+        }
+    };
+
+    $("canvas#chartLangs").remove();
+    data && data.length > 0 ? $(".no-data-msg").remove() : $("canvas#chartLangs").remove();
+    data && data.length > 0 ? $("div.languages").append('<canvas id="chartLangs"></canvas>') : $("div.languages").append('<div class="no-data-msg">Geen data beschikbaar</div>');
+    
+    var ctx = document.getElementById("chartLangs");
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '# of Tomatoes',
+                data: counts,
+                backgroundColor: [
+                    '#405181', '#01a9ac', '#64c5b1', '#1ABB9C'
+                ],
+                borderWidth: 0,
+                borderColor: '#1f2940',
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let label = context.label;
+                            let value = context.formattedValue;
+
+                            if (!label)
+                                label = 'Unknown'
+
+                            let sum = 0;
+                            let dataArr = context.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += Number(data);
+                            });
+
+                            let percentage = (value * 100 / sum).toFixed(1) + '%';
+                            return label + ": " + percentage;
+                        }
+                    }
+                }
+            }]
+        },
+        options: {
+            showAllTooltips: true,
+            cutout: '80%',
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    display: false,
                     labels: {
                         padding: 20,
                         usePointStyle: true,

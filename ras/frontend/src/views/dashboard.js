@@ -48,7 +48,7 @@ const Dashboard = (props) => {
             <div className="content">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-8">
+                        <div className="col-md-9">
                             <div className="row">
                                 <div className="col-md-4 col-sm-4">
                                     <div className="stat-block">
@@ -70,7 +70,7 @@ const Dashboard = (props) => {
                             <Books year={year} />
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                             <Languages year={year} />
                             <Genres year={year} />
                             <Ratings year={year} />

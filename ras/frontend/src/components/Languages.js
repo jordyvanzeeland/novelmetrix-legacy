@@ -4,9 +4,17 @@ const Languages = (props) => {
     const [languageBooks, setLanguageBooks] = useState([])
 
     const getData = async () => {
-        const data = await import("./Data.js")
+        const [data, charts] = await Promise.all([
+            await import("./Data.js"),
+            await import("./Charts.js")
+        ]);
+
         const languagebooks = await data.getLanguagesBooks(props.year)
-        setLanguageBooks(languagebooks);
+
+        if(languagebooks){
+            charts.initDoughnut2(languagebooks, props.year);
+            setLanguageBooks(languagebooks);
+        }
     }
 
     useEffect(() => {
@@ -15,7 +23,7 @@ const Languages = (props) => {
 
     return (
         <React.Fragment>
-            <div className="ratings">
+            <div className="ratings languages">
                 <span className="block_name">Talen</span>
                 <table className="ratingstable responsive nowrap" width="100%">
                     <thead>
@@ -34,6 +42,8 @@ const Languages = (props) => {
                         })}
                     </tbody>
                 </table>
+
+                <canvas id="chartLangs"></canvas>
             </div>
         </React.Fragment>
     )
