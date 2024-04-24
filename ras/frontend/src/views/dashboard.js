@@ -38,6 +38,15 @@ const Dashboard = (props) => {
             <div className="topbar">
                 <img className="logo" src="/static/images/logo_white.png" />
 
+                <div className="chooseYear">
+                    <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
+                        {readingYears.map((year, i) => {
+                            return (<option key={i} value={year}>{year}</option>)
+                        })}
+                        {!readingYears.includes(currentyear) ? <option key={currentyear} value={currentyear}>{currentyear}</option> : ''}
+                    </select>
+                </div>
+
                 <div className="topbar_right">
                     <ul>
                         <li className="currentUser"><i class="fas fa-user-circle"></i> {localStorage.getItem('name')}</li>
@@ -48,32 +57,18 @@ const Dashboard = (props) => {
             <div className="content">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-9">
+                        <div className="col-md-6">
                             <div className="row">
-                                <div className="col-md-4 col-sm-4">
-                                    <div className="stat-block">
-                                    <i className="fa fa-calendar"></i>  
-                                        <span className="stats-label">Selecteer jaar:</span>
-                                        <span className="stats-number">
-                                        <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
-                                            {readingYears.map((year, i) => {
-                                                return (<option key={i} value={year}>{year}</option>)
-                                            })}
-                                            {!readingYears.includes(currentyear) ? <option key={currentyear} value={currentyear}>{currentyear}</option> : ''}
-                                        </select>
-                                        </span>
-                                    </div>
-                                </div>
-                                <Stats year={year} />
+                                <Books year={year} />
                             </div>
-                            
-                            <Books year={year} />
                         </div>
 
                         <div className="col-md-3">
-                            <Languages year={year} />
                             <Genres year={year} />
+                        </div>
+                        <div className="col-md-3">
                             <Ratings year={year} />
+                            <Languages year={year} />
                         </div>
                     </div>
                 </div>

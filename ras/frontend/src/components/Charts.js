@@ -82,7 +82,7 @@ export const initChart = (data, year) => {
             datasets: dataSet
         },
         options: {
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             responsive: true,
             showTooltips: true,
             legend: {
