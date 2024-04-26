@@ -60,6 +60,7 @@ const Dashboard = (props) => {
                         <div className="col-md-6">
                             <div className="row">
                                 <Books year={year} />
+                                {/* <Readed year={year} /> */}
                             </div>
                         </div>
 
@@ -72,8 +73,6 @@ const Dashboard = (props) => {
                         </div>
                     </div>
                 </div>
-
-                {showModal && (<Readed year={year} />)}
             </div>
         </React.Fragment>
     )
