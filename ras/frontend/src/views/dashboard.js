@@ -6,6 +6,7 @@ import Stats from "../components/Stats";
 import * as moment from 'moment';
 import "../components/DataTables.css";
 import Readed from "../components/Readed.js";
+import Challenge from "../components/Challenge.js";
 import Sidebar from "../components/Sidebar.js";
 import 'flag-icon-css/css/flag-icons.min.css';
 import Languages from "../components/Languages.js";
@@ -58,10 +59,7 @@ const Dashboard = (props) => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-6">
-                            <div className="row">
-                                <Books year={year} />
-                                {/* <Readed year={year} /> */}
-                            </div>
+                            <Books year={year} />
                         </div>
 
                         <div className="col-md-3">
