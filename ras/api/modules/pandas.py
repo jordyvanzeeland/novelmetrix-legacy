@@ -7,20 +7,25 @@ from .functions import isAuthorized, getBooksData, filterData
 
 @api_view(['GET'])
 def getBooksByYear(request):
-    if(request.headers.get('Authorization')):
-        isLoggedIn = isAuthorized(request.headers.get('Authorization'));
+    try:
+        authorization_token = request.headers.get('Authorization')
+        isLoggedIn = isAuthorized(authorization_token)
 
-        if(isLoggedIn):
-            if request.META.get('HTTP_YEAR'):
-                df = getBooksData(request.headers.get('userid'), request.META.get('HTTP_YEAR'))
-                data = df.to_dict(orient='records')
-                return Response(data)
-            else:
-                return JsonResponse({'error': 'No year header included'}, safe=False)
-        else:
-            return JsonResponse({'error': 'No user detected'}, safe=False)
-    else:
-        return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        if not authorization_token:
+            return JsonResponse({'error': 'No authorization token'}, safe=False)
+
+        if not isLoggedIn:
+            return JsonResponse({'error': 'Unauthorized'}, safe=False)
+        
+        if not request.META.get('HTTP_YEAR'):
+            return JsonResponse({'error': 'No year header included'}, safe=False)
+
+        df = getBooksData(request.headers.get('userid'), request.META.get('HTTP_YEAR'))
+        data = df.to_dict(orient='records')
+        return Response(data)
+    except Exception as e:
+        return JsonResponse({'error': 'An error occurred: {}'.format(str(e))}, safe=False)
+
 
 # ----------------------
 # Get all reading years

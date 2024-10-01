@@ -31,7 +31,7 @@ html, body{
 
 
   .content{
-    padding: 110px 30px 30px 100px;
+    padding: 110px 30px 30px 30px;
   }
 
   .content-manage{
@@ -357,24 +357,23 @@ html, body{
 
   .chooseYear{
     padding: 15px 15px;
-    color:#fff;
+    color:#333;
     display: inline-block;
   }
 
   .chooseYear span{
     display: inline-block;
-    color:#fff;
+    color:#333;
   }
 
   .chooseYear i{
-    color: #ffffff;
-    font-size:13px;
+    color: #405181;
   }
 
   .chooseYear select{
-    font-size:13px;
+    font-weight: 400;
     background: none;
-    color:#fff;
+    color:#333;
     padding: 5px;
   }
 
@@ -467,14 +466,13 @@ html, body{
   }
 
   span.block_name{
-    color: #777;
-    font-weight: 300;
-    border-bottom: solid 1px #f5f6fa;
+    color: #000;
+    font-weight: 400;
     width: 100%;
     display: block;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .stat-block .progress{
@@ -673,7 +671,9 @@ html, body{
 }
 
 .topbar{
-  background: #405181;
+  background: #ffffff;
+  border-top: solid 10px #405181;
+  box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15);
   width: 100%;
   min-height: 50px;
   padding-left:30px;
@@ -685,11 +685,17 @@ html, body{
   width:150px;
   display:inline-block;
   padding: 15px 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .topbar_right{
   float:right;
   padding: 23px 0;
+  font-weight: 300;
   margin-right: 30px;
 }
 
@@ -705,12 +711,12 @@ html, body{
 }
 
 .topbar_right ul li i{
-  color: #ffffff;
+  color: #405181;
   font-size: 14px;
 }
 
 .topbar_right ul li:hover i{
-  color: #ffffff;
+  color: #333;
 }
 
 .stats{
@@ -768,7 +774,7 @@ html, body{
 }
 
 .currentUser{
-  color:#ffffff;
+  color:#333;
 }
 
 .currentUser i{

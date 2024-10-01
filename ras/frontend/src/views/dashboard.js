@@ -35,11 +35,12 @@ const Dashboard = (props) => {
 
     return (
         <React.Fragment>
-            <Sidebar />
             <div className="topbar">
-                <img className="logo" src="/static/images/logo_white.png" />
+                <img className="logo" src="/static/images/logo.png" />
 
+                
                 <div className="chooseYear">
+                    <i class="fas fa-calendar-alt"></i>
                     <select className="yearselector" value={year} onChange={(event) => setYear(event.target.value)}>
                         {readingYears.map((year, i) => {
                             return (<option key={i} value={year}>{year}</option>)
