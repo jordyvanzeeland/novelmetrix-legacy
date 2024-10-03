@@ -36,7 +36,7 @@ const Dashboard = (props) => {
     return (
         <React.Fragment>
             <div className="topbar">
-                <img className="logo" src="/static/images/logo.png" />
+                <img className="logo" src="/static/images/logo-new.png" />
 
                 
                 <div className="chooseYear">

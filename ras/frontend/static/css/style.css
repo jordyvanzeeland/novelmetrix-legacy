@@ -599,7 +599,7 @@ html, body{
     height:100%;
   }
 
-  .login{
+  /* .login{
     width:350px;
     min-height:300px;
     position: absolute;
@@ -608,17 +608,27 @@ html, body{
     -ms-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
     border-radius: 5px;
-  }
+  } */
+
+  .login{
+    background: #ffffff;
+    max-width:450px;
+    width:100%;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .05);
+    padding: 35px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+    -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+}
 
   .login.register{
     width:450px;
   }
-
-.login form{
-  background:#ffffff;
-  box-shadow: 1px 1px 1px rgba(0,0,0,.05);
-  padding: 30px;
-}
 
 .login img{
   display: block;
@@ -639,7 +649,29 @@ html, body{
     width:100%;
 }
 
-.login form input{
+.login input[type="text"], .login input[type="password"]{
+  background: #eee;
+  border: none;
+  padding: 12px 15px;
+  font-size: 13px;
+}
+
+.login input[type="text"]:focus, .login input[type="password"]:focus{
+  border-bottom: solid 2px #405181;
+  box-shadow: none;
+}
+
+.login button{
+  padding: 10px 30px;
+  background: #405181;
+  border: none;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+  margin-top: 10px;
+  font-size: 14px;
+  width: 100%;
+}
+
+/* .login form input{
     background:#f9f9f9;
     border:none;
     border-radius: 5px;
@@ -647,19 +679,19 @@ html, body{
     font-size:13px;
 }
 
-.login form .icon{
+/* .login form .icon{
     position: absolute;
     right: 44px;
     margin-top: 7px;
 }
 
-.login form .icon i{
+/* .login form .icon i{
     color:#aaa;
     font-size:13px;
 }
 
 .login form button{
-    background:#364c67;
+    background:#405181;
     width:100%;
     border: none;
     padding: 10px 15px;
@@ -667,8 +699,8 @@ html, body{
 }
 
 .login form button:hover{
-    background:#122235;
-}
+    background:#405181;
+} */ 
 
 .topbar{
   background: #ffffff;
@@ -682,9 +714,9 @@ html, body{
 }
 
 .topbar .logo{
-  width:150px;
+  width:160px;
   display:inline-block;
-  padding: 15px 0;
+  padding: 7px 0;
   position: absolute;
   left: 0;
   right: 0;

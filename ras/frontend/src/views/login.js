@@ -120,13 +120,34 @@ const Login = (props) => {
         <React.Fragment>
             <div className='login_overlay'></div>
             <div className='login'>
-                <img className="logo_text" src="/static/images/logo.png" />
+                <img className="logo_text" src="/static/images/logo-new.png" style={{ width: '280px' }} />
 
                 {hasError && error === 'UserNotExist' && (<div id='err_msg' className="alert alert-danger" style={{ textAlign: 'center' }}>Deze gebruiker heeft geen account</div>)}
                 {hasError && error === 'WrongCredentials' && (<div id='err_msg' className="alert alert-danger" style={{ textAlign: 'center' }}>De ingevulde gegevens zijn onjuist.</div>)}
 
                 <form onSubmit={(event) => handleFormSubmit(event)}>
-                    <div className="mb-3">
+                    <div className="card-body">
+                                <div className="row mb-4">
+                                    <div className="col-md-12">
+                                        <input type="text" onChange={handleChange} className="form-control" name="username" id="username" placeholder="Gebruikersnaam" aria-describedby="emailHelp" required/>
+                                    </div>
+                                </div>
+
+                                <div className="row mb-4">
+                                    <div className="col-md-12">
+                                        <input type="password" onChange={handleChange} className="form-control" name="password" id="password" placeholder="Wachtwoord" required/>
+                                    </div>
+                                </div>
+
+                                <div className="row mb-0">
+                                    <div className="col-md-12">
+                                        <button type="submit" name="submit" className="btn btn-primary" onClick={() => login()}>
+                                            Inloggen
+                                        </button>
+                                    </div>
+                                </div>
+                        </div>
+                    {/* <div className="mb-3">
                         <span className='icon'>
                             <i className="fas fa-user"></i>
                         </span>
@@ -138,9 +159,8 @@ const Login = (props) => {
                         </span>
                         <input type="password" onChange={handleChange} className="form-control" name="password" id="password" placeholder="Wachtwoord" required/>
                     </div>
-                    <button type="submit" className="btn btn-primary">Inloggen</button>
+                    <button type="submit" className="btn btn-primary">Inloggen</button> */}
                 </form>
-                <Link className="btn" to="/register" style={{ width: '100%', marginTop: '15px' }}>Maak een account aan</Link>
             </div>
         </React.Fragment>
     );
